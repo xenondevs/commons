@@ -48,3 +48,36 @@ fun <T, E> KProperty2<T, E, *>.getRuntimeDelegate(receiver: T & Any): Any? {
     property.isAccessible = true
     return property.getDelegate(receiver, null as E)
 }
+
+fun KProperty0<*>.isLazyInitialized(): Boolean {
+    isAccessible = true
+    val lazy = getDelegate() as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}
+
+fun KProperty0<*>.isRuntimeLazyInitialized(): Boolean {
+    val lazy = getRuntimeDelegate() as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}
+
+fun <T> KProperty1<T, *>.isLazyInitialized(receiver: T): Boolean {
+    isAccessible = true
+    val lazy = getDelegate(receiver) as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}
+
+fun <T> KProperty1<T, *>.isRuntimeLazyInitialized(receiver: T & Any): Boolean {
+    val lazy = getRuntimeDelegate(receiver) as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}
+
+fun <T, E> KProperty2<T, E, *>.isLazyInitialized(receiver1: T, receiver2: E): Boolean {
+    isAccessible = true
+    val lazy = getDelegate(receiver1, receiver2) as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}
+
+fun <T, E> KProperty2<T, E, *>.isRuntimeLazyInitialized(receiver: T & Any): Boolean {
+    val lazy = getRuntimeDelegate(receiver) as? Lazy<*>
+    return lazy?.isInitialized() ?: false
+}

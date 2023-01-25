@@ -12,17 +12,37 @@ import kotlin.reflect.typeOf
 val KType.classifierClass: KClass<*>?
     get() = classifier as? KClass<*>
 
-inline val <reified T> T.type: KType
-    get() = typeOf<T>()
-
-inline val <reified T> T.typeArguments: List<KType?>
-    get() = type.arguments.map { it.type }
-
 inline val <reified K> Map<K, *>.keyType: KType
     get() = typeOf<K>()
 
 inline val <reified V> Map<*, V>.valueType: KType
     get() = typeOf<V>()
+
+fun KClass<*>.createStarProjectedType(
+    nullable: Boolean = false,
+    annotations: List<Annotation> = emptyList()
+) = createType(
+    Array(typeParameters.size) { KTypeProjection.STAR }.asList(),
+    nullable,
+    annotations
+)
+
+@JvmName("KClassifierCreateTypeKTypeProjection")
+fun KClassifier.createType(
+    vararg arguments: KTypeProjection
+) = createType(arguments.asList())
+
+@JvmName("KClassifierCreateTypeKType")
+fun KClassifier.createType(
+    vararg arguments: KType?
+) = createType(arguments.map { if (it == null) KTypeProjection.STAR else KTypeProjection.invariant(it) })
+
+@JvmName("createStarProjectedType1")
+fun createStarProjectedType(
+    classifier: KClass<*>,
+    nullable: Boolean = false,
+    annotations: List<Annotation> = emptyList()
+) = classifier.createStarProjectedType(nullable, annotations)
 
 fun createType(
     classifier: KClassifier,
@@ -30,3 +50,15 @@ fun createType(
     nullable: Boolean = false,
     annotations: List<Annotation> = emptyList()
 ) = classifier.createType(arguments, nullable, annotations)
+
+@JvmName("createTypeKTypeProjection")
+fun createType(
+    classifier: KClassifier,
+    vararg arguments: KTypeProjection
+) = classifier.createType(*arguments)
+
+@JvmName("createTypeKType")
+fun createType(
+    classifier: KClassifier,
+    vararg arguments: KType?
+) = classifier.createType(*arguments)

@@ -12,7 +12,7 @@ import java.lang.reflect.Array as ReflectArray
 
 inline fun <reified T> javaTypeOf(): Type = typeOf<T>().javaType
 
-val Type.classifierClass: Class<*>
+val Type.rawType: Class<*>
     get() = when (this) {
         is ParameterizedType -> rawType as Class<*>
         is WildcardType -> upperBounds[0] as Class<*>
