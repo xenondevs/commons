@@ -24,9 +24,9 @@ fun KProperty0<*>.getRuntimeDelegate(): Any? {
         return getDelegate()
     }
     
-    val property = PropertyReference0Impl(receiver, receiver::class.java, name, signature, 0) as KProperty0<*>
+    val property = receiver::class.memberProperties.first { it.name == name } as KProperty1<Any, *>
     property.isAccessible = true
-    return property.getDelegate()
+    return property.getDelegate(receiver)
 }
 
 fun <T> KProperty1<T, *>.hasRuntimeDelegate(receiver: T & Any): Boolean {
