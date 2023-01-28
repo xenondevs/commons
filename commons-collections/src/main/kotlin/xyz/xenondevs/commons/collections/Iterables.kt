@@ -3,6 +3,41 @@
 package xyz.xenondevs.commons.collections
 
 import java.util.ArrayList
+import java.util.NoSuchElementException
+
+inline fun <T> Iterable<T>.findNthOrNull(n: Int, predicate: (T) -> Boolean): T? {
+    var count = 0
+    for (element in this) {
+        if (predicate(element)) {
+            if (count == n) return element
+            count++
+        }
+    }
+    
+    return null
+}
+
+inline fun <T> Iterable<T>.findNth(n: Int, predicate: (T) -> Boolean): T {
+    return findNthOrNull(n, predicate)
+        ?: throw NoSuchElementException("No ${n + 1} element(s) matching predicate found.")
+}
+
+inline fun <reified R> Iterable<*>.findNthOfTypeOrNull(n: Int): R? {
+    var count = 0
+    for (element in this) {
+        if (element is R) {
+            if (count == n) return element
+            count++
+        }
+    }
+    
+    return null
+}
+
+inline fun <reified R> Iterable<*>.findNthOfType(n: Int): R {
+    return findNthOfTypeOrNull<R>(n)
+        ?: throw NoSuchElementException("No ${n + 1} element(s) of type ${R::class.java} found.")
+}
 
 inline fun <T, K, V> Iterable<T>.associateNotNull(transform: (T) -> Pair<K, V>?): Map<K, V> {
     return associateNotNullTo(LinkedHashMap(), transform)

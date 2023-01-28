@@ -86,3 +86,7 @@ inline fun <K, V, R, M : MutableMap<K, R>> Map<K, V>.mapValuesNotNullTo(destinat
 inline fun <K, V> MutableMap<K, V>.poll(): Map.Entry<K, V>? {
     return entries.poll()
 }
+
+inline fun <K, V> MutableMap<K, V>.putOrRemove(key: K, value: V?) {
+    if (value == null) remove(key) else put(key, value)
+}
