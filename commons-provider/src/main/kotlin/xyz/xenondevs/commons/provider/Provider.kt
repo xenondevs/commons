@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 @Suppress("PropertyName")
 abstract class Provider<T> {
     
-    private var children: ArrayList<Provider<*>>? = null
+    protected var children: ArrayList<Provider<*>>? = null
     private var updateHandlers: ArrayList<(T) -> Unit>? = null
     
     private var initialized = false
