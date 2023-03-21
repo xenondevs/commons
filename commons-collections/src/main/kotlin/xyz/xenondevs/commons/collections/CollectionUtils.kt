@@ -20,4 +20,21 @@ object CollectionUtils {
         return out
     }
     
+    fun <T, B> sortDependenciesMapped(collection: Collection<T>, dependenciesMapper: (T) -> Set<B>, mapper: (T) -> B): List<T> {
+        val mapped = collection.map(mapper)
+        val dependencies = collection.associateWith { dependenciesMapper(it).filter(mapped::contains) }
+        val inp = collection.toMutableList()
+        val out = LinkedList<T>()
+        while (inp.isNotEmpty()) {
+            inp.removeIf {
+                if (out.map(mapper).containsAll(dependencies[it]!!)) {
+                    out.add(it)
+                    return@removeIf true
+                }
+                return@removeIf false
+            }
+        }
+        return out
+    }
+    
 }
