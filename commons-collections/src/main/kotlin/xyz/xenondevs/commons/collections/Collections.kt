@@ -4,7 +4,7 @@ package xyz.xenondevs.commons.collections
 
 import kotlin.contracts.contract
 
-inline fun <E> Collection<E>.takeUnlessEmpty(): Collection<E>? = ifEmpty { null }
+inline fun <E, C : Collection<E>> C.takeUnlessEmpty(): C? = ifEmpty { null }
 
 inline fun Collection<*>?.isNullOrEmpty(): Boolean {
     contract {
