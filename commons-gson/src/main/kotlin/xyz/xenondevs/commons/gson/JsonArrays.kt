@@ -35,6 +35,25 @@ inline fun JsonArray.addAll(strings: Iterable<String>) = strings.forEach(this::a
 @JvmName("addAllElements")
 inline fun JsonArray.addAll(elements: Iterable<JsonElement>) = elements.forEach(this::add)
 
+inline fun BooleanArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun CharArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun IntArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun LongArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun FloatArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun DoubleArray.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun Array<String>.toJsonArray() = JsonArray().also { it.addAll(this) }
+inline fun Array<JsonElement>.toJsonArray() = JsonArray().also { it.addAll(this) }
+@JvmName("toJsonArrayNumbers")
+inline fun Iterable<Number>.toJsonArray() = JsonArray().also { it.addAll(this) }
+@JvmName("toJsonArrayBooleans")
+inline fun Iterable<Boolean>.toJsonArray() = JsonArray().also { it.addAll(this) }
+@JvmName("toJsonArrayChars")
+inline fun Iterable<Char>.toJsonArray() = JsonArray().also { it.addAll(this) }
+@JvmName("toJsonArrayStrings")
+inline fun Iterable<String>.toJsonArray() = JsonArray().also { it.addAll(this) }
+@JvmName("toJsonArrayElements")
+inline fun Iterable<JsonElement>.toJsonArray() = JsonArray().also { it.addAll(this) }
+
 inline fun JsonArray.getAllStrings(): List<String> {
     return getAllStringsTo(ArrayList())
 }
