@@ -6,7 +6,7 @@
 
     <artifactId>commons</artifactId>
     <groupId>xyz.xenondevs.commons</groupId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>commons-collections</module>
