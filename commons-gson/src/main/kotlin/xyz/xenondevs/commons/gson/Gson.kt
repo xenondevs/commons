@@ -6,42 +6,44 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonSerializer
 import com.google.gson.TypeAdapter
-import com.google.gson.reflect.TypeToken
 import java.io.Reader
 import java.lang.reflect.Type
+import kotlin.reflect.javaType
+import kotlin.reflect.typeOf
 
+@OptIn(ExperimentalStdlibApi::class)
 @PublishedApi
-internal inline fun <reified T> typeOf(): Type = object : TypeToken<T>() {}.type
+internal inline fun <reified T> javaTypeOf(): Type = typeOf<T>().javaType
 
 inline fun <reified T> Gson.fromJson(json: String?): T? {
     if (json == null) return null
-    return fromJson(json, typeOf<T>())
+    return fromJson(json, javaTypeOf<T>())
 }
 
 inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
     if (jsonElement == null) return null
-    return fromJson(jsonElement, typeOf<T>())
+    return fromJson(jsonElement, javaTypeOf<T>())
 }
 
 inline fun <reified T> Gson.fromJson(reader: Reader): T? {
-    return fromJson(reader, typeOf<T>())
+    return fromJson(reader, javaTypeOf<T>())
 }
 
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonSerializer<T>): GsonBuilder {
-    return registerTypeAdapter(typeOf<T>(), typeAdapter)
+    return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
 
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonDeserializer<T>): GsonBuilder {
-    return registerTypeAdapter(typeOf<T>(), typeAdapter)
+    return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
 
 @JvmName("registerTypeAdapter1")
 inline fun <reified T, A> GsonBuilder.registerTypeAdapter(typeAdapter: A): GsonBuilder where A : JsonSerializer<T>, A : JsonDeserializer<T> {
-    return registerTypeAdapter(typeOf<T>(), typeAdapter)
+    return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
 
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: TypeAdapter<T>): GsonBuilder {
-    return registerTypeAdapter(typeOf<T>(), typeAdapter)
+    return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
 
 inline fun <reified T> GsonBuilder.registerTypeHierarchyAdapter(typeAdapter: JsonSerializer<T>): GsonBuilder {
