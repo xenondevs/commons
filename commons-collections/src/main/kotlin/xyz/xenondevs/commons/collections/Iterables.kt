@@ -138,3 +138,12 @@ inline fun <E> MutableIterable<E>.pollFirstWhere(test: (E) -> Boolean): E? {
     
     return null
 }
+
+inline fun <T> Iterable<T>.sumOf(transform: (T) -> Float): Float {
+    var sum = 0f
+    for (element in this) {
+        sum += transform(element)
+    }
+    
+    return sum
+}
