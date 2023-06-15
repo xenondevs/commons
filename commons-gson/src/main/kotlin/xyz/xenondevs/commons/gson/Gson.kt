@@ -29,6 +29,10 @@ inline fun <reified T> Gson.fromJson(reader: Reader): T? {
     return fromJson(reader, javaTypeOf<T>())
 }
 
+inline fun <reified T> Gson.toJsonTreeTyped(src: T): JsonElement {
+    return toJsonTree(src, javaTypeOf<T>())
+}
+
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonSerializer<T>): GsonBuilder {
     return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
