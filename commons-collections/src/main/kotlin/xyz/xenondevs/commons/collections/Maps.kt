@@ -37,6 +37,8 @@ inline fun Map<*, *>?.isNotNullOrEmpty(): Boolean {
     return this != null && isNotEmpty()
 }
 
+inline fun <K, V, M : Map<K, V>> M.takeUnlessEmpty(): M? = ifEmpty { null }
+
 inline fun <K, V> Map<K, V>.selectValues(keys: Iterable<K>): List<V> {
     return selectValuesTo(ArrayList(), keys)
 }
