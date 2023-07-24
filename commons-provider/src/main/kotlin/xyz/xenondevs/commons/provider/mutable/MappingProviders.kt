@@ -8,9 +8,12 @@ fun <T : Any, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) ->
     return MutableMapEverythingProvider(this, transform, untransform).also(::addChild)
 }
 
+@Deprecated("Use mapNonNull instead", ReplaceWith("mapNonNull(transform, untransform)"))
 @JvmName("map1")
-fun <T, R> MutableProvider<T?>.map(transform: (T & Any) -> R, untransform: (R & Any) -> T & Any): MutableProvider<R?> {
-    return MutableMapOrNullProvider(this, transform, untransform).also(::addChild)
+fun <T, R> MutableProvider<T?>.map(transform: (T & Any) -> R, untransform: (R & Any) -> T & Any): MutableProvider<R?> = mapNonNull(transform, untransform)
+
+fun <T, R> MutableProvider<T?>.mapNonNull(transform: (T & Any) -> R, untransform: (R & Any) -> T & Any): MutableProvider<R?> {
+    return MutableMapNonNullProvider(this, transform, untransform).also(::addChild)
 }
 
 fun <T, R : T & Any> MutableProvider<T?>.orElse(value: R): MutableProvider<R> {
@@ -38,7 +41,7 @@ private class MutableMapEverythingProvider<T, R>(
     
 }
 
-private class MutableMapOrNullProvider<T, R>(
+private class MutableMapNonNullProvider<T, R>(
     private val provider: MutableProvider<T>,
     private val transform: (T & Any) -> R,
     private val untransform: (R & Any) -> T & Any
