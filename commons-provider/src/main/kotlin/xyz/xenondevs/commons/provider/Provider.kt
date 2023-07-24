@@ -2,13 +2,15 @@
 
 package xyz.xenondevs.commons.provider
 
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.reflect.KProperty
 
 @Suppress("PropertyName")
 abstract class Provider<T> {
     
-    protected var children: ArrayList<Provider<*>>? = null
-    private var updateHandlers: ArrayList<(T) -> Unit>? = null
+    protected var children: MutableSet<Provider<*>>? = null
+    private var updateHandlers: MutableList<(T) -> Unit>? = null
     
     private var initialized = false
     protected var _value: T? = null
@@ -35,7 +37,7 @@ abstract class Provider<T> {
     
     fun addChild(provider: Provider<*>) {
         if (children == null)
-            children = ArrayList(1)
+            children = Collections.newSetFromMap(WeakHashMap())
         
         children!!.add(provider)
     }
