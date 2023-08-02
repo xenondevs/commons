@@ -125,5 +125,34 @@ object CollectionUtils {
                 """.trimIndent())
     }
     
+    fun <T> poolDependencies(collection: Collection<T>, dependenciesMapper: (T) -> Set<T>): Set<Set<T>> {
+        val dependencies: Map<T, Set<T>> = collection.associateWithTo(HashMap()) { dependenciesMapper(it).filterTo(HashSet(), collection::contains) }
+        val dependants: Map<T, Set<T>> = collection.associateWithTo(HashMap()) { collection.filterTo(HashSet()) { candidate -> it in dependencies[candidate]!! } }
+        
+        val pools = HashSet<HashSet<T>>()
+        val queue = LinkedList(collection)
+        
+        while (queue.isNotEmpty()) {
+            val pool = HashSet<T>()
+            
+            val unexplored = LinkedList<T>()
+            unexplored += queue.poll()
+            
+            while (unexplored.isNotEmpty()) {
+                val entry = unexplored.poll()
+                pool += entry
+                
+                fun explore(entries: Set<T>) =
+                    entries.forEach { if (it !in pool) unexplored += it }
+                
+                explore(dependencies[entry]!!)
+                explore(dependants[entry]!!)
+            }
+            
+            pools += pool
+        }
+        
+        return pools
+    }
     
 }
