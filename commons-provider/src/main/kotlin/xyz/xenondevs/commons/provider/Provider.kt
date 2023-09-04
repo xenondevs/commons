@@ -32,7 +32,10 @@ abstract class Provider<T> {
         val value = loadValue()
         _value = value
         updateHandlers?.forEach { it.invoke(value) }
-        children?.forEach(Provider<*>::update)
+        children?.forEach { child ->
+            if (child.initialized)
+                child.update()
+        }
     }
     
     fun addChild(provider: Provider<*>) {
