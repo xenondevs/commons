@@ -59,6 +59,14 @@ inline fun <reified R, K, V> Map<K, V>.filterIsInstanceValues(): Map<K, R> {
     return filter { it.value is R } as Map<K, R>
 }
 
+inline fun <K, V : Any> Map<K, V?>.filterValuesNotNull(): Map<K, V> {
+    return filterValuesNotNullTo(LinkedHashMap())
+}
+
+inline fun <K, V : Any, C : MutableMap<K, V>> Map<K, V?>.filterValuesNotNullTo(destination: C): C {
+    return filterTo(destination as MutableMap<K, V?>) { (_, value) -> value != null } as C
+}
+
 inline fun <K, V, R> Map<K, V>.mapKeysNotNull(keySelector: (Map.Entry<K, V>) -> R?): Map<R, V> {
     return mapKeysNotNullTo(LinkedHashMap(), keySelector)
 }
