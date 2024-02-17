@@ -2,8 +2,10 @@ package xyz.xenondevs.commons.gson
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.google.gson.TypeAdapter
 import java.io.Reader
@@ -31,6 +33,14 @@ inline fun <reified T> Gson.fromJson(reader: Reader): T? {
 
 inline fun <reified T> Gson.toJsonTreeTyped(src: T): JsonElement {
     return toJsonTree(src, javaTypeOf<T>())
+}
+
+inline fun <reified T> JsonSerializationContext.serializeTyped(src: T): JsonElement {
+    return serialize(src, javaTypeOf<T>())
+}
+
+inline fun <reified T> JsonDeserializationContext.deserializeTyped(json: JsonElement): T {
+    return deserialize(json, javaTypeOf<T>())
 }
 
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonSerializer<T>): GsonBuilder {
