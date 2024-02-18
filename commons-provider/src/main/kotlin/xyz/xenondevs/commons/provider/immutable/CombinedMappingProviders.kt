@@ -49,7 +49,7 @@ private class CombinedMappingProvider2<A, B, R>(
         b.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get())
     
 }
 
@@ -66,7 +66,7 @@ private class CombinedMappingProvider3<A, B, C, R>(
         c.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get())
     
 }
 
@@ -85,7 +85,7 @@ private class CombinedMappingProvider4<A, B, C, D, R>(
         d.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get())
     
 }
 
@@ -106,7 +106,7 @@ private class CombinedMappingProvider5<A, B, C, D, E, R>(
         e.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get())
     
 }
 
@@ -129,7 +129,7 @@ private class CombinedMappingProvider6<A, B, C, D, E, F, R>(
         f.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value, f.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get(), f.get())
     
 }
 
@@ -154,7 +154,7 @@ private class CombinedMappingProvider7<A, B, C, D, E, F, G, R>(
         g.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value, f.value, g.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get())
     
 }
 
@@ -181,7 +181,7 @@ private class CombinedMappingProvider8<A, B, C, D, E, F, G, H, R>(
         h.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get())
     
 }
 
@@ -210,7 +210,7 @@ private class CombinedMappingProvider9<A, B, C, D, E, F, G, H, I, R>(
         i.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value, i.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get())
     
 }
 
@@ -241,6 +241,6 @@ private class CombinedMappingProvider10<A, B, C, D, E, F, G, H, I, J, R>(
         j.addChild(this)
     }
     
-    override fun loadValue(): R = mapValue(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value, i.value, j.value)
+    override fun loadValue(): R = mapValue(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get(), j.get())
     
 }

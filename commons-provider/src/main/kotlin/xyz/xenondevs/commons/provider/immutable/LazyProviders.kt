@@ -22,6 +22,6 @@ private class LazyProvider<T>(private val initializer: () -> Provider<T>) : Prov
             return _provider!!
         }
     
-    override fun loadValue(): T = provider.value
+    override fun loadValue(): T = provider.get()
     
 }

@@ -77,7 +77,7 @@ internal class CombinedProvider<T>(
     }
     
     override fun loadValue(): List<T> {
-        return providers.map { it.value }
+        return providers.map { it.get() }
     }
     
 }
@@ -92,7 +92,7 @@ class CombinedProvider2<A, B> internal constructor(
         b.addChild(this)
     }
     
-    override fun loadValue() = Tuple2(a.value, b.value)
+    override fun loadValue() = Tuple2(a.get(), b.get())
     
 }
 
@@ -108,7 +108,7 @@ class CombinedProvider3<A, B, C> internal constructor(
         c.addChild(this)
     }
     
-    override fun loadValue() = Tuple3(a.value, b.value, c.value)
+    override fun loadValue() = Tuple3(a.get(), b.get(), c.get())
     
 }
 
@@ -126,7 +126,7 @@ class CombinedProvider4<A, B, C, D> internal constructor(
         d.addChild(this)
     }
     
-    override fun loadValue() = Tuple4(a.value, b.value, c.value, d.value)
+    override fun loadValue() = Tuple4(a.get(), b.get(), c.get(), d.get())
     
 }
 
@@ -146,7 +146,7 @@ class CombinedProvider5<A, B, C, D, E> internal constructor(
         e.addChild(this)
     }
     
-    override fun loadValue() = Tuple5(a.value, b.value, c.value, d.value, e.value)
+    override fun loadValue() = Tuple5(a.get(), b.get(), c.get(), d.get(), e.get())
     
 }
 
@@ -168,7 +168,7 @@ class CombinedProvider6<A, B, C, D, E, F> internal constructor(
         f.addChild(this)
     }
     
-    override fun loadValue() = Tuple6(a.value, b.value, c.value, d.value, e.value, f.value)
+    override fun loadValue() = Tuple6(a.get(), b.get(), c.get(), d.get(), e.get(), f.get())
     
 }
 
@@ -192,7 +192,7 @@ class CombinedProvider7<A, B, C, D, E, F, G> internal constructor(
         g.addChild(this)
     }
     
-    override fun loadValue() = Tuple7(a.value, b.value, c.value, d.value, e.value, f.value, g.value)
+    override fun loadValue() = Tuple7(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get())
     
 }
 
@@ -218,7 +218,7 @@ class CombinedProvider8<A, B, C, D, E, F, G, H> internal constructor(
         h.addChild(this)
     }
     
-    override fun loadValue() = Tuple8(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value)
+    override fun loadValue() = Tuple8(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get())
     
 }
 
@@ -246,7 +246,7 @@ class CombinedProvider9<A, B, C, D, E, F, G, H, I> internal constructor(
         i.addChild(this)
     }
     
-    override fun loadValue() = Tuple9(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value, i.value)
+    override fun loadValue() = Tuple9(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get())
     
 }
 
@@ -276,6 +276,6 @@ class CombinedProvider10<A, B, C, D, E, F, G, H, I, J> internal constructor(
         j.addChild(this)
     }
     
-    override fun loadValue() = Tuple10(a.value, b.value, c.value, d.value, e.value, f.value, g.value, h.value, i.value, j.value)
+    override fun loadValue() = Tuple10(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get(), j.get())
     
 }

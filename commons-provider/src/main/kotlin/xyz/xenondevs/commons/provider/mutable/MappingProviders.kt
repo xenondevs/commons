@@ -5,38 +5,50 @@ package xyz.xenondevs.commons.provider.mutable
 import xyz.xenondevs.commons.provider.Provider
 
 fun <T : Any, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> {
-    return MutableMapEverythingProvider(this, transform, untransform).also(::addChild)
+    val provider = MutableMapEverythingProvider(this, transform, untransform)
+    addChild(provider)
+    return provider
 }
-
-@Deprecated("Use mapNonNull instead", ReplaceWith("mapNonNull(transform, untransform)"))
-@JvmName("map1")
-fun <T, R> MutableProvider<T?>.map(transform: (T & Any) -> R, untransform: (R & Any) -> T & Any): MutableProvider<R?> = mapNonNull(transform, untransform)
 
 fun <T, R> MutableProvider<T?>.mapNonNull(transform: (T & Any) -> R, untransform: (R & Any) -> T & Any): MutableProvider<R?> {
-    return MutableMapNonNullProvider(this, transform, untransform).also(::addChild)
+    val provider = MutableMapNonNullProvider(this, transform, untransform)
+    addChild(provider)
+    return provider
 }
 
-fun <T, R : T & Any> MutableProvider<T?>.orElse(value: R): MutableProvider<R> {
-    return MutableFallbackValueProvider(this, value).also(::addChild)
+fun <T> MutableProvider<T?>.orElse(value: T): MutableProvider<T> {
+    val provider = MutableFallbackValueProvider(this, value)
+    addChild(provider)
+    return provider
 }
 
-fun <T, R : T & Any> MutableProvider<T?>.orElse(provider: Provider<R>): MutableProvider<R> {
-    return MutableFallbackProviderProvider(this, provider)
+fun <T> MutableProvider<T?>.orElse(provider: Provider<T & Any>): MutableProvider<T & Any> {
+    val result = MutableFallbackProviderProvider(this, provider)
+    provider.addChild(result)
+    addChild(result)
+    return result
+}
+
+fun <T> MutableProvider<T?>.orElse(provider: MutableProvider<T?>): MutableProvider<T?> {
+    val result = MutableNullableFallbackProviderProvider(this, provider)
+    provider.addChild(result)
+    addChild(result)
+    return result
 }
 
 private class MutableMapEverythingProvider<T, R>(
-    private val provider: MutableProvider<T>,
+    private val parent: MutableProvider<T>,
     private val transform: (T) -> R,
     private val untransform: (R) -> T
 ) : MutableProvider<R>() {
     
     override fun loadValue(): R {
-        return transform(provider.value)
+        return transform(parent.get())
     }
     
-    override fun setValue(value: R) {
-        this._value = value
-        provider.setValue(untransform(value))
+    override fun set(value: R, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+        parent.set(untransform(value), setOf(this))
     }
     
 }
@@ -48,44 +60,69 @@ private class MutableMapNonNullProvider<T, R>(
 ) : MutableProvider<R?>() {
     
     override fun loadValue(): R? {
-        return provider.value?.let(transform)
+        return provider.get()?.let(transform)
     }
     
-    override fun setValue(value: R?) {
-        this._value = value
-        provider.setValue(value?.let(untransform) as T)
-    }
-    
-}
-
-private class MutableFallbackValueProvider<T, R : T & Any>(
-    private val provider: MutableProvider<T?>,
-    private val fallback: R
-) : MutableProvider<R>() {
-    
-    override fun loadValue(): R {
-        return (provider.value ?: fallback) as R
-    }
-    
-    override fun setValue(value: R) {
-        this._value = value
-        provider.setValue((if (value == fallback) null else value) as T)
+    override fun set(value: R?, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+        provider.set(value?.let(untransform) as T, setOf(this))
     }
     
 }
 
-private class MutableFallbackProviderProvider<T, R : T & Any>(
+private class MutableFallbackValueProvider<T>(
     private val provider: MutableProvider<T?>,
-    private val fallback: Provider<R>
-) : MutableProvider<R>() {
+    private val fallback: T
+) : MutableProvider<T>() {
     
-    override fun loadValue(): R {
-        return (provider.value ?: fallback.value) as R
+    override fun loadValue(): T {
+        return provider.get() ?: fallback
     }
     
-    override fun setValue(value: R) {
-        this._value = value
-        provider.setValue((if (value == fallback.value) null else value) as T)
+    override fun set(value: T, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+        provider.set((if (value == fallback) null else value) as T, setOf(this))
+    }
+    
+}
+
+private class MutableFallbackProviderProvider<T>(
+    private val provider: MutableProvider<T?>,
+    private val fallback: Provider<T & Any>
+) : MutableProvider<T & Any>() {
+    
+    override fun loadValue(): T & Any {
+        return provider.get() ?: fallback.get()
+    }
+    
+    override fun set(value: T & Any, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+        provider.set((if (value == fallback.get()) null else value) as T, setOf(this))
+    }
+    
+}
+
+private class MutableNullableFallbackProviderProvider<T>(
+    private val provider: MutableProvider<T?>,
+    private val fallback: MutableProvider<T?>
+) : MutableProvider<T?>() {
+    
+    override fun loadValue(): T? {
+        return provider.get() ?: fallback.get()
+    }
+    
+    override fun set(value: T?, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+        
+        val fallbackValue = fallback.get()
+        when (value) {
+            fallbackValue -> provider.set(null, setOf(this))
+            null -> {
+                provider.set(null, setOf(this))
+                fallback.set(null, setOf(this))
+            }
+            else -> provider.set(value, setOf(this))
+        }
     }
     
 }
