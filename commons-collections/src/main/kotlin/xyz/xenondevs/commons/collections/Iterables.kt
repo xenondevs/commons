@@ -1,5 +1,3 @@
-@file:Suppress("NOTHING_TO_INLINE")
-
 package xyz.xenondevs.commons.collections
 
 import java.util.ArrayList
@@ -105,7 +103,7 @@ inline fun <T, R, C : MutableCollection<in R>> Iterable<T>.flatMapTo(destination
     return destination
 }
 
-inline fun <E> MutableIterable<E>.poll(): E? {
+fun <E> MutableIterable<E>.poll(): E? {
     val iterator = iterator()
     return if (iterator.hasNext()) {
         val element = iterator.next()

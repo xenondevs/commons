@@ -1,12 +1,12 @@
-@file:Suppress("UNCHECKED_CAST", "NOTHING_TO_INLINE")
+@file:Suppress("UNCHECKED_CAST")
 
 package xyz.xenondevs.commons.collections
 
 import kotlin.contracts.contract
 
-inline fun <E, C : Collection<E>> C.takeUnlessEmpty(): C? = ifEmpty { null }
+fun <E, C : Collection<E>> C.takeUnlessEmpty(): C? = ifEmpty { null }
 
-inline fun Collection<*>?.isNullOrEmpty(): Boolean {
+fun Collection<*>?.isNullOrEmpty(): Boolean {
     contract {
         returns(false) implies (this@isNullOrEmpty != null)
     }
@@ -14,7 +14,7 @@ inline fun Collection<*>?.isNullOrEmpty(): Boolean {
     return this == null || isEmpty()
 }
 
-inline fun Collection<*>?.isNotNullOrEmpty(): Boolean {
+fun Collection<*>?.isNotNullOrEmpty(): Boolean {
     contract {
         returns(true) implies (this@isNotNullOrEmpty != null)
     }

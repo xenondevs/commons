@@ -1,5 +1,3 @@
-@file:Suppress("NOTHING_TO_INLINE")
-
 package xyz.xenondevs.commons.gson
 
 import com.google.gson.JsonElement
@@ -12,7 +10,7 @@ import java.nio.file.Path
 import kotlin.io.path.reader
 import kotlin.io.path.writeText
 
-inline fun File.parseJson(): JsonElement {
+fun File.parseJson(): JsonElement {
     try {
         return reader().use(JsonParser::parseReader)
     } catch (t: Throwable) {
@@ -20,7 +18,7 @@ inline fun File.parseJson(): JsonElement {
     }
 }
 
-inline fun Path.parseJson(): JsonElement {
+fun Path.parseJson(): JsonElement {
     try {
         return reader().use(JsonParser::parseReader)
     } catch (t: Throwable) {
@@ -28,11 +26,11 @@ inline fun Path.parseJson(): JsonElement {
     }
 }
 
-inline fun InputStream.parseJson(): JsonElement = use { JsonParser.parseReader(it.reader()) }
+fun InputStream.parseJson(): JsonElement = use { JsonParser.parseReader(it.reader()) }
 
-inline fun JsonElement.writeToFile(file: File) = file.writeText(toString())
-inline fun JsonElement.writeToFile(path: Path) = path.writeText(toString())
+fun JsonElement.writeToFile(file: File) = file.writeText(toString())
+fun JsonElement.writeToFile(path: Path) = path.writeText(toString())
 
-inline fun JsonElement.isString(): Boolean = this is JsonPrimitive && isString
-inline fun JsonElement.isBoolean(): Boolean = this is JsonPrimitive && isBoolean
-inline fun JsonElement.isNumber(): Boolean = this is JsonPrimitive && isNumber
+fun JsonElement.isString(): Boolean = this is JsonPrimitive && isString
+fun JsonElement.isBoolean(): Boolean = this is JsonPrimitive && isBoolean
+fun JsonElement.isNumber(): Boolean = this is JsonPrimitive && isNumber

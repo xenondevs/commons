@@ -1,4 +1,4 @@
-@file:Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
+@file:Suppress("UNCHECKED_CAST")
 
 package xyz.xenondevs.commons.collections
 
