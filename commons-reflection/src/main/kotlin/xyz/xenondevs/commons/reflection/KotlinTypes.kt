@@ -12,6 +12,9 @@ import kotlin.reflect.typeOf
 val KType.classifierClass: KClass<*>?
     get() = classifier as? KClass<*>
 
+val KType.nonNullTypeArguments: List<KType>
+    get() = arguments.map { it.type ?: throw TypeInformationException.starProjection(this) }
+
 inline val <reified K> Map<K, *>.keyType: KType
     get() = typeOf<K>()
 
@@ -62,3 +65,21 @@ fun createType(
     classifier: KClassifier,
     vararg arguments: KType?
 ) = classifier.createType(*arguments)
+
+private class TypeInformationException(message: String?) : Exception(message) {
+    
+    companion object {
+        
+        fun starProjection(type: KType): TypeInformationException {
+            val nullArguments = type.arguments.asSequence()
+                .withIndex()
+                .filter { it.value.type == null }
+                .map { it.index }
+                .joinToString()
+            
+            return TypeInformationException("Type $type has a star projection as type argument at: ${nullArguments}.")
+        }
+        
+    }
+    
+}
