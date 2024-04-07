@@ -52,11 +52,27 @@ inline fun <K, V, C : MutableCollection<in V>> Map<K, V>.selectValuesTo(destinat
 }
 
 inline fun <reified R, K, V> Map<K, V>.filterIsInstanceKeys(): Map<R, V> {
-    return filter { it.key is R } as Map<R, V>
+    return filterIsInstanceKeysTo(LinkedHashMap())
+}
+
+inline fun <reified R, K, V, C : MutableMap<R, V>> Map<K, V>.filterIsInstanceKeysTo(destination: C): C {
+    for ((key, value) in this) {
+        if (key is R) destination[key] = value
+    }
+    
+    return destination
 }
 
 inline fun <reified R, K, V> Map<K, V>.filterIsInstanceValues(): Map<K, R> {
-    return filter { it.value is R } as Map<K, R>
+    return filterIsInstanceValuesTo(LinkedHashMap())
+}
+
+inline fun <reified R, K, V, C : MutableMap<K, R>> Map<K, V>.filterIsInstanceValuesTo(destination: C): C {
+    for ((key, value) in this) {
+        if (value is R) destination[key] = value
+    }
+    
+    return destination
 }
 
 inline fun <K, V : Any> Map<K, V?>.filterValuesNotNull(): Map<K, V> {
@@ -88,6 +104,19 @@ inline fun <K, V, R, M : MutableMap<K, R>> Map<K, V>.mapValuesNotNullTo(destinat
     for (entry in this.entries) {
         val value = valueSelector(entry)
         if (value != null) destination[entry.key] = value
+    }
+    
+    return destination
+}
+
+inline fun <K, V, R> Map<K, V>.flatMap(transform: (Map.Entry<K, V>) -> Array<R>): List<R> {
+    return flatMapTo(ArrayList<R>(), transform)
+}
+
+inline fun <K, V, R, C : MutableCollection<in R>> Map<K, V>.flatMapTo(destination: C, transform: (Map.Entry<K, V>) -> Array<R>): C {
+    for (element in this) {
+        val list = transform(element)
+        destination.addAll(list)
     }
     
     return destination

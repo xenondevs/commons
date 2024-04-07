@@ -8,4 +8,8 @@ inline fun <K> weakHashSet(): MutableSet<K> = Collections.newSetFromMap(WeakHash
 
 inline fun <K> weakHashSetOf(vararg elements: K): MutableSet<K> = weakHashSet<K>().apply { addAll(elements) }
 
+fun <K> identityHashSet(): MutableSet<K> = Collections.newSetFromMap(IdentityHashMap())
+
+fun <K> identityHashSetOf(vararg elements: K): MutableSet<K> = identityHashSet<K>().apply { addAll(elements) }
+
 inline fun <E> Set<E>.contentEquals(other: Set<E>) = size == other.size && containsAll(other)
