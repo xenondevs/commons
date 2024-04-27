@@ -5,7 +5,7 @@ package xyz.xenondevs.commons.collections
 import java.util.*
 import kotlin.contracts.contract
 
-inline fun <K, V> treeMapOf(vararg pairs: Pair<K, V>): TreeMap<K, V> {
+fun <K, V> treeMapOf(vararg pairs: Pair<K, V>): TreeMap<K, V> {
     return TreeMap<K, V>().apply { putAll(pairs) }
 }
 
@@ -21,7 +21,7 @@ inline fun <reified K : Enum<K>, V> Map<K, V>.toEnumMap(): EnumMap<K, V> {
     return toMap(EnumMap(K::class.java))
 }
 
-inline fun Map<*, *>?.isNullOrEmpty(): Boolean {
+fun Map<*, *>?.isNullOrEmpty(): Boolean {
     contract {
         returns(false) implies (this@isNullOrEmpty != null)
     }
@@ -29,7 +29,7 @@ inline fun Map<*, *>?.isNullOrEmpty(): Boolean {
     return this == null || isEmpty()
 }
 
-inline fun Map<*, *>?.isNotNullOrEmpty(): Boolean {
+fun Map<*, *>?.isNotNullOrEmpty(): Boolean {
     contract {
         returns(true) implies (this@isNotNullOrEmpty != null)
     }
@@ -37,13 +37,13 @@ inline fun Map<*, *>?.isNotNullOrEmpty(): Boolean {
     return this != null && isNotEmpty()
 }
 
-inline fun <K, V, M : Map<K, V>> M.takeUnlessEmpty(): M? = ifEmpty { null }
+fun <K, V, M : Map<K, V>> M.takeUnlessEmpty(): M? = ifEmpty { null }
 
-inline fun <K, V> Map<K, V>.selectValues(keys: Iterable<K>): List<V> {
+fun <K, V> Map<K, V>.selectValues(keys: Iterable<K>): List<V> {
     return selectValuesTo(ArrayList(), keys)
 }
 
-inline fun <K, V, C : MutableCollection<in V>> Map<K, V>.selectValuesTo(destination: C, keys: Iterable<K>): C {
+fun <K, V, C : MutableCollection<in V>> Map<K, V>.selectValuesTo(destination: C, keys: Iterable<K>): C {
     for (key in keys) {
         destination += get(key)!!
     }
@@ -75,11 +75,11 @@ inline fun <reified R, K, V, C : MutableMap<K, R>> Map<K, V>.filterIsInstanceVal
     return destination
 }
 
-inline fun <K, V : Any> Map<K, V?>.filterValuesNotNull(): Map<K, V> {
+fun <K, V : Any> Map<K, V?>.filterValuesNotNull(): Map<K, V> {
     return filterValuesNotNullTo(LinkedHashMap())
 }
 
-inline fun <K, V : Any, C : MutableMap<K, V>> Map<K, V?>.filterValuesNotNullTo(destination: C): C {
+fun <K, V : Any, C : MutableMap<K, V>> Map<K, V?>.filterValuesNotNullTo(destination: C): C {
     return filterTo(destination as MutableMap<K, V?>) { (_, value) -> value != null } as C
 }
 
@@ -122,7 +122,7 @@ inline fun <K, V, R, C : MutableCollection<in R>> Map<K, V>.flatMapTo(destinatio
     return destination
 }
 
-inline fun <K, V> MutableMap<K, V>.poll(): Map.Entry<K, V>? {
+fun <K, V> MutableMap<K, V>.poll(): Map.Entry<K, V>? {
     return entries.poll()
 }
 
