@@ -11,6 +11,7 @@
     <modules>
         <module>commons-collections</module>
         <module>commons-gson</module>
+        <module>commons-guava</module>
         <module>commons-provider</module>
         <module>commons-reflection</module>
         <module>commons-tuple</module>
