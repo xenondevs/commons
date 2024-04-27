@@ -126,9 +126,8 @@ fun <K, V> MutableMap<K, V>.poll(): Map.Entry<K, V>? {
     return entries.poll()
 }
 
-inline fun <K, V> MutableMap<K, V>.putOrRemove(key: K, value: V?) {
+fun <K, V> MutableMap<K, V>.putOrRemove(key: K, value: V?): V? =
     if (value == null) remove(key) else put(key, value)
-}
 
 inline fun <K, V> MutableMap<K, V>.removeIf(predicate: (Map.Entry<K, V>) -> Boolean): MutableMap<K, V> {
     val iterator = iterator()
