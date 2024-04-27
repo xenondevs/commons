@@ -10,4 +10,8 @@ fun <K> identityHashSet(): MutableSet<K> = Collections.newSetFromMap(IdentityHas
 
 fun <K> identityHashSetOf(vararg elements: K): MutableSet<K> = identityHashSet<K>().apply { addAll(elements) }
 
+inline fun <reified E : Enum<E>> enumSet(): EnumSet<E> = EnumSet.noneOf(E::class.java)
+
+inline fun <reified E : Enum<E>> enumSetOf(vararg elements: E): EnumSet<E> = enumSet<E>().apply { addAll(elements) }
+
 fun <E> Set<E>.contentEquals(other: Set<E>) = size == other.size && containsAll(other)

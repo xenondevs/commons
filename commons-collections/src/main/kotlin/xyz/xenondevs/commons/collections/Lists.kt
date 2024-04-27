@@ -11,3 +11,9 @@ fun <T> MutableList<T>.rotateLeft() {
     val first = removeAt(0)
     add(first)
 }
+
+fun <T> List<T>.after(element: T, step: Int = 1): T =
+    get((indexOf(element) + step).mod(size))
+
+fun <T> List<T>.before(element: T, step: Int = 1): T =
+    get((indexOf(element) - step).mod(size))

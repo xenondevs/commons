@@ -1,7 +1,7 @@
 package xyz.xenondevs.commons.collections
 
-import java.util.ArrayList
-import java.util.NoSuchElementException
+import java.util.*
+import kotlin.collections.LinkedHashMap
 
 inline fun <T> Iterable<T>.findNthOrNull(n: Int, predicate: (T) -> Boolean): T? {
     var count = 0
@@ -90,6 +90,11 @@ inline fun <reified R> Iterable<*>.firstInstanceOfOrNull(): R? {
     return null
 }
 
+inline fun <reified R> Iterable<*>.firstInstanceOf(): R {
+    return firstInstanceOfOrNull() 
+        ?: throw NoSuchElementException("No element of type ${R::class.java} found")
+}
+
 inline fun <T, R> Iterable<T>.flatMap(transform: (T) -> Array<R>): List<R> {
     return flatMapTo(ArrayList<R>(), transform)
 }
@@ -144,4 +149,12 @@ inline fun <T> Iterable<T>.sumOf(transform: (T) -> Float): Float {
     }
     
     return sum
+}
+
+inline fun <reified E : Enum<E>> Iterable<E>.toEnumSet(): EnumSet<E> {
+    val set = enumSet<E>()
+    for (element in this) {
+        set.add(element)
+    }
+    return set
 }

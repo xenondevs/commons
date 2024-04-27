@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.collections
 
+import java.util.*
 import kotlin.sequences.flatMap
 
 fun <T> Sequence<T>.sumOf(selector: (T) -> Float): Float {
@@ -12,3 +13,6 @@ fun <T> Sequence<T>.sumOf(selector: (T) -> Float): Float {
 
 fun <T, R> Sequence<T>.flatMap(transform: (T) -> Array<R>): Sequence<R> =
     flatMap { transform(it).asSequence() }
+
+inline fun <reified E : Enum<E>> Sequence<E>.toEnumSet(): EnumSet<E> =
+    toCollection(enumSet())

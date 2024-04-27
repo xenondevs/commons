@@ -17,6 +17,13 @@ inline fun <reified K : Enum<K>, V> enumMap(): EnumMap<K, V>  {
     return EnumMap<K, V>(K::class.java)
 }
 
+inline fun <reified K : Enum<K>, V> enumMap(map: Map<K, V>): EnumMap<K, V> {
+    if (map.isEmpty())
+        return enumMap()
+    
+    return EnumMap(map)
+}
+
 inline fun <reified K : Enum<K>, V> Map<K, V>.toEnumMap(): EnumMap<K, V> {
     return toMap(EnumMap(K::class.java))
 }

@@ -1,5 +1,7 @@
 package xyz.xenondevs.commons.collections
 
+import java.util.*
+
 inline fun <T> Array<T?>.getOrSet(index: Int, lazyValue: () -> T): T {
     var value = get(index)
     if (value == null) {
@@ -12,6 +14,13 @@ inline fun <T> Array<T?>.getOrSet(index: Int, lazyValue: () -> T): T {
     return value
 }
 
+inline fun <reified E : Enum<E>> Array<E>.toEnumSet(): EnumSet<E> {
+    val set = enumSet<E>()
+    for (element in this) {
+        set.add(element)
+    }
+    return set
+}
 
 //<editor-fold desc="ObjectArray mapToArray">
 inline fun <T, reified R> Array<T>.mapToArray(transform: (T) -> R): Array<R> {

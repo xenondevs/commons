@@ -2,6 +2,7 @@
 
 package xyz.xenondevs.commons.collections
 
+import java.util.*
 import kotlin.contracts.contract
 
 fun <E, C : Collection<E>> C.takeUnlessEmpty(): C? = ifEmpty { null }
@@ -119,4 +120,50 @@ inline fun <T> Collection<T>.mapToDoubleArray(transform: (T) -> Double): DoubleA
     }
     
     return array
+}
+
+inline fun <T> Collection<T>.mapToBitSet(transform: (T) -> Boolean): BitSet {
+    val bitSet = BitSet(size)
+    
+    for ((i, element) in this.withIndex()) {
+        if (transform(element))
+            bitSet.set(i)
+    }
+    
+    return bitSet
+}
+
+inline fun <T> Collection<T>.mapToBits(transform: (T) -> Boolean): ByteArray {
+    val array = ByteArray((size + 7) / 8)
+    
+    for ((i, element) in withIndex()) {
+        if (transform(element)) {
+            array[i / 8] = (array[i / 8].toInt() or (1 shl (i % 8))).toByte()
+        }
+    }
+    
+    return array
+}
+
+fun <E> Collection<E>.intersects(other: Collection<E>): Boolean {
+    if (size > other.size) {
+        for (element in other) {
+            if (contains(element))
+                return true
+        }
+    } else {
+        for (element in this) {
+            if (other.contains(element))
+                return true
+        }
+    }
+    
+    return false
+}
+
+inline fun <reified E : Enum<E>> Collection<E>.toEnumSet(): EnumSet<E> {
+    if (isEmpty())
+        return enumSet()
+    
+    return EnumSet.copyOf(this)
 }
