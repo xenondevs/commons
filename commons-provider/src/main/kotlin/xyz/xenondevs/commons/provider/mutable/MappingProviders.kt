@@ -3,6 +3,7 @@
 package xyz.xenondevs.commons.provider.mutable
 
 import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.immutable.provider
 
 fun <T : Any, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> {
     val provider = MutableMapEverythingProvider(this, transform, untransform)
@@ -22,7 +23,12 @@ fun <T> MutableProvider<T?>.orElse(value: T): MutableProvider<T> {
     return provider
 }
 
-fun <T> MutableProvider<T?>.orElse(provider: Provider<T & Any>): MutableProvider<T & Any> {
+// naming this function orElse would lead to a resolution ambiguity with orElse(value: T)
+fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvider<T> {
+    return orElse(provider(lazyValue))
+}
+
+fun <T : Any> MutableProvider<T?>.orElse(provider: Provider<T>): MutableProvider<T> {
     val result = MutableFallbackProviderProvider(this, provider)
     provider.addChild(result)
     addChild(result)

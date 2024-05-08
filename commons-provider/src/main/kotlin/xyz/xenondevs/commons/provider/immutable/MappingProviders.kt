@@ -46,6 +46,11 @@ fun <T> Provider<T?>.orElse(value: T): Provider<T> {
     return provider
 }
 
+// naming this function orElse would lead to a resolution ambiguity with orElse(value: T)
+fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> {
+    return orElse(provider(lazyValue))
+}
+
 fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> {
     val result = FallbackProviderProvider(this, provider)
     provider.addChild(result)
