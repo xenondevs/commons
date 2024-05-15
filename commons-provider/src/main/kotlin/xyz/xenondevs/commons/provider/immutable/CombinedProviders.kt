@@ -11,64 +11,121 @@ import xyz.xenondevs.commons.tuple.Tuple7
 import xyz.xenondevs.commons.tuple.Tuple8
 import xyz.xenondevs.commons.tuple.Tuple9
 
+/**
+ * Creates and returns a new [Provider] that combines all values of [providers].
+ */
 fun <T> combinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
     CombinedProvider(providers)
 
-operator fun <A, B> Provider<A>.plus(b: Provider<B>): CombinedProvider2<A, B> =
-    CombinedProvider2(this, b)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a] and [b].
+ */
+fun <A, B> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>
+): Provider<Tuple2<A, B>> = CombinedProvider2(a, b)
 
-operator fun <A, B, C> CombinedProvider2<A, B>.plus(c: Provider<C>): CombinedProvider3<A, B, C> =
-    CombinedProvider3(a, b, c)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b] and [c].
+ */
+fun <A, B, C> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>
+): Provider<Tuple3<A, B, C>> = CombinedProvider3(a, b, c)
 
-operator fun <A, B, C, D> CombinedProvider3<A, B, C>.plus(d: Provider<D>): CombinedProvider4<A, B, C, D> =
-    CombinedProvider4(a, b, c, d)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c] and [d].
+ */
+fun <A, B, C, D> combinedProvider(
+    a: Provider<A>, 
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>
+): Provider<Tuple4<A, B, C, D>> = CombinedProvider4(a, b, c, d)
 
-operator fun <A, B, C, D, E> CombinedProvider4<A, B, C, D>.plus(e: Provider<E>): CombinedProvider5<A, B, C, D, E> =
-    CombinedProvider5(a, b, c, d, e)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d] and [e].
+ */
+fun <A, B, C, D, E> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>, 
+    d: Provider<D>,
+    e: Provider<E>
+): Provider<Tuple5<A, B, C, D, E>> = CombinedProvider5(a, b, c, d, e)
 
-operator fun <A, B, C, D, E, F> CombinedProvider5<A, B, C, D, E>.plus(f: Provider<F>): CombinedProvider6<A, B, C, D, E, F> =
-    CombinedProvider6(a, b, c, d, e, f)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e] and [f].
+ */
+fun <A, B, C, D, E, F> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>,
+    e: Provider<E>, 
+    f: Provider<F>
+): Provider<Tuple6<A, B, C, D, E, F>> = CombinedProvider6(a, b, c, d, e, f)
 
-operator fun <A, B, C, D, E, F, G> CombinedProvider6<A, B, C, D, E, F>.plus(g: Provider<G>): CombinedProvider7<A, B, C, D, E, F, G> =
-    CombinedProvider7(a, b, c, d, e, f, g)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f] and [g].
+ */
+fun <A, B, C, D, E, F, G> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>,
+    e: Provider<E>,
+    f: Provider<F>,
+    g: Provider<G>
+): Provider<Tuple7<A, B, C, D, E, F, G>> = CombinedProvider7(a, b, c, d, e, f, g)
 
-operator fun <A, B, C, D, E, F, G, H> CombinedProvider7<A, B, C, D, E, F, G>.plus(h: Provider<H>): CombinedProvider8<A, B, C, D, E, F, G, H> =
-    CombinedProvider8(a, b, c, d, e, f, g, h)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g] and [h].
+ */
+fun <A, B, C, D, E, F, G, H> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>,
+    d: Provider<D>, 
+    e: Provider<E>, 
+    f: Provider<F>,
+    g: Provider<G>,
+    h: Provider<H>
+): Provider<Tuple8<A, B, C, D, E, F, G, H>> = CombinedProvider8(a, b, c, d, e, f, g, h)
 
-operator fun <A, B, C, D, E, F, G, H, I> CombinedProvider8<A, B, C, D, E, F, G, H>.plus(i: Provider<I>): CombinedProvider9<A, B, C, D, E, F, G, H, I> =
-    CombinedProvider9(a, b, c, d, e, f, g, h, i)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h] and [i].
+ */
+fun <A, B, C, D, E, F, G, H, I> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>, 
+    e: Provider<E>, 
+    f: Provider<F>,
+    g: Provider<G>, 
+    h: Provider<H>, 
+    i: Provider<I>
+): Provider<Tuple9<A, B, C, D, E, F, G, H, I>> = CombinedProvider9(a, b, c, d, e, f, g, h, i)
 
-operator fun <A, B, C, D, E, F, G, H, I, J> CombinedProvider9<A, B, C, D, E, F, G, H, I>.plus(j: Provider<J>): CombinedProvider10<A, B, C, D, E, F, G, H, I, J> =
-    CombinedProvider10(a, b, c, d, e, f, g, h, i, j)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h], [i] and [j].
+ */
+fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>,
+    d: Provider<D>,
+    e: Provider<E>,
+    f: Provider<F>, 
+    g: Provider<G>, 
+    h: Provider<H>, 
+    i: Provider<I>, 
+    j: Provider<J>
+): Provider<Tuple10<A, B, C, D, E, F, G, H, I, J>> = CombinedProvider10(a, b, c, d, e, f, g, h, i, j)
 
-fun <A, B> combinedProvider(a: Provider<A>, b: Provider<B>): CombinedProvider2<A, B> =
-    CombinedProvider2(a, b)
-
-fun <A, B, C> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>): CombinedProvider3<A, B, C> =
-    CombinedProvider3(a, b, c)
-
-fun <A, B, C, D> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>): CombinedProvider4<A, B, C, D> =
-    CombinedProvider4(a, b, c, d)
-
-fun <A, B, C, D, E> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>): CombinedProvider5<A, B, C, D, E> =
-    CombinedProvider5(a, b, c, d, e)
-
-fun <A, B, C, D, E, F> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>): CombinedProvider6<A, B, C, D, E, F> =
-    CombinedProvider6(a, b, c, d, e, f)
-
-fun <A, B, C, D, E, F, G> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>): CombinedProvider7<A, B, C, D, E, F, G> =
-    CombinedProvider7(a, b, c, d, e, f, g)
-
-fun <A, B, C, D, E, F, G, H> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>): CombinedProvider8<A, B, C, D, E, F, G, H> =
-    CombinedProvider8(a, b, c, d, e, f, g, h)
-
-fun <A, B, C, D, E, F, G, H, I> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>, i: Provider<I>): CombinedProvider9<A, B, C, D, E, F, G, H, I> =
-    CombinedProvider9(a, b, c, d, e, f, g, h, i)
-
-fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>, i: Provider<I>, j: Provider<J>): CombinedProvider10<A, B, C, D, E, F, G, H, I, J> =
-    CombinedProvider10(a, b, c, d, e, f, g, h, i, j)
-
-internal class CombinedProvider<T>(
+private class CombinedProvider<T>(
     private val providers: List<Provider<out T>>
 ) : Provider<List<T>>() {
     
@@ -82,7 +139,7 @@ internal class CombinedProvider<T>(
     
 }
 
-class CombinedProvider2<A, B> internal constructor(
+private class CombinedProvider2<A, B>(
     val a: Provider<A>,
     val b: Provider<B>
 ) : Provider<Tuple2<A, B>>() {
@@ -96,7 +153,7 @@ class CombinedProvider2<A, B> internal constructor(
     
 }
 
-class CombinedProvider3<A, B, C> internal constructor(
+private class CombinedProvider3<A, B, C>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>
@@ -112,7 +169,7 @@ class CombinedProvider3<A, B, C> internal constructor(
     
 }
 
-class CombinedProvider4<A, B, C, D> internal constructor(
+private class CombinedProvider4<A, B, C, D>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -130,7 +187,7 @@ class CombinedProvider4<A, B, C, D> internal constructor(
     
 }
 
-class CombinedProvider5<A, B, C, D, E> internal constructor(
+private class CombinedProvider5<A, B, C, D, E>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -150,7 +207,7 @@ class CombinedProvider5<A, B, C, D, E> internal constructor(
     
 }
 
-class CombinedProvider6<A, B, C, D, E, F> internal constructor(
+private class CombinedProvider6<A, B, C, D, E, F>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -172,7 +229,7 @@ class CombinedProvider6<A, B, C, D, E, F> internal constructor(
     
 }
 
-class CombinedProvider7<A, B, C, D, E, F, G> internal constructor(
+private class CombinedProvider7<A, B, C, D, E, F, G>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -196,7 +253,7 @@ class CombinedProvider7<A, B, C, D, E, F, G> internal constructor(
     
 }
 
-class CombinedProvider8<A, B, C, D, E, F, G, H> internal constructor(
+private class CombinedProvider8<A, B, C, D, E, F, G, H>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -222,7 +279,7 @@ class CombinedProvider8<A, B, C, D, E, F, G, H> internal constructor(
     
 }
 
-class CombinedProvider9<A, B, C, D, E, F, G, H, I> internal constructor(
+private class CombinedProvider9<A, B, C, D, E, F, G, H, I>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,
@@ -250,7 +307,7 @@ class CombinedProvider9<A, B, C, D, E, F, G, H, I> internal constructor(
     
 }
 
-class CombinedProvider10<A, B, C, D, E, F, G, H, I, J> internal constructor(
+private class CombinedProvider10<A, B, C, D, E, F, G, H, I, J>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>,

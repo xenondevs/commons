@@ -116,15 +116,22 @@ class MappingProviderTests {
     }
     
     @Test
+    fun testRequire() {
+        val provider = mutableProvider(-1)
+        val required = provider.require({ it >= 0 }, { "Positive value" })
+        
+        assertThrows<IllegalArgumentException> { required.get() }
+        provider.set(1)
+        assertEquals(1, required.get())
+    }
+    
+    @Test
     fun testRequireNonNull() {
-        val mutProvider = mutableProvider<Int?>(null)
-        val provider: Provider<Int?> = mutProvider
-        val required = provider.requireNonNull("")
+        val provider = mutableProvider<Int?>(null)
+        val required = provider.requireNotNull()
         
-        assertThrows<IllegalStateException> { required.get() }
-        
-        mutProvider.set(1)
-        
+        assertThrows<IllegalArgumentException> { required.get() }
+        provider.set(1)
         assertEquals(1, required.get())
     }
     

@@ -11,32 +11,131 @@ import xyz.xenondevs.commons.tuple.Tuple7
 import xyz.xenondevs.commons.tuple.Tuple8
 import xyz.xenondevs.commons.tuple.Tuple9
 
-fun <A, B, R> combinedProvider(a: Provider<A>, b: Provider<B>, mapValue: (A, B) -> R): Provider<R> =
-    CombinedMappingProvider2(a, b, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a] and [b]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, R> combinedProvider(
+    a: Provider<A>, 
+    b: Provider<B>,
+    mapValue: (A, B) -> R
+): Provider<R> = CombinedMappingProvider2(a, b, mapValue)
 
-fun <A, B, C, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, mapValue: (A, B, C) -> R): Provider<R> =
-    CombinedMappingProvider3(a, b, c, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b] and [c]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>,
+    mapValue: (A, B, C) -> R
+): Provider<R> = CombinedMappingProvider3(a, b, c, mapValue)
 
-fun <A, B, C, D, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, mapValue: (A, B, C, D) -> R): Provider<R> =
-    CombinedMappingProvider4(a, b, c, d, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c] and [d]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>,
+    d: Provider<D>, 
+    mapValue: (A, B, C, D) -> R
+): Provider<R> = CombinedMappingProvider4(a, b, c, d, mapValue)
 
-fun <A, B, C, D, E, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, mapValue: (A, B, C, D, E) -> R): Provider<R> =
-    CombinedMappingProvider5(a, b, c, d, e, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d] and [e]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, R> combinedProvider(
+    a: Provider<A>, 
+    b: Provider<B>, 
+    c: Provider<C>, 
+    d: Provider<D>,
+    e: Provider<E>, 
+    mapValue: (A, B, C, D, E) -> R
+): Provider<R> = CombinedMappingProvider5(a, b, c, d, e, mapValue)
 
-fun <A, B, C, D, E, F, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, mapValue: (A, B, C, D, E, F) -> R): Provider<R> =
-    CombinedMappingProvider6(a, b, c, d, e, f, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e] and [f]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, F, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>, 
+    d: Provider<D>,
+    e: Provider<E>,
+    f: Provider<F>,
+    mapValue: (A, B, C, D, E, F) -> R
+): Provider<R> = CombinedMappingProvider6(a, b, c, d, e, f, mapValue)
 
-fun <A, B, C, D, E, F, G, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, mapValue: (A, B, C, D, E, F, G) -> R): Provider<R> =
-    CombinedMappingProvider7(a, b, c, d, e, f, g, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f] and [g]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, F, G, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>, 
+    e: Provider<E>,
+    f: Provider<F>,
+    g: Provider<G>, 
+    mapValue: (A, B, C, D, E, F, G) -> R
+): Provider<R> = CombinedMappingProvider7(a, b, c, d, e, f, g, mapValue)
 
-fun <A, B, C, D, E, F, G, H, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>, mapValue: (A, B, C, D, E, F, G, H) -> R): Provider<R> =
-    CombinedMappingProvider8(a, b, c, d, e, f, g, h, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g] and [h]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, F, G, H, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>, 
+    c: Provider<C>, 
+    d: Provider<D>,
+    e: Provider<E>,
+    f: Provider<F>, 
+    g: Provider<G>, 
+    h: Provider<H>, 
+    mapValue: (A, B, C, D, E, F, G, H) -> R
+): Provider<R> = CombinedMappingProvider8(a, b, c, d, e, f, g, h, mapValue)
 
-fun <A, B, C, D, E, F, G, H, I, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>, i: Provider<I>, mapValue: (A, B, C, D, E, F, G, H, I) -> R): Provider<R> =
-    CombinedMappingProvider9(a, b, c, d, e, f, g, h, i, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h] and [i]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, F, G, H, I, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>, 
+    d: Provider<D>,
+    e: Provider<E>, 
+    f: Provider<F>, 
+    g: Provider<G>, 
+    h: Provider<H>, 
+    i: Provider<I>, 
+    mapValue: (A, B, C, D, E, F, G, H, I) -> R
+): Provider<R> = CombinedMappingProvider9(a, b, c, d, e, f, g, h, i, mapValue)
 
-fun <A, B, C, D, E, F, G, H, I, J, R> combinedProvider(a: Provider<A>, b: Provider<B>, c: Provider<C>, d: Provider<D>, e: Provider<E>, f: Provider<F>, g: Provider<G>, h: Provider<H>, i: Provider<I>, j: Provider<J>, mapValue: (A, B, C, D, E, F, G, H, I, J) -> R): Provider<R> =
-    CombinedMappingProvider10(a, b, c, d, e, f, g, h, i, j, mapValue)
+/**
+ * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h], [i] and [j]
+ * and immediately maps them to [R] using [mapValue].
+ */
+fun <A, B, C, D, E, F, G, H, I, J, R> combinedProvider(
+    a: Provider<A>,
+    b: Provider<B>,
+    c: Provider<C>,
+    d: Provider<D>, 
+    e: Provider<E>, 
+    f: Provider<F>, 
+    g: Provider<G>, 
+    h: Provider<H>,
+    i: Provider<I>, 
+    j: Provider<J>,
+    mapValue: (A, B, C, D, E, F, G, H, I, J) -> R
+): Provider<R> = CombinedMappingProvider10(a, b, c, d, e, f, g, h, i, j, mapValue)
 
 private class CombinedMappingProvider2<A, B, R>(
     private val a: Provider<A>,
