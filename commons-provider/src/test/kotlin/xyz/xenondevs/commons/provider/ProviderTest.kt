@@ -10,7 +10,7 @@ class ProviderTest {
     fun testProviderPropagate() {
         var value = 1
         
-        val top = object : Provider<Int>() {
+        val top: Provider<Int> = object : AbstractProvider<Int>() {
             override fun loadValue(): Int = value
         }
         
@@ -37,14 +37,14 @@ class ProviderTest {
     }
     
     @Test
-    fun testProviderUpdateHandler() {
+    fun testProviderSubscriber() {
         var value = 0
         var invoked = false
         
-        val provider = object : Provider<Int>() {
+        val provider: Provider<Int> = object : AbstractProvider<Int>() {
             override fun loadValue(): Int = value
         }
-        provider.addUpdateHandler { invoked = true }
+        provider.subscribe { invoked = true }
         
         // initializing should not call update handler
         provider.get()

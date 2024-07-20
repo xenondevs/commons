@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.provider.immutable
 
+import xyz.xenondevs.commons.provider.AbstractProvider
 import xyz.xenondevs.commons.provider.Provider
 import xyz.xenondevs.commons.tuple.Tuple10
 import xyz.xenondevs.commons.tuple.Tuple2
@@ -126,8 +127,8 @@ fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(
 ): Provider<Tuple10<A, B, C, D, E, F, G, H, I, J>> = CombinedProvider10(a, b, c, d, e, f, g, h, i, j)
 
 private class CombinedProvider<T>(
-    private val providers: List<Provider<out T>>
-) : Provider<List<T>>() {
+    private val providers: List<Provider<T>>
+) : AbstractProvider<List<T>>() {
     
     init {
         providers.forEach { it.addChild(this) }
@@ -142,7 +143,7 @@ private class CombinedProvider<T>(
 private class CombinedProvider2<A, B>(
     val a: Provider<A>,
     val b: Provider<B>
-) : Provider<Tuple2<A, B>>() {
+) : AbstractProvider<Tuple2<A, B>>() {
     
     init {
         a.addChild(this)
@@ -157,7 +158,7 @@ private class CombinedProvider3<A, B, C>(
     val a: Provider<A>,
     val b: Provider<B>,
     val c: Provider<C>
-) : Provider<Tuple3<A, B, C>>() {
+) : AbstractProvider<Tuple3<A, B, C>>() {
     
     init {
         a.addChild(this)
@@ -174,7 +175,7 @@ private class CombinedProvider4<A, B, C, D>(
     val b: Provider<B>,
     val c: Provider<C>,
     val d: Provider<D>
-) : Provider<Tuple4<A, B, C, D>>() {
+) : AbstractProvider<Tuple4<A, B, C, D>>() {
     
     init {
         a.addChild(this)
@@ -193,7 +194,7 @@ private class CombinedProvider5<A, B, C, D, E>(
     val c: Provider<C>,
     val d: Provider<D>,
     val e: Provider<E>
-) : Provider<Tuple5<A, B, C, D, E>>() {
+) : AbstractProvider<Tuple5<A, B, C, D, E>>() {
     
     init {
         a.addChild(this)
@@ -214,7 +215,7 @@ private class CombinedProvider6<A, B, C, D, E, F>(
     val d: Provider<D>,
     val e: Provider<E>,
     val f: Provider<F>
-) : Provider<Tuple6<A, B, C, D, E, F>>() {
+) : AbstractProvider<Tuple6<A, B, C, D, E, F>>() {
     
     init {
         a.addChild(this)
@@ -237,7 +238,7 @@ private class CombinedProvider7<A, B, C, D, E, F, G>(
     val e: Provider<E>,
     val f: Provider<F>,
     val g: Provider<G>
-) : Provider<Tuple7<A, B, C, D, E, F, G>>() {
+) : AbstractProvider<Tuple7<A, B, C, D, E, F, G>>() {
     
     init {
         a.addChild(this)
@@ -262,7 +263,7 @@ private class CombinedProvider8<A, B, C, D, E, F, G, H>(
     val f: Provider<F>,
     val g: Provider<G>,
     val h: Provider<H>
-) : Provider<Tuple8<A, B, C, D, E, F, G, H>>() {
+) : AbstractProvider<Tuple8<A, B, C, D, E, F, G, H>>() {
     
     init {
         a.addChild(this)
@@ -289,7 +290,7 @@ private class CombinedProvider9<A, B, C, D, E, F, G, H, I>(
     val g: Provider<G>,
     val h: Provider<H>,
     val i: Provider<I>
-) : Provider<Tuple9<A, B, C, D, E, F, G, H, I>>() {
+) : AbstractProvider<Tuple9<A, B, C, D, E, F, G, H, I>>() {
     
     init {
         a.addChild(this)
@@ -318,7 +319,7 @@ private class CombinedProvider10<A, B, C, D, E, F, G, H, I, J>(
     val h: Provider<H>,
     val i: Provider<I>,
     val j: Provider<J>
-) : Provider<Tuple10<A, B, C, D, E, F, G, H, I, J>>() {
+) : AbstractProvider<Tuple10<A, B, C, D, E, F, G, H, I, J>>() {
     
     init {
         a.addChild(this)

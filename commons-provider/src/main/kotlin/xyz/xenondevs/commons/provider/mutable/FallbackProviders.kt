@@ -2,6 +2,7 @@
 
 package xyz.xenondevs.commons.provider.mutable
 
+import xyz.xenondevs.commons.provider.AbstractProvider
 import xyz.xenondevs.commons.provider.Provider
 import xyz.xenondevs.commons.provider.immutable.provider
 
@@ -59,31 +60,31 @@ fun <T> MutableProvider<T?>.orElse(provider: MutableProvider<T?>): MutableProvid
 private class MutableFallbackValueProvider<T>(
     private val provider: MutableProvider<T?>,
     private val fallback: T
-) : MutableProvider<T>() {
+) : AbstractProvider<T>() {
     
     override fun loadValue(): T {
         return provider.get() ?: fallback
     }
     
-    override fun set(value: T, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+    override fun set(value: T, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callSubscribers, ignoredChildren)
         provider.set((if (value == fallback) null else value) as T, setOf(this))
     }
     
 }
 
-private class MutableFallbackProviderProvider<T>(
+private class MutableFallbackProviderProvider<T : Any>(
     private val provider: MutableProvider<T?>,
-    private val fallback: Provider<T & Any>
-) : MutableProvider<T & Any>() {
+    private val fallback: Provider<T>
+) : AbstractProvider<T>() {
     
-    override fun loadValue(): T & Any {
+    override fun loadValue(): T {
         return provider.get() ?: fallback.get()
     }
     
-    override fun set(value: T & Any, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
-        provider.set((if (value == fallback.get()) null else value) as T, setOf(this))
+    override fun set(value: T, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callSubscribers, ignoredChildren)
+        provider.set(if (value == fallback.get()) null else value, setOf(this))
     }
     
 }
@@ -91,18 +92,18 @@ private class MutableFallbackProviderProvider<T>(
 private class MutableNullableFallbackProviderProvider<T>(
     private val provider: MutableProvider<T?>,
     private val fallback: MutableProvider<T?>
-) : MutableProvider<T?>() {
+) : AbstractProvider<T?>() {
     
     override fun loadValue(): T? {
         return provider.get() ?: fallback.get()
     }
     
-    override fun set(value: T?, updateChildren: Boolean, callUpdateHandlers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callUpdateHandlers, ignoredChildren)
+    override fun set(value: T?, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, updateChildren, callSubscribers, ignoredChildren)
         
         val fallbackValue = fallback.get()
         when (value) {
-            fallbackValue -> provider.set(null, setOf(this))
+            fallbackValue -> provider.set(null, ignoredChildren = setOf(this))
             null -> {
                 provider.set(null, setOf(this))
                 fallback.set(null, setOf(this))

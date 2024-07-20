@@ -1,7 +1,6 @@
 package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Test
-import xyz.xenondevs.commons.provider.Provider
 import kotlin.test.assertEquals
 
 class MappingProviderTests {

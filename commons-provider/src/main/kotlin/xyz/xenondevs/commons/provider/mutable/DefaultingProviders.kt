@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.provider.mutable
 
+import xyz.xenondevs.commons.provider.AbstractProvider
 import xyz.xenondevs.commons.provider.Provider
 import xyz.xenondevs.commons.provider.immutable.provider
 
@@ -36,7 +37,7 @@ fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableP
 
 private abstract class MutableDefaultingProvider<T : Any>(
     protected val provider: MutableProvider<T?>,
-) : MutableProvider<T>() {
+) : AbstractProvider<T>() {
     
     override fun loadValue(): T {
         var value = provider.get()

@@ -1,11 +1,11 @@
 package xyz.xenondevs.commons.provider.immutable
 
+import xyz.xenondevs.commons.provider.AbstractProvider
 import xyz.xenondevs.commons.provider.Provider
 
 /**
  * Creates a new [Provider] that loads its value using the given [loadValue] function.
  */
-@JvmName("providerLambda")
 fun <T> provider(loadValue: () -> T): Provider<T> =
     LambdaProvider(loadValue)
 
@@ -13,7 +13,6 @@ fun <T> provider(loadValue: () -> T): Provider<T> =
  * Creates a new [Provider] with the given [value].
  */
 @Suppress("UNCHECKED_CAST")
-@JvmName("providerStatic")
 fun <T> provider(value: T): Provider<T> {
     if (value == null)
         return NullProvider as Provider<T>
@@ -21,7 +20,7 @@ fun <T> provider(value: T): Provider<T> {
     return ProviderWrapper(value)
 }
 
-private class LambdaProvider<T>(private val loader: () -> T) : Provider<T>() {
+private class LambdaProvider<T>(private val loader: () -> T) : AbstractProvider<T>() {
     
     override fun loadValue(): T {
         return loader()
@@ -29,7 +28,7 @@ private class LambdaProvider<T>(private val loader: () -> T) : Provider<T>() {
     
 }
 
-private class ProviderWrapper<T>(private val staticValue: T) : Provider<T>() {
+private class ProviderWrapper<T>(private val staticValue: T) : AbstractProvider<T>() {
     
     override fun loadValue(): T {
         return staticValue
@@ -40,7 +39,7 @@ private class ProviderWrapper<T>(private val staticValue: T) : Provider<T>() {
 /**
  * A [Provider] that always returns `null`.
  */
-object NullProvider : Provider<Any?>() {
+object NullProvider : AbstractProvider<Any?>() {
     
     override fun loadValue(): Any? {
         return null

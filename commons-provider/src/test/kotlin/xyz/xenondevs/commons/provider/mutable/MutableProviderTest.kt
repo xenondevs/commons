@@ -2,6 +2,7 @@ package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.util.concurrent.atomic.AtomicInteger
 
 class MutableProviderTest {
     
@@ -62,6 +63,20 @@ class MutableProviderTest {
         assertEquals(2, top.get())
         assertEquals(3, branchBMiddle.get())
         assertEquals(13, branchBBottom.get())
+    }
+    
+    @Test
+    fun testSetOrigin() {
+        val origin = AtomicInteger(1)
+        val provider = mutableProvider(origin::get, origin::set)
+        
+        assertEquals(1, provider.get())
+        origin.set(2)
+        assertEquals(1, provider.get())
+        provider.update()
+        assertEquals(2, provider.get())
+        provider.set(3)
+        assertEquals(3, origin.get())
     }
     
 }
