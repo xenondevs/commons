@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.guava
 
+import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 
 inline fun <R, C, V> Table<R, C, V>.replaceAll(replacer: (R, C, V) -> V) {
@@ -26,3 +27,12 @@ operator fun <R, C, V> Table<R, C, V>.iterator(): Iterator<Table.Cell<R, C, V>> 
 operator fun <R, C, V> Table.Cell<R, C, V>.component1(): R = rowKey
 operator fun <R, C, V> Table.Cell<R, C, V>.component2(): C = columnKey
 operator fun <R, C, V> Table.Cell<R, C, V>.component3(): V = value
+
+fun <R, C, V> Map<R, Map<C, V>>.toTable(table: Table<R, C, V> = HashBasedTable.create()): Table<R, C, V> {
+    for ((row, columnMap) in this) {
+        for ((column, value) in columnMap) {
+            table[row, column] = value
+        }
+    }
+    return table
+}
