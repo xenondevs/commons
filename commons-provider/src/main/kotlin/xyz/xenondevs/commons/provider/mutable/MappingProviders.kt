@@ -33,8 +33,8 @@ private class MutableMappingProvider<T, R>(
         return transform(parent.get())
     }
     
-    override fun set(value: R, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callSubscribers, ignoredChildren)
+    override fun set(value: R, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, ignoredChildren)
         parent.set(untransform(value), setOf(this))
     }
     

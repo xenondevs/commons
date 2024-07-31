@@ -18,8 +18,8 @@ fun <T> mutableProvider(initialValue: T): MutableProvider<T> =
 fun <T> mutableProvider(loadValue: () -> T, setValue: (T) -> Unit = {}): MutableProvider<T> =
     object : AbstractProvider<T>() {
         override fun loadValue(): T = loadValue()
-        override fun set(value: T, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
-            super.set(value, updateChildren, callSubscribers, ignoredChildren)
+        override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
+            super.set(value, ignoredChildren)
             setValue(value)
         }
     }

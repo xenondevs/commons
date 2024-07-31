@@ -66,8 +66,8 @@ private class MutableFallbackValueProvider<T>(
         return provider.get() ?: fallback
     }
     
-    override fun set(value: T, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callSubscribers, ignoredChildren)
+    override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, ignoredChildren)
         provider.set((if (value == fallback) null else value) as T, setOf(this))
     }
     
@@ -82,8 +82,8 @@ private class MutableFallbackProviderProvider<T : Any>(
         return provider.get() ?: fallback.get()
     }
     
-    override fun set(value: T, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callSubscribers, ignoredChildren)
+    override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, ignoredChildren)
         provider.set(if (value == fallback.get()) null else value, setOf(this))
     }
     
@@ -98,8 +98,8 @@ private class MutableNullableFallbackProviderProvider<T>(
         return provider.get() ?: fallback.get()
     }
     
-    override fun set(value: T?, updateChildren: Boolean, callSubscribers: Boolean, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, updateChildren, callSubscribers, ignoredChildren)
+    override fun set(value: T?, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, ignoredChildren)
         
         val fallbackValue = fallback.get()
         when (value) {
