@@ -8,22 +8,16 @@ import xyz.xenondevs.commons.provider.immutable.provider
  * Creates a new [MutableProvider] that defaults to [value] if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
  */
-fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> {
-    val provider = MutableDefaultValueProvider(this, value)
-    addChild(provider)
-    return provider
-}
+fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
+    MutableDefaultValueProvider(this, value)
 
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through [provider] if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
  * Once the value has been propagated upwards, changes to the value of [provider] will be ignored.
  */
-fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProvider<T> {
-    val result = MutableDefaultProviderProvider(this, provider)
-    addChild(result)
-    return result
-}
+fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProvider<T> =
+    MutableDefaultProviderProvider(this, provider)
 
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
@@ -47,6 +41,11 @@ private abstract class MutableDefaultingProvider<T : Any>(
         return value
     }
     
+    override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
+        super.set(value, ignoredChildren)
+        provider.set(value, setOf(this))
+    }
+    
     protected abstract fun applyDefaultValue(): T
     
 }
@@ -55,6 +54,10 @@ private class MutableDefaultValueProvider<T : Any>(
     provider: MutableProvider<T?>,
     private val defaultValue: T
 ) : MutableDefaultingProvider<T>(provider) {
+    
+    init {
+        provider.addChild(this)
+    }
     
     override fun applyDefaultValue(): T {
         provider.set(defaultValue, setOf(this))
@@ -67,6 +70,10 @@ private class MutableDefaultProviderProvider<T : Any>(
     provider: MutableProvider<T?>,
     private val defaultProvider: Provider<T>
 ) : MutableDefaultingProvider<T>(provider) {
+    
+    init {
+        provider.addChild(this)
+    }
     
     override fun applyDefaultValue(): T {
         val defaultValue = defaultProvider.get()

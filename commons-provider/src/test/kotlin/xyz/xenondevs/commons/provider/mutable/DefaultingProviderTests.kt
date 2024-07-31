@@ -15,6 +15,11 @@ class DefaultingProviderTests {
         assertEquals(null, provider.get())
         assertEquals(1, defaultingProvider.get())
         assertEquals(1, provider.get())
+        
+        // expected write propagation
+        defaultingProvider.set(2)
+        assertEquals(2, defaultingProvider.get())
+        assertEquals(2, provider.get())
     }
     
     @Test
@@ -27,6 +32,11 @@ class DefaultingProviderTests {
         assertEquals(null, provider.get())
         assertEquals(1, defaultingProvider.get())
         assertEquals(1, provider.get())
+        
+        // expected write propagation
+        defaultingProvider.set(2)
+        assertEquals(2, defaultingProvider.get())
+        assertEquals(2, provider.get())
     }
     
     @Test
@@ -48,6 +58,11 @@ class DefaultingProviderTests {
         assertEquals(2, fallback.get())
         assertEquals(1, defaultingProvider.get())
         assertEquals(1, provider.get())
+        
+        // expected write propagation
+        defaultingProvider.set(3)
+        assertEquals(3, defaultingProvider.get())
+        assertEquals(3, provider.get())
     }
     
 }
