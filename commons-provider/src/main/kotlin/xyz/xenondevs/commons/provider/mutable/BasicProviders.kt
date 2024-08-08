@@ -12,6 +12,14 @@ fun <T> mutableProvider(initialValue: T): MutableProvider<T> =
     }
 
 /**
+ * Creates a new [MutableProvider] that loads its value using the given [loadValue] function.
+ */
+fun <T> mutableProvider(loadValue: () -> T): MutableProvider<T> =
+    object : AbstractProvider<T>() {
+        override fun loadValue(): T = loadValue()
+    }
+
+/**
  * Creates a new [MutableProvider] that loads its value using the given [loadValue] function
  * and sets it using the given [setValue] function.
  */
