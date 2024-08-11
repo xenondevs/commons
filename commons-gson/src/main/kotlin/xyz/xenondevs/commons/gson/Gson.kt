@@ -2,6 +2,7 @@ package xyz.xenondevs.commons.gson
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.InstanceCreator
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -57,6 +58,10 @@ inline fun <reified T, A> GsonBuilder.registerTypeAdapter(typeAdapter: A): GsonB
 }
 
 inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: TypeAdapter<T>): GsonBuilder {
+    return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
+}
+
+inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: InstanceCreator<T>): GsonBuilder {
     return registerTypeAdapter(javaTypeOf<T>(), typeAdapter)
 }
 
