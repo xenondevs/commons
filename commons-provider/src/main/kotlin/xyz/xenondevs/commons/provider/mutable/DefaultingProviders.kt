@@ -1,15 +1,21 @@
+@file:OptIn(UnstableProviderApi::class)
+
 package xyz.xenondevs.commons.provider.mutable
 
 import xyz.xenondevs.commons.provider.AbstractProvider
+import xyz.xenondevs.commons.provider.MutableProvider
 import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.UnstableProviderApi
 import xyz.xenondevs.commons.provider.immutable.provider
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 /**
  * Creates a new [MutableProvider] that defaults to [value] if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
  */
 fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
-    MutableDefaultValueProvider(this, value)
+    MutableDefaultValueProvider(this as AbstractProvider<T?>, value)
 
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through [provider] if the value of [this][MutableProvider] is null.
@@ -17,68 +23,63 @@ fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
  * Once the value has been propagated upwards, changes to the value of [provider] will be ignored.
  */
 fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProvider<T> =
-    MutableDefaultProviderProvider(this, provider)
+    MutableDefaultProviderProvider(this as AbstractProvider<T?>, provider as AbstractProvider<T>)
 
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
  */
-fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableProvider<T> {
-    // naming this function orElse would lead to a resolution ambiguity with defaultsTo(value: T)
-    
-    return defaultsTo(provider(lazyValue))
-}
-
-private abstract class MutableDefaultingProvider<T : Any>(
-    protected val provider: MutableProvider<T?>,
-) : AbstractProvider<T>() {
-    
-    override fun loadValue(): T {
-        var value = provider.get()
-        if (value == null)
-            value = applyDefaultValue()
-        
-        return value
-    }
-    
-    override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, ignoredChildren)
-        provider.set(value, setOf(this))
-    }
-    
-    protected abstract fun applyDefaultValue(): T
-    
-}
+fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableProvider<T> = // naming this function orElse would lead to a resolution ambiguity with defaultsTo(value: T)
+    defaultsTo(provider(lazyValue))
 
 private class MutableDefaultValueProvider<T : Any>(
-    provider: MutableProvider<T?>,
+    private val parent: AbstractProvider<T?>,
     private val defaultValue: T
-) : MutableDefaultingProvider<T>(provider) {
+) : AbstractProvider<T>(parent.lock) {
     
     init {
-        provider.addChild(this)
+        lock.withLock {
+            addParent(parent) { it }
+            parent.addChild(this)
+        }
     }
     
-    override fun applyDefaultValue(): T {
-        provider.set(defaultValue, setOf(this))
-        return defaultValue
+    override fun pull(): T {
+        var value = parent.get()
+        if (value == null) {
+            value = defaultValue
+            parent.onChildChanged(this) { it }
+        }
+        
+        return value
     }
     
 }
 
 private class MutableDefaultProviderProvider<T : Any>(
-    provider: MutableProvider<T?>,
-    private val defaultProvider: Provider<T>
-) : MutableDefaultingProvider<T>(provider) {
+    private val provider: AbstractProvider<T?>,
+    private val defaultProvider: AbstractProvider<T>
+) : AbstractProvider<T>(ReentrantLock()) {
     
     init {
-        provider.addChild(this)
+        provider.changeLock(lock)
+        defaultProvider.changeLock(lock)
+        lock.withLock {
+            addParent(provider) { it }
+            addInactiveParent(defaultProvider)
+            provider.addChild(this)
+            defaultProvider.addInactiveChild(this)
+        }
     }
     
-    override fun applyDefaultValue(): T {
-        val defaultValue = defaultProvider.get()
-        provider.set(defaultValue, setOf(this))
-        return defaultValue
+    override fun pull(): T {
+        var value = provider.get()
+        if (value == null) {
+            value = defaultProvider.get()
+            provider.onChildChanged(this) { it }
+        }
+        
+        return value
     }
     
 }

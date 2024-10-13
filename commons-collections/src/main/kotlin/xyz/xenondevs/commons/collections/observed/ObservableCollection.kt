@@ -3,7 +3,7 @@ package xyz.xenondevs.commons.collections.observed
 import java.util.function.Predicate
 
 class ObservableCollection<E>(
-    private val collection: MutableCollection<E>,
+    val collection: MutableCollection<E>,
     private val handleUpdate: () -> Unit
 ) : MutableCollection<E> by collection {
     

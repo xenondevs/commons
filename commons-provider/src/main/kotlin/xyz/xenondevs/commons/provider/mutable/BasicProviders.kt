@@ -1,33 +1,39 @@
+@file:OptIn(UnstableProviderApi::class)
+
 package xyz.xenondevs.commons.provider.mutable
 
 import xyz.xenondevs.commons.provider.AbstractProvider
-import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.MutableProvider
+import xyz.xenondevs.commons.provider.UnstableProviderApi
+import java.util.concurrent.locks.ReentrantLock
 
 /**
  * Creates a new [MutableProvider] with the given [initialValue].
  */
 fun <T> mutableProvider(initialValue: T): MutableProvider<T> =
-    object : AbstractProvider<T>() {
-        override fun loadValue(): T = initialValue
+    object : AbstractProvider<T>(ReentrantLock()) {
+        
+        override fun pull(): T {
+            return initialValue
+        }
+        
     }
 
 /**
- * Creates a new [MutableProvider] that loads its value using the given [loadValue] function.
+ * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function.
  */
-fun <T> mutableProvider(loadValue: () -> T): MutableProvider<T> =
-    object : AbstractProvider<T>() {
-        override fun loadValue(): T = loadValue()
+fun <T> mutableProvider(lazyValue: () -> T): MutableProvider<T> =
+    object : AbstractProvider<T>(ReentrantLock()) {
+        
+        override fun pull(): T {
+            return lazyValue()
+        }
+        
     }
 
 /**
- * Creates a new [MutableProvider] that loads its value using the given [loadValue] function
+ * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function
  * and sets it using the given [setValue] function.
  */
-fun <T> mutableProvider(loadValue: () -> T, setValue: (T) -> Unit = {}): MutableProvider<T> =
-    object : AbstractProvider<T>() {
-        override fun loadValue(): T = loadValue()
-        override fun set(value: T, ignoredChildren: Set<Provider<*>>) {
-            super.set(value, ignoredChildren)
-            setValue(value)
-        }
-    }
+fun <T> mutableProvider(lazyValue: () -> T, setValue: (T) -> Unit = {}): MutableProvider<T> =
+    mutableProvider(lazyValue).apply { subscribe(setValue) }

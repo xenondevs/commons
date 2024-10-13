@@ -4,6 +4,8 @@ import java.util.*
 
 fun <K> weakHashSet(): MutableSet<K> = Collections.newSetFromMap(WeakHashMap())
 
+fun <K> weakHashSet(initialCapacity: Int): MutableSet<K> = Collections.newSetFromMap(WeakHashMap(initialCapacity))
+
 fun <K> weakHashSetOf(vararg elements: K): MutableSet<K> = weakHashSet<K>().apply { addAll(elements) }
 
 fun <K> identityHashSet(): MutableSet<K> = Collections.newSetFromMap(IdentityHashMap())

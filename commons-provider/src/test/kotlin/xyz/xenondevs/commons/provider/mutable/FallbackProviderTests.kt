@@ -55,32 +55,36 @@ class FallbackProviderTests {
     }
     
     @Test
-    fun testOrElseNullableProvider() {
-        val provider = mutableProvider<Int?>(null)
-        val fallback = mutableProvider<Int?>(null)
-        val orElse = provider.orElse(fallback)
+    fun testOrElseLazily() {
+        var lazyCalled = false
         
+        val provider = mutableProvider<Int?>(0)
+        val orElse = provider.orElseLazily { 
+            lazyCalled = true
+            1
+        }
+        
+        orElse.get()
+        assertEquals(false, lazyCalled)
+        provider.set(null)
+        assertEquals(false, lazyCalled)
+        orElse.get()
+        assertEquals(true, lazyCalled)
+    }
+    
+    @Test
+    fun testOrElseNew() {
+        val provider = mutableProvider<MutableSet<Int>?>(null)
+        val orElse = provider.orElseNew { mutableSetOf() }.observed()
+        
+        val set = orElse.get()
+        set += 1
+        assertEquals(setOf(1), orElse.get())
+        assertEquals<Set<Int>?>(setOf(1), provider.get())
+        
+        set -= 1
+        assertEquals(emptySet(), orElse.get())
         assertEquals(null, provider.get())
-        assertEquals(null, fallback.get())
-        assertEquals(null, orElse.get())
-        
-        fallback.set(1)
-        
-        assertEquals(null, provider.get())
-        assertEquals(1, fallback.get())
-        assertEquals(1, orElse.get())
-        
-        orElse.set(2)
-        
-        assertEquals(2, provider.get())
-        assertEquals(1, fallback.get())
-        assertEquals(2, orElse.get())
-        
-        orElse.set(null)
-        
-        assertEquals(null, provider.get())
-        assertEquals(null, fallback.get())
-        assertEquals(null, orElse.get())
     }
     
 }

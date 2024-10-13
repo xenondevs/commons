@@ -4,7 +4,7 @@ import java.util.function.BiFunction
 import java.util.function.Function
 
 class ObservableMap<K, V>(
-    private val map: MutableMap<K, V>,
+    val map: MutableMap<K, V>,
     private val handleUpdate: () -> Unit
 ) : MutableMap<K, V> by map {
     

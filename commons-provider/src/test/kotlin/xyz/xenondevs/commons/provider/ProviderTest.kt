@@ -2,16 +2,15 @@ package xyz.xenondevs.commons.provider
 
 import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.immutable.map
-import xyz.xenondevs.commons.provider.immutable.provider
+import xyz.xenondevs.commons.provider.mutable.map
+import xyz.xenondevs.commons.provider.mutable.mutableProvider
 import kotlin.test.assertEquals
 
 class ProviderTest {
     
     @Test
     fun testProviderPropagate() {
-        var value = 1
-        
-        val top: Provider<Int> = provider { value }
+        val top = mutableProvider(1)
         
         val branchA = top.map { it * 10 }
         val branchB = top.map { it * 100 }
@@ -25,8 +24,7 @@ class ProviderTest {
         assertEquals(leafA.get(), 11)
         assertEquals(leafB.get(), 101)
         
-        value = 2
-        top.update()
+        top.set(2)
         
         assertEquals(top.get(), 2)
         assertEquals(branchA.get(), 20)
@@ -36,65 +34,117 @@ class ProviderTest {
     }
     
     @Test
-    fun testProviderRemoveChild() {
-        var value = 1
-        val top: Provider<Int> = provider { value }
-        val middle = top.map { it + 1 }
-        val bottom = middle.map { it + 1 }
+    fun testProviderIsLazy() {
+        val root = mutableProvider(1)
         
-        assertEquals(3, bottom.get())
+        var branchATransform = 0
+        var branchAUntransform = 0
         
-        value = 2
-        top.update()
+        var leafATransform = 0
+        var leafAUntransform = 0
         
-        assertEquals(4, bottom.get())
+        var branchBTransform = 0
+        var branchBUntransform = 0
         
-        top.removeChild(middle)
-        value = 3
-        top.update()
+        var leafBTransform = 0
+        var leafBUntransform = 0
         
-        assertEquals(4, bottom.get())
+        val branchA = root.map({
+            branchATransform++
+            it * 10
+        }, {
+            branchAUntransform++
+            it / 10
+        })
+        val leafA = branchA.map({
+            leafATransform++
+            it + 1
+        }, {
+            leafAUntransform++
+            it - 1
+        })
         
-        middle.update()
+        val branchB = root.map({
+            branchBTransform++
+            it * 100
+        }, {
+            branchBUntransform++
+            it / 100
+        })
+        val leafB = branchB.map({
+            leafBTransform++
+            it + 1
+        }, {
+            leafBUntransform++
+            it - 1
+        })
         
-        assertEquals(5, bottom.get())
+        root.set(2)
+        
+        assertEquals(0, branchATransform)
+        assertEquals(0, branchAUntransform)
+        assertEquals(0, leafATransform)
+        assertEquals(0, leafAUntransform)
+        assertEquals(0, branchBTransform)
+        assertEquals(0, branchBUntransform)
+        assertEquals(0, leafBTransform)
+        assertEquals(0, leafBUntransform)
+        
+        assertEquals(201, leafB.get()) // resolve leafB
+        branchA.set(10)
+        assertEquals(0, branchATransform)
+        assertEquals(0, branchAUntransform)
+        assertEquals(0, leafATransform)
+        assertEquals(0, leafAUntransform)
+        assertEquals(1, branchBTransform)
+        assertEquals(0, branchBUntransform)
+        assertEquals(1, leafBTransform)
+        assertEquals(0, leafBUntransform)
+        
+        assertEquals(1, root.get()) // resolve root
+        assertEquals(11, leafA.get()) // resolve leafA
+        assertEquals(0, branchATransform)
+        assertEquals(1, branchAUntransform)
+        assertEquals(1, leafATransform)
+        assertEquals(0, leafAUntransform)
+        assertEquals(1, branchBTransform)
+        assertEquals(0, branchBUntransform)
+        assertEquals(1, leafBTransform)
+        assertEquals(0, leafBUntransform)
     }
     
     @Test
     fun testProviderSubscriber() {
-        var value = 0
         var invoked = false
         var invokedWeak = false
         
-        val provider: Provider<Int> = provider { value }
+        val provider = mutableProvider(0)
         provider.subscribe { invoked = true }
         provider.subscribeWeak(this) { _, _ -> invokedWeak = true }
         
-        // initializing should not call update handler
+        // initializing should not call subscriber
         provider.get()
         assert(!invoked)
         assert(!invokedWeak)
         
-        // updating without changes to value should not call update handler
-        provider.update()
+        // updating without changes to value should not call subscriber
+        provider.set(0)
         assert(!invoked)
         assert(!invokedWeak)
         
-        // updating with change to value should call update handler
-        value = 1
-        provider.update()
+        // updating with change to value should call subscriber
+        provider.set(1)
         assert(invoked)
         assert(invokedWeak)
     }
     
     @Test
     fun testProviderRemoveSubscriber() {
-        var value = 0
         var mirror1 = -1
         var mirror2 = -1
         var mirror3 = -1
         
-        val provider: Provider<Int> = provider { value }
+        val provider = mutableProvider(0)
         val subscriber1: (Int) -> Unit = { mirror1 = it }
         val subscriber2: (Any, Int) -> Unit = { _, v -> mirror2 = v }
         val subscriber3: (Any, Int) -> Unit = { _, v -> mirror3 = v }
@@ -102,22 +152,20 @@ class ProviderTest {
         provider.subscribeWeak(this, subscriber2)
         provider.subscribeWeak(this, subscriber3)
         
-        provider.update()
+        provider.set(0)
         assertEquals(0, mirror1)
         assertEquals(0, mirror2)
         assertEquals(0, mirror3)
         
-        value = 1
         provider.unsubscribe(subscriber1)
         provider.unsubscribeWeak(this, subscriber2)
-        provider.update()
+        provider.set(1)
         assertEquals(0, mirror1)
         assertEquals(0, mirror2)
         assertEquals(1, mirror3)
         
-        value = 2
         provider.unsubscribeWeak(this)
-        provider.update()
+        provider.set(2)
         assertEquals(0, mirror1)
         assertEquals(0, mirror2)
         assertEquals(1, mirror3)

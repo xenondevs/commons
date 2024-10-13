@@ -1,7 +1,7 @@
 package xyz.xenondevs.commons.collections.observed
 
 class ObservableIterator<T>(
-    private val iterator: MutableIterator<T>,
+    val iterator: MutableIterator<T>,
     private val handleUpdate: () -> Unit
 ) : MutableIterator<T> by iterator {
     

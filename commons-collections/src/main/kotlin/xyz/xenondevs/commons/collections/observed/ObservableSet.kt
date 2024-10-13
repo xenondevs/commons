@@ -1,7 +1,7 @@
 package xyz.xenondevs.commons.collections.observed
 
 class ObservableSet<E>(
-    private val set: MutableSet<E>,
+    val set: MutableSet<E>,
     private val handleUpdate: () -> Unit,
 ) : MutableSet<E> by set {
     

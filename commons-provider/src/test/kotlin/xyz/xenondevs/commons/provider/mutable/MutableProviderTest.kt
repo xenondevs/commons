@@ -70,13 +70,8 @@ class MutableProviderTest {
         val origin = AtomicInteger(1)
         val provider = mutableProvider(origin::get, origin::set)
         
-        assertEquals(1, provider.get())
-        origin.set(2)
-        assertEquals(1, provider.get())
-        provider.update()
-        assertEquals(2, provider.get())
-        provider.set(3)
-        assertEquals(3, origin.get())
+        provider.set(2)
+        assertEquals(2, origin.get())
     }
     
 }

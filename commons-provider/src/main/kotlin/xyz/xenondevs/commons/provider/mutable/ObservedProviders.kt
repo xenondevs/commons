@@ -1,94 +1,90 @@
+@file:OptIn(UnstableProviderApi::class)
+
 package xyz.xenondevs.commons.provider.mutable
 
 import xyz.xenondevs.commons.collections.observed.ObservableList
 import xyz.xenondevs.commons.collections.observed.ObservableMap
 import xyz.xenondevs.commons.collections.observed.ObservableSet
 import xyz.xenondevs.commons.provider.AbstractProvider
+import xyz.xenondevs.commons.provider.MutableProvider
 import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.UnstableProviderApi
+import kotlin.concurrent.withLock
 
 /**
- * Creates and returns a new [MutableProvider] that observes the list of [this][MutableProvider]
+ * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
  * and propagates changes appropriately.
  */
 @JvmName("observedList")
-fun <E> MutableProvider<out MutableList<E>>.observed(): MutableProvider<MutableList<E>> =
-    ObservedListProvider(this)
+fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>> =
+    ObservedListProvider(this as AbstractProvider<MutableList<E>>)
 
 /**
- * Creates and returns a new [MutableProvider] that observes the map of [this][MutableProvider]
+ * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
  * and propagates changes appropriately.
  */
 @JvmName("observedMap")
-fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): MutableProvider<MutableMap<K, V>> =
-    ObservedMapProvider(this)
+fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
+    ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>)
 
 /**
- * Creates and returns a new [MutableProvider] that observes the set of [this][MutableProvider]
+ * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
  * and propagates changes appropriately.
  */
 @JvmName("observedSet")
-fun <E> MutableProvider<out MutableSet<E>>.observed(): MutableProvider<MutableSet<E>> =
-    ObservedSetProvider(this)
+fun <E> MutableProvider<out MutableSet<E>>.observed(): Provider<MutableSet<E>> =
+    ObservedSetProvider(this as AbstractProvider<MutableSet<E>>)
 
 private class ObservedListProvider<T>(
-    private val provider: MutableProvider<out MutableList<T>>
-) : AbstractProvider<MutableList<T>>() {
+    private val parent: AbstractProvider<MutableList<T>>
+) : AbstractProvider<MutableList<T>>(parent.lock) {
     
     init {
-        provider.addChild(this)
+        lock.withLock {
+            parent.addChild(this)
+            addParent(parent) { lock.withLock { (it as ObservableList<T>).list } }
+        }
     }
     
-    override fun loadValue(): MutableList<T> {
-        val list = provider.get()
-        return ObservableList(provider.get()) { set(list) }
-    }
-    
-    @Suppress("UNCHECKED_CAST")
-    override fun set(value: MutableList<T>, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, ignoredChildren)
-        (provider as MutableProvider<MutableList<T>>).set(value, setOf(this))
+    override fun pull(): MutableList<T> {
+        val list = parent.get()
+        return ObservableList(list) { lock.withLock { onSelfChanged() } }
     }
     
 }
 
 private class ObservedMapProvider<K, V>(
-    private val provider: MutableProvider<out MutableMap<K, V>>
-) : AbstractProvider<MutableMap<K, V>>() {
+    private val parent: AbstractProvider<MutableMap<K, V>>
+) : AbstractProvider<MutableMap<K, V>>(parent.lock) {
     
     init {
-        provider.addChild(this)
+        lock.withLock {
+            parent.addChild(this)
+            addParent(parent) { (it as ObservableMap<K, V>).map }
+        }
     }
     
-    override fun loadValue(): MutableMap<K, V> {
-        val map = provider.get()
-        return ObservableMap(provider.get()) { set(map) }
-    }
-    
-    @Suppress("UNCHECKED_CAST")
-    override fun set(value: MutableMap<K, V>, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, ignoredChildren)
-        (provider as MutableProvider<MutableMap<K, V>>).set(value, setOf(this))
+    override fun pull(): MutableMap<K, V> {
+        val map = parent.get()
+        return ObservableMap(map) { lock.withLock { onSelfChanged() } }
     }
     
 }
 
 private class ObservedSetProvider<T>(
-    private val provider: MutableProvider<out MutableSet<T>>
-) : AbstractProvider<MutableSet<T>>() {
+    private val parent: AbstractProvider<MutableSet<T>>
+) : AbstractProvider<MutableSet<T>>(parent.lock) {
     
     init {
-        provider.addChild(this)
+        lock.withLock {
+            parent.addChild(this)
+            addParent(parent) { (it as ObservableSet<T>).set }
+        }
     }
     
-    override fun loadValue(): MutableSet<T> {
-        val set = provider.get()
-        return ObservableSet(provider.get()) { set(set) }
-    }
-    
-    @Suppress("UNCHECKED_CAST")
-    override fun set(value: MutableSet<T>, ignoredChildren: Set<Provider<*>>) {
-        super.set(value, ignoredChildren)
-        (provider as MutableProvider<MutableSet<T>>).set(value, setOf(this))
+    override fun pull(): MutableSet<T> {
+        val set = parent.get()
+        return ObservableSet(set) { lock.withLock { onSelfChanged() } }
     }
     
 }

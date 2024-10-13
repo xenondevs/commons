@@ -138,16 +138,52 @@ class MappingProviderTests {
     @Test
     fun testFlatMap() {
         val provider = provider(listOf("AB", "CD"))
-        val flatMapped = provider.flatMap { it.toCharArray().asList() }
-        
+        val flatMapped = provider.flatMapCollection { it.toCharArray().asList() }
+
         assertEquals(listOf("AB", "CD"), provider.get())
         assertEquals(listOf('A', 'B', 'C', 'D'), flatMapped.get())
     }
     
     @Test
+    fun testFlatMapToProvider() {
+        val a = provider("1")
+        val b = provider("2")
+        val providerMap = mapOf("a" to a, "b" to b)
+        val selector = mutableProvider("a")
+        val flatMapped = selector.flatMap { providerMap[it]!! }
+        
+        assertEquals("1", flatMapped.get())
+        selector.set("b")
+        assertEquals("2", flatMapped.get())
+    }
+    
+    @Test
+    fun testFlatMapToMutableProvider() {
+        val a = mutableProvider("a")
+        val b = mutableProvider("b")
+        val providerMap = mapOf("a" to a, "b" to b)
+        val selector = mutableProvider("a")
+        val flatMapped = selector.flatMapMutable { providerMap[it]!! }
+        
+        flatMapped.set("1")
+        assertEquals("1", a.get())
+        assertEquals("b", b.get())
+        
+        selector.set("b")
+        flatMapped.set("2")
+        assertEquals("1", a.get())
+        assertEquals("2", b.get())
+        
+        b.set("3")
+        assertEquals("1", a.get())
+        assertEquals("3", b.get())
+        assertEquals("3", flatMapped.get())
+    }
+    
+    @Test
     fun testFlatten() {
         val provider = provider(listOf(listOf(1, 2), listOf(3, 4)))
-        val flattened = provider.flatten()
+        val flattened = provider.flattenIterables()
         
         assertEquals(listOf(listOf(1, 2), listOf(3, 4)), provider.get())
         assertEquals(listOf(1, 2, 3, 4), flattened.get())
@@ -156,7 +192,7 @@ class MappingProviderTests {
     @Test
     fun testMerged() {
         val provider = provider(listOf(mapOf("a" to 1, "b" to 2), mapOf("b" to -2, "c" to 3)))
-        val merged = provider.merged()
+        val merged = provider.mergeMaps()
         
         assertEquals(listOf(mapOf("a" to 1, "b" to 2), mapOf("b" to -2, "c" to 3)), provider.get())
         assertEquals(mapOf("a" to 1, "b" to -2, "c" to 3), merged.get())

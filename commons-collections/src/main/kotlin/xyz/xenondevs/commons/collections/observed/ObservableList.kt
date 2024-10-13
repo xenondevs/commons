@@ -4,7 +4,7 @@ import java.util.function.Predicate
 import java.util.function.UnaryOperator
 
 class ObservableList<E>(
-    private val list: MutableList<E>,
+    val list: MutableList<E>,
     private val handleUpdate: () -> Unit
 ): MutableList<E> by list {
     

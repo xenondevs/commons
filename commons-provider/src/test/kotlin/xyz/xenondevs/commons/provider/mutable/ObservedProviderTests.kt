@@ -1,6 +1,7 @@
 package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Test
+import xyz.xenondevs.commons.provider.immutable.map
 import kotlin.test.assertEquals
 
 class ObservedProviderTests {
@@ -15,24 +16,23 @@ class ObservedProviderTests {
             { it.mapValues { (_, v) -> v.toInt() } }
         )
         val observedProvider = mappedProvider.observed()
+        val mappedProvider2 = observedProvider.map { it.mapValues { (_, v) -> v.toInt() } }
         
         // initial state
         assertEquals(mapOf("a" to "1"), observedProvider.get())
+        assertEquals(mapOf("a" to 1), mappedProvider2.get())
         
-        // mapped provider is not observed, so changes will not propagate upwards
+        // mapped provider is not observed, so changes will not propagate
         mappedProvider.get()["b"] = "2"
-        assertEquals(mapOf("a" to "1", "b" to "2"), observedProvider.get())
         assertEquals(mapOf("a" to 1), map)
+        assertEquals(mapOf("a" to "1", "b" to "2"), observedProvider.get())
+        assertEquals(mapOf("a" to 1), mappedProvider2.get())
         
-        // mutation on observed provider's map will propagate upwards
+        // mutation on observed provider's map will propagate
         observedProvider.get()["c"] = "3"
-        assertEquals(mapOf("a" to "1", "b" to "2", "c" to "3"), observedProvider.get())
         assertEquals(mapOf("a" to 1, "b" to 2, "c" to 3), map)
-        
-        // changing provider value will propagate upwards
-        observedProvider.set(mutableMapOf("a" to "0"))
-        assertEquals(mapOf("a" to "0"), observedProvider.get())
-        assertEquals(mapOf("a" to 0), map)
+        assertEquals(mapOf("a" to "1", "b" to "2", "c" to "3"), observedProvider.get())
+        assertEquals(mapOf("a" to 1, "b" to 2, "c" to 3), mappedProvider2.get())
     }
     
     @Test
@@ -45,24 +45,23 @@ class ObservedProviderTests {
             { it.mapTo(LinkedHashSet()) { e -> e.toInt() } }
         )
         val observedProvider = mappedProvider.observed()
+        val mappedProvider2 = observedProvider.map { it.mapTo(LinkedHashSet()) { e -> e.toInt() } }
         
         // initial state
         assertEquals(setOf("1"), observedProvider.get())
+        assertEquals(setOf(1), mappedProvider2.get())
         
-        // mapped provider is not observed, so changes will not propagate upwards
+        // mapped provider is not observed, so changes will not propagate
         mappedProvider.get().add("2")
-        assertEquals(setOf("1", "2"), observedProvider.get())
         assertEquals(setOf(1), set)
+        assertEquals(setOf("1", "2"), observedProvider.get())
+        assertEquals(setOf(1), mappedProvider2.get())
         
-        // mutation on observed provider's list will propagate upwards
+        // mutation on observed provider's list will propagate
         observedProvider.get().add("3")
-        assertEquals(setOf("1", "2", "3"), observedProvider.get())
         assertEquals(setOf(1, 2, 3), set)
-        
-        // changing provider value will propagate upwards
-        observedProvider.set(mutableSetOf("0"))
-        assertEquals(setOf("0"), observedProvider.get())
-        assertEquals(setOf(0), set)
+        assertEquals(setOf("1", "2", "3"), observedProvider.get())
+        assertEquals(setOf(1, 2, 3), mappedProvider2.get())
     }
     
     @Test
@@ -75,24 +74,23 @@ class ObservedProviderTests {
             { it.map { e -> e.toInt() } }
         )
         val observedProvider = mappedProvider.observed()
+        val mappedProvider2 = observedProvider.map { it.map { e -> e.toInt() } }
         
         // initial state
         assertEquals(listOf("1"), observedProvider.get())
+        assertEquals(listOf(1), mappedProvider2.get())
         
-        // mapped provider is not observed, so changes will not propagate upwards
+        // mapped provider is not observed, so changes will not propagate
         mappedProvider.get().add("2")
-        assertEquals(listOf("1", "2"), observedProvider.get())
         assertEquals(listOf(1), list)
+        assertEquals(listOf("1", "2"), observedProvider.get())
+        assertEquals(listOf(1), mappedProvider2.get())
         
-        // mutation on observed provider's list will propagate upwards
+        // mutation on observed provider's list will propagate
         observedProvider.get().add("3")
-        assertEquals(listOf("1", "2", "3"), observedProvider.get())
         assertEquals(listOf(1, 2, 3), list)
-        
-        // changing provider value will propagate upwards
-        observedProvider.set(mutableListOf("0"))
-        assertEquals(listOf("0"), observedProvider.get())
-        assertEquals(listOf(0), list)
+        assertEquals(listOf("1", "2", "3"), observedProvider.get())
+        assertEquals(listOf(1, 2, 3), mappedProvider2.get())
     }
     
 }
