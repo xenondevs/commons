@@ -1,10 +1,7 @@
 @file:OptIn(UnstableProviderApi::class)
 
-package xyz.xenondevs.commons.provider.mutable
+package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.provider.AbstractProvider
-import xyz.xenondevs.commons.provider.MutableProvider
-import xyz.xenondevs.commons.provider.UnstableProviderApi
 import kotlin.concurrent.withLock
 
 /**

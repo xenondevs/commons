@@ -2,6 +2,8 @@ package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import xyz.xenondevs.commons.provider.map
+import xyz.xenondevs.commons.provider.mutableProvider
 import java.util.concurrent.atomic.AtomicInteger
 
 class MutableProviderTest {

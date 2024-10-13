@@ -1,9 +1,6 @@
 package xyz.xenondevs.commons.provider
 
 import org.junit.jupiter.api.Test
-import xyz.xenondevs.commons.provider.immutable.map
-import xyz.xenondevs.commons.provider.mutable.map
-import xyz.xenondevs.commons.provider.mutable.mutableProvider
 import kotlin.test.assertEquals
 
 class ProviderTest {

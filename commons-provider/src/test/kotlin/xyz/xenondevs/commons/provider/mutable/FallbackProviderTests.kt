@@ -2,6 +2,11 @@ package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.mutableProvider
+import xyz.xenondevs.commons.provider.observed
+import xyz.xenondevs.commons.provider.orElse
+import xyz.xenondevs.commons.provider.orElseLazily
+import xyz.xenondevs.commons.provider.orElseNew
 import kotlin.test.assertEquals
 
 class FallbackProviderTests {

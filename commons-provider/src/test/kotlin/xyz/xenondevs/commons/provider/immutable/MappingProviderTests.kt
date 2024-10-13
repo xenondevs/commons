@@ -3,7 +3,20 @@ package xyz.xenondevs.commons.provider.immutable
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import xyz.xenondevs.commons.provider.Provider
-import xyz.xenondevs.commons.provider.mutable.mutableProvider
+import xyz.xenondevs.commons.provider.flatMap
+import xyz.xenondevs.commons.provider.flatMapCollection
+import xyz.xenondevs.commons.provider.flatMapMutable
+import xyz.xenondevs.commons.provider.flattenIterables
+import xyz.xenondevs.commons.provider.map
+import xyz.xenondevs.commons.provider.mapEach
+import xyz.xenondevs.commons.provider.mapEachNotNull
+import xyz.xenondevs.commons.provider.mapNonNull
+import xyz.xenondevs.commons.provider.mergeMaps
+import xyz.xenondevs.commons.provider.mutableProvider
+import xyz.xenondevs.commons.provider.orElse
+import xyz.xenondevs.commons.provider.provider
+import xyz.xenondevs.commons.provider.require
+import xyz.xenondevs.commons.provider.requireNotNull
 import kotlin.test.assertEquals
 
 class MappingProviderTests {

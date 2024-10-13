@@ -1,12 +1,7 @@
 @file:OptIn(UnstableProviderApi::class)
 
-package xyz.xenondevs.commons.provider.immutable
+package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.provider.AbstractProvider
-import xyz.xenondevs.commons.provider.Provider
-import xyz.xenondevs.commons.provider.UnstableProviderApi
-import xyz.xenondevs.commons.provider.addAsChildTo
-import xyz.xenondevs.commons.provider.changeLocks
 import xyz.xenondevs.commons.tuple.Tuple10
 import xyz.xenondevs.commons.tuple.Tuple2
 import xyz.xenondevs.commons.tuple.Tuple3

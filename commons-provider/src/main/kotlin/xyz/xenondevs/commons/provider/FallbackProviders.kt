@@ -1,14 +1,43 @@
 @file:OptIn(UnstableProviderApi::class)
 
-package xyz.xenondevs.commons.provider.mutable
+package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.provider.AbstractProvider
-import xyz.xenondevs.commons.provider.MutableProvider
-import xyz.xenondevs.commons.provider.Provider
-import xyz.xenondevs.commons.provider.UnstableProviderApi
-import xyz.xenondevs.commons.provider.immutable.provider
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
+
+/**
+ * Creates and returns a new [Provider] that returns a fallback [value] if the value of [this][Provider] is null.
+ */
+fun <T> Provider<T?>.orElse(value: T): Provider<T> =
+    map { it ?: value }
+
+/**
+ * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
+ */
+fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> {
+    this as AbstractProvider<T?>
+    provider as AbstractProvider<T>
+
+    provider.changeLock(lock)
+    lock.withLock {
+        val orElse = map { it ?: provider.get() } as AbstractProvider<T>
+        orElse.addInactiveParent(provider)
+        provider.addChild(orElse)
+        return orElse
+    }
+}
+
+/**
+ * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
+ */
+fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> = // naming this function orElse would lead to a resolution ambiguity with orElse(value: T)
+    orElse(provider(lazyValue))
+
+/**
+ * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
+ */
+fun <T> Provider<T?>.orElseNew(newValue: () -> T): Provider<T> =
+    map { it ?: newValue() }
 
 /**
  * Creates a new [MutableProvider] that returns a fallback [value] if the value of [this][MutableProvider] is null.
@@ -38,9 +67,9 @@ fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvi
     orElse(provider(lazyValue))
 
 /**
- * Creates a new [MutableProvider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][MutableProvider] is set to null. 
+ * Creates a new [MutableProvider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][MutableProvider] is set to null.
  * Conversely, if the returned provider's value is set to a value equal to one returned by [newValue], the value of [this][MutableProvider] will be set to null.
- * 
+ *
  * For mutable data types, it is required that the [newValue] lambda returns a new instance every time it is called, and that all of those instances are [equal][Any.equals] to each other.
  */
 fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<T> =
