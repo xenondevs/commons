@@ -38,6 +38,33 @@ class ObservedProviderTests {
     }
     
     @Test
+    fun testOldMapUnobserved() {
+        val mapA = mutableMapOf("a" to 1)
+        val mapB = mutableMapOf("b" to 1)
+        
+        var updateCount = 0
+        
+        val mapProvider = mutableProvider(mapA)
+        val observedProvider = mapProvider.observed()
+        observedProvider.subscribe { updateCount++ }
+    
+        assertEquals(0, updateCount)
+        
+        val observedMapA = observedProvider.get()
+        observedMapA["a"] = 2
+        assertEquals(1, updateCount)
+        
+        mapProvider.set(mapB)
+        val observedMapB = observedProvider.get()
+        
+        observedMapA["a"] = 3
+        assertEquals(2, updateCount)
+        
+        observedMapB["b"] = 2
+        assertEquals(3, updateCount)
+    }
+    
+    @Test
     fun testObservedSet() {
         var set = setOf(1)
         
@@ -67,6 +94,33 @@ class ObservedProviderTests {
     }
     
     @Test
+    fun testOldSetUnobserved() {
+        val setA = mutableSetOf(1)
+        val setB = mutableSetOf(1)
+        
+        var updateCount = 0
+        
+        val setProvider = mutableProvider(setA)
+        val observedProvider = setProvider.observed()
+        observedProvider.subscribe { updateCount++ }
+        
+        assertEquals(0, updateCount)
+        
+        val observedSetA = observedProvider.get()
+        observedSetA += 2
+        assertEquals(1, updateCount)
+        
+        setProvider.set(setB)
+        val observedSetB = observedProvider.get()
+        
+        observedSetA += 3
+        assertEquals(2, updateCount)
+        
+        observedSetB += 2
+        assertEquals(3, updateCount)
+    }
+    
+    @Test
     fun testObservedList() {
         var list = listOf(1)
         
@@ -93,6 +147,33 @@ class ObservedProviderTests {
         assertEquals(listOf(1, 2, 3), list)
         assertEquals(listOf("1", "2", "3"), observedProvider.get())
         assertEquals(listOf(1, 2, 3), mappedProvider2.get())
+    }
+    
+    @Test
+    fun testOldListUnobserved() {
+        val listA = mutableListOf(1)
+        val listB = mutableListOf(1)
+        
+        var updateCount = 0
+        
+        val listProvider = mutableProvider(listA)
+        val observedProvider = listProvider.observed()
+        observedProvider.subscribe { updateCount++ }
+        
+        assertEquals(0, updateCount)
+        
+        val observedListA = observedProvider.get()
+        observedListA += 2
+        assertEquals(1, updateCount)
+        
+        listProvider.set(listB)
+        val observedListB = observedProvider.get()
+        
+        observedListA += 3
+        assertEquals(2, updateCount)
+        
+        observedListB += 2
+        assertEquals(3, updateCount)
     }
     
 }
