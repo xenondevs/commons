@@ -12,6 +12,30 @@ import kotlin.concurrent.withLock
  * and propagates changes appropriately.
  */
 @JvmName("observedList")
+fun <E> Provider<MutableList<E>>.observed(): Provider<MutableList<E>> =
+    ObservedListProvider(this as AbstractProvider<MutableList<E>>, false)
+
+/**
+ * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
+ * and propagates changes appropriately.
+ */
+@JvmName("observedMap")
+fun <K, V> Provider<MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
+    ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>, false)
+
+/**
+ * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
+ * and propagates changes appropriately.
+ */
+@JvmName("observedSet")
+fun <E> Provider<MutableSet<E>>.observed(): Provider<MutableSet<E>> =
+    ObservedSetProvider(this as AbstractProvider<MutableSet<E>>, false)
+
+/**
+ * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
+ * and propagates changes appropriately.
+ */
+@JvmName("observedList")
 fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>> =
     ObservedListProvider(this as AbstractProvider<MutableList<E>>)
 
