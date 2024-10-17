@@ -60,8 +60,10 @@ abstract class AbstractProvider<T>(
     
     private var activeParents: MutableSet<ParentProviderWrapper<T, *>>? = null
     private var inactiveParents: MutableSet<AbstractProvider<*>>? = null
-    private var inactiveChildren: MutableSet<AbstractProvider<*>>? = null
     private var activeChildren: MutableSet<AbstractProvider<*>>? = null
+    private var weakActiveChildren: MutableSet<AbstractProvider<*>>? = null
+    private var inactiveChildren: MutableSet<AbstractProvider<*>>? = null
+    private var weakInactiveChildren: MutableSet<AbstractProvider<*>>? = null
     private var subscribers: MutableList<(T) -> Unit>? = null
     private var weakSubscribers: MutableMap<Any, ArrayList<(Any, T) -> Unit>>? = null
     
@@ -234,59 +236,75 @@ abstract class AbstractProvider<T>(
         }
     }
     
-    fun addChild(child: AbstractProvider<*>) {
+    private fun getOrCreateChildSet(active: Boolean, weak: Boolean): MutableSet<AbstractProvider<*>> {
         assert(lock.isHeldByCurrentThread)
-        if (child.lock != lock)
-            throw IllegalArgumentException("Mismatching locks")
+        val children: MutableSet<AbstractProvider<*>>
+        if (active) {
+            if (weak) {
+                if (weakActiveChildren == null)
+                    weakActiveChildren = weakHashSet(1)
+                children = weakActiveChildren!!
+            } else {
+                if (activeChildren == null)
+                    activeChildren = HashSet(1)
+                children = activeChildren!!
+            }
+        } else {
+            if (weak) {
+                if (weakInactiveChildren == null)
+                    weakInactiveChildren = weakHashSet(1)
+                children = weakInactiveChildren!!
+            } else {
+                if (inactiveChildren == null)
+                    inactiveChildren = HashSet(1)
+                children = inactiveChildren!!
+            }
+        }
         
-        if (activeChildren == null)
-            activeChildren = weakHashSet(1)
-        activeChildren!!.add(child)
+        return children
     }
     
-    fun removeChild(child: AbstractProvider<*>) {
+    private fun getChildSetOrNull(active: Boolean, weak: Boolean): MutableSet<AbstractProvider<*>>? {
         assert(lock.isHeldByCurrentThread)
-        activeChildren?.remove(child)
-    }
-    
-    fun addInactiveChild(child: AbstractProvider<*>) {
-        assert(lock.isHeldByCurrentThread)
-        if (child.lock != lock)
-            throw IllegalArgumentException("Mismatching locks")
-        
-        if (inactiveChildren == null)
-            inactiveChildren = weakHashSet(1)
-        inactiveChildren!!.add(child)
-    }
-    
-    fun removeInactiveChild(child: AbstractProvider<*>) {
-        assert(lock.isHeldByCurrentThread)
-        inactiveChildren?.remove(child)
-    }
-    
-    fun addChildren(vararg children: AbstractProvider<*>) {
-        assert(lock.isHeldByCurrentThread)
-        
-        for (child in children) {
-            if (child.lock != lock)
-                throw IllegalArgumentException("Mismatching locks")
-            
-            if (activeChildren == null)
-                activeChildren = weakHashSet(1)
-            activeChildren!!.add(child)
+        return if (active) {
+            if (weak) weakActiveChildren else activeChildren
+        } else {
+            if (weak) weakInactiveChildren else inactiveChildren
         }
     }
     
-    fun addInactiveChildren(vararg children: AbstractProvider<*>) {
+    fun addChild(active: Boolean, weak: Boolean, child: AbstractProvider<*>) {
+        assert(lock.isHeldByCurrentThread)
+        if (child.lock != lock)
+            throw IllegalArgumentException("Mismatching locks")
+        
+        getOrCreateChildSet(active, weak).add(child)
+    }
+    
+    fun addChildren(active: Boolean, weak: Boolean, vararg children: AbstractProvider<*>) {
         assert(lock.isHeldByCurrentThread)
         
+        val childSet = getOrCreateChildSet(active, weak)
         for (child in children) {
             if (child.lock != lock)
                 throw IllegalArgumentException("Mismatching locks")
             
-            if (inactiveChildren == null)
-                inactiveChildren = weakHashSet(1)
-            inactiveChildren!!.add(child)
+            childSet.add(child)
+        }
+    }
+    
+    fun removeChild(active: Boolean, weak: Boolean, child: AbstractProvider<*>) {
+        assert(lock.isHeldByCurrentThread)
+        getChildSetOrNull(active, weak)?.remove(child)
+    }
+    
+    fun removeChildren(active: Boolean, weak: Boolean, vararg children: AbstractProvider<*>) {
+        assert(lock.isHeldByCurrentThread)
+        
+        val childSet = getChildSetOrNull(active, weak)
+            ?: return
+        for (child in children) {
+            childSet.remove(child)
         }
     }
     
@@ -306,9 +324,9 @@ abstract class AbstractProvider<T>(
 }
 
 @OptIn(UnstableProviderApi::class)
-internal fun AbstractProvider<*>.addAsChildTo(vararg parents: AbstractProvider<*>) {
+internal fun AbstractProvider<*>.addAsChildTo(active: Boolean, weak: Boolean, vararg parents: AbstractProvider<*>) {
     for (parent in parents) {
-        parent.addChild(this)
+        parent.addChild(active, weak, this)
     }
 }
 
