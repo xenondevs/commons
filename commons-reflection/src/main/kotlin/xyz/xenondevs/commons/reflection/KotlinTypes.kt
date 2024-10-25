@@ -21,6 +21,11 @@ inline val <reified K> Map<K, *>.keyType: KType
 inline val <reified V> Map<*, V>.valueType: KType
     get() = typeOf<V>()
 
+fun KType?.equalsIgnoreNullability(other: KType?): Boolean {
+    return this == null && other == null 
+        || this != null && other != null && classifier == other.classifier && arguments.size == other.arguments.size
+}
+
 fun KClass<*>.createStarProjectedType(
     nullable: Boolean = false,
     annotations: List<Annotation> = emptyList()
