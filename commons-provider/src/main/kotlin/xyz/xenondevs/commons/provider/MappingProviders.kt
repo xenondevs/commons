@@ -337,7 +337,7 @@ private class FlatMappingProvider<P, T>(
             provider.addChild(active = true, weak = weak, child = this)
             addParent(provider, ignored = setOf(parent)) { it }
             
-            parent.subscribeWeak(this) { thisRef, parentValue ->
+            parent.subscribeWeakImmediate(this) { thisRef, parentValue ->
                 thisRef.handleProviderUpdate(transform(parentValue))
             }
         }

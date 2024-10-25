@@ -15,6 +15,8 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
+// TODO: locks don't need to be changed if all parents have the same lock
+
 /**
  * Creates and returns a new [Provider] that combines all values of [providers].
  */

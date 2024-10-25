@@ -127,7 +127,9 @@ private class ObservedListProvider<T>(
         var observedList: ObservableList<T>? = null
         observedList = ObservableList(list) {
             if (this.observedList === observedList) {
-                lock.withLock { onSelfChanged() }
+                val preparedSubscribers = ArrayList<() -> Unit>(0)
+                lock.withLock { onSelfChanged(preparedSubscribers) }
+                preparedSubscribers.forEach { it() }
             }
         }
         this.observedList = observedList
@@ -160,7 +162,9 @@ private class ObservedMapProvider<K, V>(
         var observedMap: ObservableMap<K, V>? = null
         observedMap = ObservableMap(map) {
             if (this.observedMap === observedMap) {
-                lock.withLock { onSelfChanged() }
+                val preparedSubscribers = ArrayList<() -> Unit>(0)
+                lock.withLock { onSelfChanged(preparedSubscribers) }
+                preparedSubscribers.forEach { it() }
             }
         }
         this.observedMap = observedMap
@@ -193,7 +197,9 @@ private class ObservedSetProvider<T>(
         var observedSet: ObservableSet<T>? = null
         observedSet = ObservableSet(set) {
             if (this.observedSet === observedSet) {
-                lock.withLock { onSelfChanged() }
+                val preparedSubscribers = ArrayList<() -> Unit>(0)
+                lock.withLock { onSelfChanged(preparedSubscribers) }
+                preparedSubscribers.forEach { it() }
             }
         }
         this.observedSet = observedSet

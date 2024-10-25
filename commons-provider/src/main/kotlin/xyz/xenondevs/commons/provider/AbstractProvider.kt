@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.provider
 
+import xyz.xenondevs.commons.collections.isNullOrEmpty
 import xyz.xenondevs.commons.collections.weakHashSet
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
@@ -32,11 +33,14 @@ private class ParentProviderWrapper<C, P>(
     val ignored: Set<AbstractProvider<*>> // set of providers which should not cause parent.onChildChanged when updating child (only one level deep)
 ) {
     
-    fun onChildChanged(changed: AbstractProvider<*>) {
+    fun onChildChanged(
+        changed: AbstractProvider<*>,
+        preparedSubscribers: MutableList<() -> Unit>
+    ) {
         if (changed in ignored)
             return
         
-        parent.onChildChanged(child, push)
+        parent.onChildChanged(child, push, preparedSubscribers)
     }
     
 }
@@ -66,9 +70,11 @@ abstract class AbstractProvider<T>(
     private var weakInactiveChildren: MutableSet<AbstractProvider<*>>? = null
     private var subscribers: MutableList<(T) -> Unit>? = null
     private var weakSubscribers: MutableMap<Any, ArrayList<(Any, T) -> Unit>>? = null
+    private var immediateSubscribers: MutableList<(T) -> Unit>? = null
+    private var weakImmediateSubscribers: MutableMap<Any, ArrayList<(Any, T) -> Unit>>? = null
     
     val parents: Set<AbstractProvider<*>>
-        get() = lock.withLock { 
+        get() = lock.withLock {
             val parents = HashSet<AbstractProvider<*>>()
             activeParents?.forEach { parents.add(it.parent) }
             inactiveParents?.forEach { parents.add(it) }
@@ -104,10 +110,18 @@ abstract class AbstractProvider<T>(
         }
     }
     
-    override fun set(value: T) = lock.withLock {
-        if (this.value != value) {
-            this.value = value
-            onSelfChanged()
+    override fun set(value: T) {
+        val preparedSubscribers = ArrayList<() -> Unit>(0)
+        
+        lock.withLock {
+            if (this.value != value) {
+                this.value = value
+                onSelfChanged(preparedSubscribers)
+            }
+        }
+        
+        for (subscriber in preparedSubscribers) {
+            subscriber()
         }
     }
     
@@ -117,6 +131,12 @@ abstract class AbstractProvider<T>(
         subscribers!!.add(action)
     }
     
+    fun subscribeImmediate(action: (T) -> Unit): Unit = lock.withLock {
+        if (immediateSubscribers == null)
+            immediateSubscribers = ArrayList(1)
+        immediateSubscribers!!.add(action)
+    }
+    
     @Suppress("UNCHECKED_CAST")
     override fun <R : Any> subscribeWeak(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
         if (weakSubscribers == null)
@@ -124,8 +144,19 @@ abstract class AbstractProvider<T>(
         weakSubscribers!!.getOrPut(owner) { ArrayList(1) } += action as (Any, T) -> Unit
     }
     
+    @Suppress("UNCHECKED_CAST")
+    fun <R : Any> subscribeWeakImmediate(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
+        if (weakImmediateSubscribers == null)
+            weakImmediateSubscribers = WeakHashMap(1)
+        weakImmediateSubscribers!!.getOrPut(owner) { ArrayList(1) } += action as (Any, T) -> Unit
+    }
+    
     override fun unsubscribe(action: (T) -> Unit): Unit = lock.withLock {
         subscribers?.remove(action)
+    }
+    
+    fun unsubscribeImmediate(action: (T) -> Unit): Unit = lock.withLock {
+        immediateSubscribers?.remove(action)
     }
     
     @Suppress("UNCHECKED_CAST")
@@ -134,55 +165,85 @@ abstract class AbstractProvider<T>(
         weakSubscribers?.get(owner)?.remove(action)
     }
     
+    @Suppress("UNCHECKED_CAST")
+    fun <R : Any> unsubscribeWeakImmediate(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
+        action as (Any, T) -> Unit
+        weakImmediateSubscribers?.get(owner)?.remove(action)
+    }
+    
     override fun <R : Any> unsubscribeWeak(owner: R): Unit = lock.withLock {
         weakSubscribers?.remove(owner)
     }
     
-    fun onSelfChanged() {
-        assert(lock.isHeldByCurrentThread)
-        
-        fireSubscribers()
-        
-        activeParents?.forEach { it.onChildChanged(this) }
-        activeChildren?.forEach { it.onParentChanged(this) }
+    fun <R : Any> unsubscribeWeakImmediate(owner: R): Unit = lock.withLock {
+        weakImmediateSubscribers?.remove(owner)
     }
     
-    fun onParentChanged(changedParent: AbstractProvider<*>) {
+    fun onSelfChanged(preparedSubscribers: MutableList<() -> Unit>) {
+        assert(lock.isHeldByCurrentThread)
+        
+        prepareSubscribers(preparedSubscribers)
+        
+        activeParents?.forEach { it.onChildChanged(this, preparedSubscribers) }
+        activeChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
+    }
+    
+    fun onParentChanged(
+        changedParent: AbstractProvider<*>,
+        preparedSubscribers: MutableList<() -> Unit>
+    ) {
         assert(lock.isHeldByCurrentThread)
         
         value = InternalProviderValue.Uninitialized
         
-        fireSubscribers()
+        prepareSubscribers(preparedSubscribers)
         
         activeParents?.forEach {
             if (it.parent != changedParent)
-                it.onChildChanged(changedParent)
+                it.onChildChanged(changedParent, preparedSubscribers)
         }
-        activeChildren?.forEach { it.onParentChanged(this) }
+        activeChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
     }
     
-    fun <C> onChildChanged(changedChild: AbstractProvider<C>, push: PushFunction<C, T>) {
+    fun <C> onChildChanged(
+        changedChild: AbstractProvider<C>,
+        push: PushFunction<C, T>,
+        preparedSubscribers: MutableList<() -> Unit>
+    ) {
         assert(lock.isHeldByCurrentThread)
         
         value = PushSource(changedChild, push)
-        fireSubscribers()
+        prepareSubscribers(preparedSubscribers)
         
-        activeParents?.forEach { it.onChildChanged(changedChild) }
+        activeParents?.forEach { it.onChildChanged(changedChild, preparedSubscribers) }
         activeChildren?.forEach {
             if (it != changedChild)
-                it.onParentChanged(this)
+                it.onParentChanged(this, preparedSubscribers)
         }
     }
     
-    private fun fireSubscribers() { // TODO: fire outside of lock ?
+    private fun prepareSubscribers(preparedSubscribers: MutableList<() -> Unit>) {
         assert(lock.isHeldByCurrentThread)
         
-        if (subscribers.isNullOrEmpty() && weakSubscribers.isNullOrEmpty())
-            return
+        if (subscribers.isNullOrEmpty()
+            && weakSubscribers.isNullOrEmpty()
+            && immediateSubscribers.isNullOrEmpty()
+            && weakImmediateSubscribers.isNullOrEmpty()
+        ) return
         
         val value = get()
-        subscribers?.forEach { it(value) }
+        subscribers?.forEach { subscriber ->
+            preparedSubscribers += { subscriber(value) }
+        }
         weakSubscribers?.forEach { (owner, actions) ->
+            for (action in actions) {
+                preparedSubscribers += { action(owner, value) }
+            }
+        }
+        immediateSubscribers?.forEach { subscriber ->
+            subscriber(value)
+        }
+        weakImmediateSubscribers?.forEach { (owner, actions) ->
             for (action in actions) {
                 action(owner, value)
             }

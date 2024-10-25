@@ -168,4 +168,18 @@ class ProviderTest {
         assertEquals(1, mirror3)
     }
     
+    @OptIn(UnstableProviderApi::class)
+    @Test
+    fun testProviderSubscriberCalledOutsideLock() {
+        val provider = mutableProvider(0) as AbstractProvider<Int>
+        val mapped = provider.map({ it + 1 }, { it - 1 }) as AbstractProvider<Int>
+        
+        provider.subscribe { assertEquals(false, provider.lock.isHeldByCurrentThread) }
+        provider.subscribeWeak(this) { _, _ -> assertEquals(false, provider.lock.isHeldByCurrentThread) }
+        mapped.subscribe { assertEquals(false, provider.lock.isHeldByCurrentThread) }
+        mapped.subscribeWeak(this) { _, _ -> assertEquals(false, provider.lock.isHeldByCurrentThread) }
+        
+        provider.set(1)
+    }
+    
 }

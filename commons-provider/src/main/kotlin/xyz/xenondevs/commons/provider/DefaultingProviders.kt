@@ -2,9 +2,9 @@
 
 package xyz.xenondevs.commons.provider
 
+import java.lang.ref.WeakReference
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
-import java.lang.ref.WeakReference
 
 /**
  * Creates a new [MutableProvider] that defaults to [value] if the value of [this][MutableProvider] is null.
@@ -16,7 +16,7 @@ fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
 /**
  * Creates a new [MutableProvider] that defaults to [value] if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
- * 
+ *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
 fun <T : Any> MutableProvider<T?>.weakDefaultsTo(value: T): MutableProvider<T> =
@@ -73,7 +73,7 @@ private class MutableDefaultValueProvider<T : Any>(
         var value = parent.get()
         if (value == null) {
             value = defaultValue
-            parent.onChildChanged(this) { it }
+            parent.onChildChanged(this, { it }, ArrayList(0)) // fixme: does not fire subscribers
         }
         
         return value
@@ -102,7 +102,7 @@ private class MutableDefaultProviderProvider<T : Any>(
         var value = provider.get()
         if (value == null) {
             value = defaultProvider.get()
-            provider.onChildChanged(this) { it }
+            provider.onChildChanged(this, { it }, ArrayList(0))
         }
         
         return value
