@@ -6,7 +6,7 @@
     <parent>
         <groupId>xyz.xenondevs.commons</groupId>
         <artifactId>commons</artifactId>
-        <version>1.18</version>
+        <version>1.19</version>
     </parent>
 
     <artifactId>commons-gson</artifactId>
