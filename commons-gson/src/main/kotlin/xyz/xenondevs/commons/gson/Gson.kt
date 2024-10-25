@@ -9,8 +9,11 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.google.gson.TypeAdapter
+import java.io.File
 import java.io.Reader
 import java.lang.reflect.Type
+import java.nio.file.Path
+import kotlin.io.path.bufferedReader
 import kotlin.reflect.javaType
 import kotlin.reflect.typeOf
 
@@ -30,6 +33,14 @@ inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
 
 inline fun <reified T> Gson.fromJson(reader: Reader): T? {
     return fromJson(reader, javaTypeOf<T>())
+}
+
+inline fun <reified T> Gson.fromJson(file: File): T? {
+    return file.bufferedReader().use { fromJson(it, javaTypeOf<T>()) }
+}
+
+inline fun <reified T> Gson.fromJson(file: Path): T? {
+    return file.bufferedReader().use { fromJson(it, javaTypeOf<T>()) }
 }
 
 inline fun <reified T> Gson.toJsonTreeTyped(src: T): JsonElement {
