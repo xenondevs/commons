@@ -9,6 +9,8 @@ import kotlin.concurrent.withLock
 /**
  * Creates and returns a new [Provider] that combines all values of [providers]
  * and immediately maps them to [R] using [mapValue].
+ * 
+ * [mapValue] should be a pure function.
  */
 @Suppress("UNCHECKED_CAST")
 fun <T, R> combinedProvider(providers: List<Provider<T>>, mapValue: (List<T>) -> R): Provider<R> =
@@ -17,6 +19,8 @@ fun <T, R> combinedProvider(providers: List<Provider<T>>, mapValue: (List<T>) ->
 /**
  * Creates and returns a new [Provider] that combines the values of [a] and [b]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, R> combinedProvider(
     a: Provider<A>,
@@ -32,6 +36,8 @@ fun <A, B, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b] and [c]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, R> combinedProvider(
     a: Provider<A>,
@@ -49,6 +55,8 @@ fun <A, B, C, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c] and [d]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, R> combinedProvider(
     a: Provider<A>,
@@ -68,6 +76,8 @@ fun <A, B, C, D, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d] and [e]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, R> combinedProvider(
     a: Provider<A>,
@@ -89,6 +99,8 @@ fun <A, B, C, D, E, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e] and [f]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, F, R> combinedProvider(
     a: Provider<A>,
@@ -112,6 +124,8 @@ fun <A, B, C, D, E, F, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f] and [g]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, F, G, R> combinedProvider(
     a: Provider<A>,
@@ -137,6 +151,8 @@ fun <A, B, C, D, E, F, G, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g] and [h]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, F, G, H, R> combinedProvider(
     a: Provider<A>,
@@ -164,6 +180,8 @@ fun <A, B, C, D, E, F, G, H, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h] and [i]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, F, G, H, I, R> combinedProvider(
     a: Provider<A>,
@@ -193,6 +211,8 @@ fun <A, B, C, D, E, F, G, H, I, R> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h], [i] and [j]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  */
 fun <A, B, C, D, E, F, G, H, I, J, R> combinedProvider(
     a: Provider<A>,
@@ -225,6 +245,8 @@ fun <A, B, C, D, E, F, G, H, I, J, R> combinedProvider(
  * Creates and returns a new [Provider] that combines all values of [providers]
  * and immediately maps them to [R] using [mapValue].
  *
+ * [mapValue] should be a pure function.
+ *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
 @Suppress("UNCHECKED_CAST")
@@ -234,6 +256,8 @@ fun <T, R> weakCombinedProvider(providers: List<Provider<T>>, mapValue: (List<T>
 /**
  * Creates and returns a new [Provider] that combines the values of [a] and [b]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -251,6 +275,8 @@ fun <A, B, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b] and [c]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -270,6 +296,8 @@ fun <A, B, C, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c] and [d]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -291,6 +319,8 @@ fun <A, B, C, D, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d] and [e]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -314,6 +344,8 @@ fun <A, B, C, D, E, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e] and [f]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -339,6 +371,8 @@ fun <A, B, C, D, E, F, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f] and [g]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -366,6 +400,8 @@ fun <A, B, C, D, E, F, G, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g] and [h]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -395,6 +431,8 @@ fun <A, B, C, D, E, F, G, H, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h] and [i]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
@@ -426,6 +464,8 @@ fun <A, B, C, D, E, F, G, H, I, R> weakCombinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h], [i] and [j]
  * and immediately maps them to [R] using [mapValue].
+ *
+ * [mapValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */

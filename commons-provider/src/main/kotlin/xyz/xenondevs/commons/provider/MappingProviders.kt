@@ -8,6 +8,8 @@ import kotlin.concurrent.withLock
 /**
  * Creates and returns a new [Provider] that maps the value of [this][Provider]
  * using the [transform] function.
+ * 
+ * [transform] should be a pure function.
  */
 fun <T, R> Provider<T>.map(transform: (T) -> R): Provider<R> =
     MappingProvider(this as AbstractProvider<T>, transform, false)
@@ -15,6 +17,8 @@ fun <T, R> Provider<T>.map(transform: (T) -> R): Provider<R> =
 /**
  * Creates and returns a new [Provider] that maps the value of [this][Provider]
  * using the [transform] function.
+ *
+ * [transform] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -24,30 +28,37 @@ fun <T, R> Provider<T>.weakMap(transform: (T) -> R): Provider<R> =
 /**
  * Creates and returns a new [Provider] that maps to the value of the [Provider]
  * returned by [transform].
+ *
+ * [transform] should be a pure function.
+ * 
+ * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
  */
 @Suppress("UNCHECKED_CAST")
-@JvmName("flatMapToProvider")
 fun <T, R> Provider<T>.flatMap(transform: (T) -> Provider<R>): Provider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, false)
 
 /**
  * Creates and returns a new [Provider] that maps to the value of the [Provider]
  * returned by [transform].
+ *
+ * [transform] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent providers
  * ([this][MutableProvider] and the result of [transform]).
  */
 @Suppress("UNCHECKED_CAST")
-@JvmName("weakFlatMapToProvider")
 fun <T, R> Provider<T>.weakFlatMap(transform: (T) -> Provider<R>): Provider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, true)
 
 /**
  * Creates and returns a new [Provider] that maps to the value of the [MutableProvider]
  * returned by [transform].
+ *
+ * [transform] should be a pure function.
+ * 
+ * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
  */
 @Suppress("UNCHECKED_CAST")
-@JvmName("flatMapToMutableProvider")
 fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, false)
 
@@ -55,11 +66,12 @@ fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): Mut
  * Creates and returns a new [Provider] that maps to the value of the [MutableProvider]
  * returned by [transform].
  *
+ * [transform] should be a pure function.
+ *
  * The returned provider will only be stored in a [WeakReference] in the parent providers
  * ([this][MutableProvider] and the result of [transform]).
  */
 @Suppress("UNCHECKED_CAST")
-@JvmName("weakFlatMapToMutableProvider")
 fun <T, R> Provider<T>.weakFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, true)
 
@@ -67,6 +79,8 @@ fun <T, R> Provider<T>.weakFlatMapMutable(transform: (T) -> MutableProvider<R>):
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]
  * using the [transform] function.
  * Null values will be passed through without transformation.
+ *
+ * [transform] should be a pure function.
  */
 inline fun <T : Any, R> Provider<T?>.mapNonNull(crossinline transform: (T) -> R): Provider<R?> =
     map { it?.let(transform) }
@@ -75,6 +89,8 @@ inline fun <T : Any, R> Provider<T?>.mapNonNull(crossinline transform: (T) -> R)
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]
  * using the [transform] function.
  * Null values will be passed through without transformation.
+ *
+ * [transform] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -84,6 +100,8 @@ inline fun <T : Any, R> Provider<T?>.weakMapNonNull(crossinline transform: (T) -
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function.
+ *
+ * [transform] should be a pure function.
  */
 inline fun <T, R> Provider<Collection<T>>.mapEach(crossinline transform: (T) -> R): Provider<List<R>> =
     mapEachTo({ size -> ArrayList(size) }, transform)
@@ -91,6 +109,8 @@ inline fun <T, R> Provider<Collection<T>>.mapEach(crossinline transform: (T) -> 
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function.
+ *
+ * [transform] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -100,6 +120,8 @@ inline fun <T, R> Provider<Collection<T>>.weakMapEach(crossinline transform: (T)
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and adds the results to a collection created by [makeCollection].
+ * 
+ * [makeCollection] and [transform] should be pure functions.
  */
 inline fun <T, R, C : MutableCollection<in R>> Provider<Collection<T>>.mapEachTo(
     crossinline makeCollection: (size: Int) -> C,
@@ -109,6 +131,8 @@ inline fun <T, R, C : MutableCollection<in R>> Provider<Collection<T>>.mapEachTo
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and adds the results to a collection created by [makeCollection].
+ *
+ * [makeCollection] and [transform] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -120,6 +144,8 @@ inline fun <T, R, C : MutableCollection<in R>> Provider<Collection<T>>.weakMapEa
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and filters out all null results.
+ *
+ * [transform] should be a pure function.
  */
 inline fun <T, R : Any> Provider<Collection<T>>.mapEachNotNull(crossinline transform: (T) -> R?): Provider<List<R>> =
     mapEachNotNullTo(::ArrayList, transform)
@@ -127,6 +153,8 @@ inline fun <T, R : Any> Provider<Collection<T>>.mapEachNotNull(crossinline trans
 /**
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and filters out all null results.
+ *
+ * [transform] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -137,6 +165,8 @@ inline fun <T, R : Any> Provider<Collection<T>>.weakMapEachNotNull(crossinline t
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and filters out all null results.
  * The results are added to a collection created by [makeCollection].
+ *
+ * [makeCollection] and [transform] should be pure functions.
  */
 inline fun <T, R : Any, C : MutableCollection<in R>> Provider<Collection<T>>.mapEachNotNullTo(
     crossinline makeCollection: (size: Int) -> C,
@@ -147,6 +177,8 @@ inline fun <T, R : Any, C : MutableCollection<in R>> Provider<Collection<T>>.map
  * Creates and returns a new [Provider] that maps each element of the [Collection] obtained from [this][Provider]
  * using the [transform] function and filters out all null results.
  * The results are added to a collection created by [makeCollection].
+ *
+ * [makeCollection] and [transform] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -159,6 +191,8 @@ inline fun <T, R : Any, C : MutableCollection<in R>> Provider<Collection<T>>.wea
 /**
  * Creates and returns a new [Provider] that flat-maps the elements of the [Collection] obtained from [this][Provider]
  * into a list using the [transform] function.
+ *
+ * [transform] should be a pure function.
  */
 @JvmName("flatMapCollection")
 inline fun <T, R> Provider<Collection<T>>.flatMapCollection(crossinline transform: (T) -> Iterable<R>): Provider<List<R>> =
@@ -167,6 +201,8 @@ inline fun <T, R> Provider<Collection<T>>.flatMapCollection(crossinline transfor
 /**
  * Creates and returns a new [Provider] that flat-maps the elements of the [Collection] obtained from [this][Provider]
  * into a list using the [transform] function.
+ *
+ * [transform] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -177,6 +213,8 @@ inline fun <T, R> Provider<Collection<T>>.weakFlatMapCollection(crossinline tran
 /**
  * Creates and returns a new [Provider] that flat-maps the elements of the [Collection] obtained from [this][Provider]
  * into a collection created by [makeCollection] using the [transform] function.
+ *
+ * [makeCollection] and [transform] should be pure functions.
  */
 inline fun <T, R, C : MutableCollection<in R>> Provider<Collection<T>>.flatMapCollectionTo(
     crossinline makeCollection: (size: Int) -> C,
@@ -186,6 +224,8 @@ inline fun <T, R, C : MutableCollection<in R>> Provider<Collection<T>>.flatMapCo
 /**
  * Creates and returns a new [Provider] that flat-maps the elements of the [Collection] obtained from [this][Provider]
  * into a collection created by [makeCollection] using the [transform] function.
+ *
+ * [makeCollection] and [transform] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -225,6 +265,8 @@ fun <K, V> Provider<List<Map<K, V>>>.weakMergeMaps(): Provider<Map<K, V>> =
 /**
  * Creates and returns a new [Provider] that merges all [Maps][Map] obtained from [this][Provider] into a single [Map],
  * which is created by the [makeMap] function.
+ * 
+ * [makeMap] should be a pure function.
  */
 fun <K, V, M : MutableMap<in K, in V>> Provider<List<Map<K, V>>>.mergeMapsTo(makeMap: (size: Int) -> M): Provider<M> =
     map { maps ->
@@ -237,6 +279,8 @@ fun <K, V, M : MutableMap<in K, in V>> Provider<List<Map<K, V>>>.mergeMapsTo(mak
 /**
  * Creates and returns a new [Provider] that merges all [Maps][Map] obtained from [this][Provider] into a single [Map],
  * which is created by the [makeMap] function.
+ *
+ * [makeMap] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -251,6 +295,8 @@ fun <K, V, M : MutableMap<in K, in V>> Provider<List<Map<K, V>>>.weakMergeMapsTo
 /**
  * Creates and returns a new [Provider] that throws an [IllegalArgumentException]
  * with a message generated by [message] if [condition] fails.
+ * 
+ * [condition] and [message] should be pure functions.
  */
 inline fun <T> Provider<T>.require(
     crossinline condition: (T) -> Boolean,
@@ -260,6 +306,8 @@ inline fun <T> Provider<T>.require(
 /**
  * Creates and returns a new [Provider] that throws an [IllegalArgumentException]
  * with a message generated by [message] if [condition] fails.
+ *
+ * [condition] and [message] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -287,6 +335,8 @@ fun <T : Any> Provider<T?>.weakRequireNotNull(message: String = "Required value 
 /**
  * Creates and returns a new [Provider] that throws an [IllegalArgumentException]
  * with a message generated by [message] if the value is `null`.
+ * 
+ * [message] should be a pure function.
  */
 inline fun <T : Any> Provider<T?>.requireNotNull(crossinline message: () -> String): Provider<T> =
     map { requireNotNull(it, message); it }
@@ -294,6 +344,8 @@ inline fun <T : Any> Provider<T?>.requireNotNull(crossinline message: () -> Stri
 /**
  * Creates and returns a new [Provider] that throws an [IllegalArgumentException]
  * with a message generated by [message] if the value is `null`.
+ *
+ * [message] should be a pure function.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -365,6 +417,8 @@ private class FlatMappingProvider<P, T>(
 /**
  * Creates and returns a new [MutableProvider] that maps the value of [this][MutableProvider]
  * bi-directionally using the provided [transform] and [untransform] functions.
+ * 
+ * [transform] and [untransform] should be pure functions.
  */
 fun <T, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> =
     MutableMappingProvider(this as AbstractProvider<T>, transform, untransform, false)
@@ -372,6 +426,8 @@ fun <T, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): M
 /**
  * Creates and returns a new [MutableProvider] that maps the value of [this][MutableProvider]
  * bi-directionally using the provided [transform] and [untransform] functions.
+ *
+ * [transform] and [untransform] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -382,6 +438,8 @@ fun <T, R> MutableProvider<T>.weakMap(transform: (T) -> R, untransform: (R) -> T
  * Creates and returns a new [MutableProvider] that maps non-null values of [this][MutableProvider]
  * bi-directionally using the provided [transform] and [untransform] functions.
  * Null values will be passed through without transformation.
+ *
+ * [transform] and [untransform] should be pure functions.
  */
 inline fun <T : Any, R : Any> MutableProvider<T?>.mapNonNull(
     crossinline transform: (T) -> R?,
@@ -392,6 +450,8 @@ inline fun <T : Any, R : Any> MutableProvider<T?>.mapNonNull(
  * Creates and returns a new [MutableProvider] that maps non-null values of [this][MutableProvider]
  * bi-directionally using the provided [transform] and [untransform] functions.
  * Null values will be passed through without transformation.
+ *
+ * [transform] and [untransform] should be pure functions.
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */

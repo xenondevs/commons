@@ -3,16 +3,33 @@ package xyz.xenondevs.commons.provider
 import java.util.function.Supplier
 import kotlin.reflect.KProperty
 
+/**
+ * A [Provider] is a thread-safe, lazily-evaluated, reactive data source that holds a single value of type [T].
+ * 
+ * There are various extension functions available for modelling atomic data transformations, such as [map] and [flatMap].
+ * It is important that all data transformation functions are pure, meaning that they are side effect free and
+ * do not access any mutable external state, in order to maintain the integrity of lazy evaluation. It is especially
+ * important that they do not resolve any other provider's value, **as doing so may risk deadlocks**.
+ * To properly operate on the values of multiple providers, combine them first via [combinedProvider].
+ * 
+ * Additionally, it is also possible to [subscribe] to providers. Note that this disables the lazy
+ * evaluation of the provider, as the value will need to be calculated immediately when an update happens
+ * in order to propagate it to the subscribers.
+ */
 sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a subscriber that will be called when the value of this [Provider] changes.
+     * 
+     * Note that the [Provider's][Provider] value may have already changed again when the subscriber is called.
      */
     fun subscribe(action: (value: T) -> Unit)
     
     /**
      * Registers a weak subscriber that will be called when the value of this [Provider] changes.
      * The subscriber will be automatically removed when the [owner] is garbage collected.
+     * 
+     * Note that the [Provider's][Provider] value may have already changed again when the subscriber is called.
      */
     fun <R : Any> subscribeWeak(owner: R, action: (owner: R, value: T) -> Unit)
     

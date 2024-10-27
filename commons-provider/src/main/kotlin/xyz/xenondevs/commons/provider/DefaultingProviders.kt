@@ -43,6 +43,8 @@ fun <T : Any> MutableProvider<T?>.weakDefaultsTo(provider: Provider<T>): Mutable
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
+ * 
+ * [lazyValue] should be a pure function.
  */
 fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableProvider<T> =
     defaultsTo(provider(lazyValue))
@@ -50,6 +52,8 @@ fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableP
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
+ *
+ * [lazyValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */

@@ -11,6 +11,7 @@ val NULL_PROVIDER: Provider<Nothing?> = provider(null)
 
 /**
  * Creates a new [Provider] that loads its value using the given [lazyValue] function.
+ * [lazyValue] should be a pure function.
  */
 fun <T> provider(lazyValue: () -> T): Provider<T> =
     object : AbstractProvider<T>(ReentrantLock()) {
@@ -47,6 +48,7 @@ fun <T> mutableProvider(initialValue: T): MutableProvider<T> =
 
 /**
  * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function.
+ * [lazyValue] should be a pure function.
  */
 fun <T> mutableProvider(lazyValue: () -> T): MutableProvider<T> =
     object : AbstractProvider<T>(ReentrantLock()) {
@@ -60,6 +62,7 @@ fun <T> mutableProvider(lazyValue: () -> T): MutableProvider<T> =
 /**
  * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function
  * and sets it using the given [setValue] function.
+ * [lazyValue] should be a pure function.
  */
 fun <T> mutableProvider(lazyValue: () -> T, setValue: (T) -> Unit = {}): MutableProvider<T> =
     mutableProvider(lazyValue).apply { subscribe(setValue) }

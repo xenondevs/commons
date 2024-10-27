@@ -49,12 +49,16 @@ private fun <T> Provider<T?>.orElse(provider: Provider<T>, weak: Boolean): Provi
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
+ *
+ * [lazyValue] should be a pure function.
  */
 fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> =
     orElse(provider(lazyValue))
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
+ *
+ * [lazyValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -63,12 +67,16 @@ fun <T> Provider<T?>.weakOrElseLazily(lazyValue: () -> T): Provider<T> =
 
 /**
  * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
+ *
+ * [newValue] should be a pure function.
  */
 fun <T> Provider<T?>.orElseNew(newValue: () -> T): Provider<T> =
     map { it ?: newValue() }
 
 /**
  * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
+ *
+ * [newValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
@@ -119,6 +127,8 @@ fun <T : Any> MutableProvider<T?>.weakOrElse(provider: Provider<T>): MutableProv
  * Creates a new [MutableProvider] that returns a fallback value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set to a value equal to the one obtained through [lazyValue], the value of [this][MutableProvider] will be set to null.
  *
+ * [lazyValue] should be a pure function.
+ *
  * This function is fundamentally different from [MutableProvider.defaultsToLazily] as it does not pass the default value upwards.
  */
 fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvider<T> =
@@ -127,6 +137,8 @@ fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvi
 /**
  * Creates a new [MutableProvider] that returns a fallback value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set to a value equal to the one obtained through [lazyValue], the value of [this][MutableProvider] will be set to null.
+ *
+ * [lazyValue] should be a pure function.
  *
  * This function is fundamentally different from [MutableProvider.defaultsToLazily] as it does not pass the default value upwards.
  *
@@ -140,6 +152,8 @@ fun <T : Any> MutableProvider<T?>.weakOrElseLazily(lazyValue: () -> T): MutableP
  * Conversely, if the returned provider's value is set to a value equal to one returned by [newValue], the value of [this][MutableProvider] will be set to null.
  *
  * For mutable data types, it is required that the [newValue] lambda returns a new instance every time it is called, and that all of those instances are [equal][Any.equals] to each other.
+ *
+ * [newValue] should be a pure function.
  */
 fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<T> =
     MutableFallbackNewProvider(this as AbstractProvider<T?>, newValue, false)
@@ -149,6 +163,8 @@ fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<
  * Conversely, if the returned provider's value is set to a value equal to one returned by [newValue], the value of [this][MutableProvider] will be set to null.
  *
  * For mutable data types, it is required that the [newValue] lambda returns a new instance every time it is called, and that all of those instances are [equal][Any.equals] to each other.
+ *
+ * [newValue] should be a pure function.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
