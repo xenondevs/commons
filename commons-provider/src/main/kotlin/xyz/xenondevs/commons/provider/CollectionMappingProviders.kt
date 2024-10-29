@@ -1,3 +1,6 @@
+@file:JvmName("Providers")
+@file:JvmMultifileClass
+
 package xyz.xenondevs.commons.provider
 
 import java.lang.ref.WeakReference
@@ -99,7 +102,6 @@ inline fun <T, R : Any, C : MutableCollection<in R>> Provider<Collection<T>>.wea
  *
  * [transform] should be a pure function.
  */
-@JvmName("flatMapCollection")
 inline fun <T, R> Provider<Collection<T>>.flatMapCollection(crossinline transform: (T) -> Iterable<R>): Provider<List<R>> =
     flatMapCollectionTo({ size -> ArrayList(size) }, transform)
 
@@ -111,7 +113,6 @@ inline fun <T, R> Provider<Collection<T>>.flatMapCollection(crossinline transfor
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakFlatMapCollection")
 inline fun <T, R> Provider<Collection<T>>.weakFlatMapCollection(crossinline transform: (T) -> Iterable<R>): Provider<List<R>> =
     weakFlatMapCollectionTo({ size -> ArrayList(size) }, transform)
 

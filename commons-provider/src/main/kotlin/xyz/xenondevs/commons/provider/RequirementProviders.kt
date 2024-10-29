@@ -1,3 +1,6 @@
+@file:JvmName("Providers")
+@file:JvmMultifileClass
+
 package xyz.xenondevs.commons.provider
 
 import java.lang.ref.WeakReference

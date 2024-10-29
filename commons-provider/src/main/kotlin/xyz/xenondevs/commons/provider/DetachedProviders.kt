@@ -1,3 +1,5 @@
+@file:JvmName("Providers")
+@file:JvmMultifileClass
 @file:OptIn(UnstableProviderApi::class)
 
 package xyz.xenondevs.commons.provider
