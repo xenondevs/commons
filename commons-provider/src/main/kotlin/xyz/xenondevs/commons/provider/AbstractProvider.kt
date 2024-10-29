@@ -1,6 +1,6 @@
 package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.collections.isNullOrEmpty
+import xyz.xenondevs.commons.collections.isNotNullOrEmpty
 import xyz.xenondevs.commons.collections.weakHashSet
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
@@ -69,9 +69,11 @@ abstract class AbstractProvider<T>(
     private var inactiveChildren: MutableSet<AbstractProvider<*>>? = null
     private var weakInactiveChildren: MutableSet<AbstractProvider<*>>? = null
     private var subscribers: MutableList<(T) -> Unit>? = null
-    private var weakSubscribers: MutableMap<Any, ArrayList<(Any, T) -> Unit>>? = null
+    private var weakSubscribers: MutableMap<Any, MutableList<(Any, T) -> Unit>>? = null
     private var immediateSubscribers: MutableList<(T) -> Unit>? = null
-    private var weakImmediateSubscribers: MutableMap<Any, ArrayList<(Any, T) -> Unit>>? = null
+    private var weakImmediateSubscribers: MutableMap<Any, MutableList<(Any, T) -> Unit>>? = null
+    private var observers: MutableList<() -> Unit>? = null
+    private var weakObservers: MutableMap<Any, MutableList<(Any) -> Unit>>? = null
     
     val parents: Set<AbstractProvider<*>>
         get() = lock.withLock {
@@ -137,6 +139,12 @@ abstract class AbstractProvider<T>(
         immediateSubscribers!!.add(action)
     }
     
+    override fun observe(action: () -> Unit): Unit = lock.withLock {
+        if (observers == null)
+            observers = ArrayList(1)
+        observers!!.add(action)
+    }
+    
     @Suppress("UNCHECKED_CAST")
     override fun <R : Any> subscribeWeak(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
         if (weakSubscribers == null)
@@ -151,12 +159,23 @@ abstract class AbstractProvider<T>(
         weakImmediateSubscribers!!.getOrPut(owner) { ArrayList(1) } += action as (Any, T) -> Unit
     }
     
+    @Suppress("UNCHECKED_CAST")
+    override fun <R : Any> observeWeak(owner: R, action: (R) -> Unit): Unit = lock.withLock {
+        if (weakObservers == null)
+            weakObservers = WeakHashMap(1)
+        weakObservers!!.getOrPut(owner) { ArrayList(1) } += action as (Any) -> Unit
+    }
+    
     override fun unsubscribe(action: (T) -> Unit): Unit = lock.withLock {
         subscribers?.remove(action)
     }
     
     fun unsubscribeImmediate(action: (T) -> Unit): Unit = lock.withLock {
         immediateSubscribers?.remove(action)
+    }
+    
+    override fun unobserve(action: () -> Unit): Unit = lock.withLock {
+        observers?.remove(action)
     }
     
     @Suppress("UNCHECKED_CAST")
@@ -171,12 +190,22 @@ abstract class AbstractProvider<T>(
         weakImmediateSubscribers?.get(owner)?.remove(action)
     }
     
+    @Suppress("UNCHECKED_CAST")
+    override fun <R : Any> unobserveWeak(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
+        action as (Any) -> Unit
+        weakObservers?.get(owner)?.remove(action)
+    }
+    
     override fun <R : Any> unsubscribeWeak(owner: R): Unit = lock.withLock {
         weakSubscribers?.remove(owner)
     }
     
     fun <R : Any> unsubscribeWeakImmediate(owner: R): Unit = lock.withLock {
         weakImmediateSubscribers?.remove(owner)
+    }
+    
+    override fun <R : Any> unobserveWeak(owner: R): Unit = lock.withLock {
+        weakObservers?.remove(owner)
     }
     
     fun onSelfChanged(preparedSubscribers: MutableList<() -> Unit>) {
@@ -225,27 +254,36 @@ abstract class AbstractProvider<T>(
     private fun prepareSubscribers(preparedSubscribers: MutableList<() -> Unit>) {
         assert(lock.isHeldByCurrentThread)
         
-        if (subscribers.isNullOrEmpty()
-            && weakSubscribers.isNullOrEmpty()
-            && immediateSubscribers.isNullOrEmpty()
-            && weakImmediateSubscribers.isNullOrEmpty()
-        ) return
-        
-        val value = get()
-        subscribers?.forEach { subscriber ->
-            preparedSubscribers += { subscriber(value) }
-        }
-        weakSubscribers?.forEach { (owner, actions) ->
+        observers?.let { preparedSubscribers += it }
+        weakObservers?.forEach { (owner, actions) ->
             for (action in actions) {
-                preparedSubscribers += { action(owner, value) }
+                preparedSubscribers += { action(owner) }
             }
         }
-        immediateSubscribers?.forEach { subscriber ->
-            subscriber(value)
-        }
-        weakImmediateSubscribers?.forEach { (owner, actions) ->
-            for (action in actions) {
-                action(owner, value)
+        
+        if (subscribers.isNotNullOrEmpty()
+            || weakSubscribers.isNotNullOrEmpty()
+            || immediateSubscribers.isNotNullOrEmpty()
+            || weakImmediateSubscribers.isNotNullOrEmpty()
+        ) {
+            val value = get()
+            
+            subscribers?.forEach { subscriber ->
+                preparedSubscribers += { subscriber(value) }
+            }
+            weakSubscribers?.forEach { (owner, actions) ->
+                for (action in actions) {
+                    preparedSubscribers += { action(owner, value) }
+                }
+            }
+            
+            immediateSubscribers?.forEach { subscriber ->
+                subscriber(value)
+            }
+            weakImmediateSubscribers?.forEach { (owner, actions) ->
+                for (action in actions) {
+                    action(owner, value)
+                }
             }
         }
     }

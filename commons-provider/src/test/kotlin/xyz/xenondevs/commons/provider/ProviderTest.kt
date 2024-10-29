@@ -182,4 +182,34 @@ class ProviderTest {
         provider.set(1)
     }
     
+    @Test
+    fun testProviderObserver() {
+        var invoked = false
+        var invokedWeak = false
+        var evalCount = 0
+        
+        val root = mutableProvider(0)
+        val mapped = root.map { evalCount++; it + 1 }
+        mapped.observe { invoked = true }
+        mapped.observeWeak(this) { invokedWeak = true }
+        
+        // initializing should not call observer
+        mapped.get()
+        assert(!invoked)
+        assert(!invokedWeak)
+        
+        // updating without changes to value should not call observer
+        root.set(0)
+        assert(!invoked)
+        assert(!invokedWeak)
+        
+        // updating with change to value should call observer
+        root.set(1)
+        assert(invoked)
+        assert(invokedWeak)
+        
+        // observer should not cause the provider value to be resolved
+        assertEquals(1, evalCount)
+    }
+    
 }
