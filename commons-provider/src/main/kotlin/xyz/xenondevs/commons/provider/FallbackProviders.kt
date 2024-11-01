@@ -11,38 +11,38 @@ import kotlin.concurrent.withLock
 /**
  * Creates and returns a new [Provider] that returns a fallback [value] if the value of [this][Provider] is null.
  */
-fun <T> Provider<T?>.orElse(value: T): Provider<T> =
-    map { it ?: value }
+fun <T> Provider<T?>.strongOrElse(value: T): Provider<T> =
+    strongMap { it ?: value }
 
 /**
  * Creates and returns a new [Provider] that returns a fallback [value] if the value of [this][Provider] is null.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> Provider<T?>.weakOrElse(value: T): Provider<T> =
-    weakMap { it ?: value }
+fun <T> Provider<T?>.orElse(value: T): Provider<T> =
+    map { it ?: value }
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
  */
-fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> =
-    orElse(provider, false)
+fun <T> Provider<T?>.strongOrElse(provider: Provider<T>): Provider<T> =
+    strongOrElse(provider, false)
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers ([this][MutableProvider] and [provider]).
  */
-fun <T> Provider<T?>.weakOrElse(provider: Provider<T>): Provider<T> =
-    orElse(provider, true)
+fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> =
+    strongOrElse(provider, true)
 
-private fun <T> Provider<T?>.orElse(provider: Provider<T>, weak: Boolean): Provider<T> {
+private fun <T> Provider<T?>.strongOrElse(provider: Provider<T>, weak: Boolean): Provider<T> {
     this as AbstractProvider<T?>
     provider as AbstractProvider<T>
     
     provider.changeLock(lock)
     lock.withLock {
-        val orElse = map { it ?: provider.get() } as AbstractProvider<T>
+        val orElse = strongMap { it ?: provider.get() } as AbstractProvider<T>
         orElse.addInactiveParent(provider)
         provider.addChild(active = true, weak = weak, child = orElse)
         return orElse
@@ -54,8 +54,8 @@ private fun <T> Provider<T?>.orElse(provider: Provider<T>, weak: Boolean): Provi
  *
  * [lazyValue] should be a pure function.
  */
-fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> =
-    orElse(provider(lazyValue))
+fun <T> Provider<T?>.strongOrElseLazily(lazyValue: () -> T): Provider<T> =
+    strongOrElse(provider(lazyValue))
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
@@ -64,16 +64,16 @@ fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> Provider<T?>.weakOrElseLazily(lazyValue: () -> T): Provider<T> =
-    weakOrElse(provider(lazyValue))
+fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> =
+    orElse(provider(lazyValue))
 
 /**
  * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
  *
  * [newValue] should be a pure function.
  */
-fun <T> Provider<T?>.orElseNew(newValue: () -> T): Provider<T> =
-    map { it ?: newValue() }
+fun <T> Provider<T?>.strongOrElseNew(newValue: () -> T): Provider<T> =
+    strongMap { it ?: newValue() }
 
 /**
  * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
@@ -82,47 +82,47 @@ fun <T> Provider<T?>.orElseNew(newValue: () -> T): Provider<T> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> Provider<T?>.weakOrElseNew(newValue: () -> T): Provider<T> =
-    weakMap { it ?: newValue() }
+fun <T> Provider<T?>.orElseNew(newValue: () -> T): Provider<T> =
+    map { it ?: newValue() }
 
 /**
  * Creates a new [MutableProvider] that returns a fallback [value] if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set a value equal to [value], the value of [this][MutableProvider] will be set to null.
  *
- * This function is fundamentally different from [MutableProvider.defaultsTo] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsTo] as it does not pass the default value upwards.
  */
-fun <T> MutableProvider<T?>.orElse(value: T): MutableProvider<T> =
+fun <T> MutableProvider<T?>.strongOrElse(value: T): MutableProvider<T> =
     MutableFallbackValueProvider(this as AbstractProvider<T?>, value, false)
 
 /**
  * Creates a new [MutableProvider] that returns a fallback [value] if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set a value equal to [value], the value of [this][MutableProvider] will be set to null.
  *
- * This function is fundamentally different from [MutableProvider.defaultsTo] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsTo] as it does not pass the default value upwards.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> MutableProvider<T?>.weakOrElse(value: T): MutableProvider<T> =
+fun <T> MutableProvider<T?>.orElse(value: T): MutableProvider<T> =
     MutableFallbackValueProvider(this as AbstractProvider<T?>, value, true)
 
 /**
  * Creates a new [MutableProvider] that returns a fallback value obtained through [provider] if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set to a value equal to the one obtained through [provider], the value of [this][MutableProvider] will be set to null.
  *
- * This function is fundamentally different from [MutableProvider.defaultsTo] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsTo] as it does not pass the default value upwards.
  */
-fun <T : Any> MutableProvider<T?>.orElse(provider: Provider<T>): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.strongOrElse(provider: Provider<T>): MutableProvider<T> =
     MutableFallbackProviderProvider(this as AbstractProvider<T?>, provider as AbstractProvider<T>, false)
 
 /**
  * Creates a new [MutableProvider] that returns a fallback value obtained through [provider] if the value of [this][MutableProvider] is null.
  * Conversely, if the returned provider's value is set to a value equal to the one obtained through [provider], the value of [this][MutableProvider] will be set to null.
  *
- * This function is fundamentally different from [MutableProvider.defaultsTo] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsTo] as it does not pass the default value upwards.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers ([this][MutableProvider] and [provider]).
  */
-fun <T : Any> MutableProvider<T?>.weakOrElse(provider: Provider<T>): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.orElse(provider: Provider<T>): MutableProvider<T> =
     MutableFallbackProviderProvider(this as AbstractProvider<T?>, provider as AbstractProvider<T>, true)
 
 /**
@@ -131,10 +131,10 @@ fun <T : Any> MutableProvider<T?>.weakOrElse(provider: Provider<T>): MutableProv
  *
  * [lazyValue] should be a pure function.
  *
- * This function is fundamentally different from [MutableProvider.defaultsToLazily] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsToLazily] as it does not pass the default value upwards.
  */
-fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvider<T> =
-    orElse(provider(lazyValue))
+fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): MutableProvider<T> =
+    strongOrElse(provider(lazyValue))
 
 /**
  * Creates a new [MutableProvider] that returns a fallback value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
@@ -142,12 +142,12 @@ fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvi
  *
  * [lazyValue] should be a pure function.
  *
- * This function is fundamentally different from [MutableProvider.defaultsToLazily] as it does not pass the default value upwards.
+ * This function is fundamentally different from [MutableProvider.strongDefaultsToLazily] as it does not pass the default value upwards.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.weakOrElseLazily(lazyValue: () -> T): MutableProvider<T> =
-    weakOrElse(provider(lazyValue))
+fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): MutableProvider<T> =
+    orElse(provider(lazyValue))
 
 /**
  * Creates a new [MutableProvider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][MutableProvider] is set to null.
@@ -157,7 +157,7 @@ fun <T : Any> MutableProvider<T?>.weakOrElseLazily(lazyValue: () -> T): MutableP
  *
  * [newValue] should be a pure function.
  */
-fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.strongOrElseNew(newValue: () -> T): MutableProvider<T> =
     MutableFallbackNewProvider(this as AbstractProvider<T?>, newValue, false)
 
 /**
@@ -170,7 +170,7 @@ fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.weakOrElseNew(newValue: () -> T): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.orElseNew(newValue: () -> T): MutableProvider<T> =
     MutableFallbackNewProvider(this as AbstractProvider<T?>, newValue, true)
 
 private class MutableFallbackValueProvider<T>(

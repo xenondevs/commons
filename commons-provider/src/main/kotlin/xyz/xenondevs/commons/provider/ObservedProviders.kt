@@ -7,102 +7,115 @@ package xyz.xenondevs.commons.provider
 import xyz.xenondevs.commons.collections.observed.ObservableList
 import xyz.xenondevs.commons.collections.observed.ObservableMap
 import xyz.xenondevs.commons.collections.observed.ObservableSet
+import java.lang.ref.WeakReference
 import kotlin.concurrent.withLock
 
 /**
  * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedList")
-fun <E> Provider<MutableList<E>>.observed(): Provider<MutableList<E>> =
+@JvmName("strongObservedList")
+fun <E> Provider<MutableList<E>>.strongObserved(): Provider<MutableList<E>> =
     ObservedListProvider(this as AbstractProvider<MutableList<E>>, mutable = false, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedMap")
-fun <K, V> Provider<MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
+@JvmName("strongObservedMap")
+fun <K, V> Provider<MutableMap<K, V>>.strongObserved(): Provider<MutableMap<K, V>> =
     ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>, mutable = false, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedSet")
-fun <E> Provider<MutableSet<E>>.observed(): Provider<MutableSet<E>> =
+@JvmName("strongObservedSet")
+fun <E> Provider<MutableSet<E>>.strongObserved(): Provider<MutableSet<E>> =
     ObservedSetProvider(this as AbstractProvider<MutableSet<E>>, mutable = false, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedList")
-fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>> =
+@JvmName("strongObservedList")
+fun <E> MutableProvider<out MutableList<E>>.strongObserved(): Provider<MutableList<E>> =
     ObservedListProvider(this as AbstractProvider<MutableList<E>>, mutable = true, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedMap")
-fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
+@JvmName("strongObservedMap")
+fun <K, V> MutableProvider<out MutableMap<K, V>>.strongObserved(): Provider<MutableMap<K, V>> =
     ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>, mutable = true, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
  * and propagates changes appropriately.
  */
-@JvmName("observedSet")
-fun <E> MutableProvider<out MutableSet<E>>.observed(): Provider<MutableSet<E>> =
+@JvmName("strongObservedSet")
+fun <E> MutableProvider<out MutableSet<E>>.strongObserved(): Provider<MutableSet<E>> =
     ObservedSetProvider(this as AbstractProvider<MutableSet<E>>, mutable = true, weak = false)
 
 /**
  * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedList")
-fun <E> Provider<MutableList<E>>.weakObserved(): Provider<MutableList<E>> =
+@JvmName("observedList")
+fun <E> Provider<MutableList<E>>.observed(): Provider<MutableList<E>> =
     ObservedListProvider(this as AbstractProvider<MutableList<E>>, mutable = false, weak = true)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedMap")
-fun <K, V> Provider<MutableMap<K, V>>.weakObserved(): Provider<MutableMap<K, V>> =
+@JvmName("observedMap")
+fun <K, V> Provider<MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
     ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>, mutable = false, weak = true)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedSet")
-fun <E> Provider<MutableSet<E>>.weakObserved(): Provider<MutableSet<E>> =
+@JvmName("observedSet")
+fun <E> Provider<MutableSet<E>>.observed(): Provider<MutableSet<E>> =
     ObservedSetProvider(this as AbstractProvider<MutableSet<E>>, mutable = false, weak = true)
 
 /**
  * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedList")
-fun <E> MutableProvider<out MutableList<E>>.weakObserved(): Provider<MutableList<E>> =
+@JvmName("observedList")
+fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>> =
     ObservedListProvider(this as AbstractProvider<MutableList<E>>, mutable = true, weak = true)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedMap")
-fun <K, V> MutableProvider<out MutableMap<K, V>>.weakObserved(): Provider<MutableMap<K, V>> =
+@JvmName("observedMap")
+fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
     ObservedMapProvider(this as AbstractProvider<MutableMap<K, V>>, mutable = true, weak = true)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
  * and propagates changes appropriately.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-@JvmName("weakObservedSet")
-fun <E> MutableProvider<out MutableSet<E>>.weakObserved(): Provider<MutableSet<E>> =
+@JvmName("observedSet")
+fun <E> MutableProvider<out MutableSet<E>>.observed(): Provider<MutableSet<E>> =
     ObservedSetProvider(this as AbstractProvider<MutableSet<E>>, mutable = true, weak = true)
 
 private class ObservedListProvider<T>(

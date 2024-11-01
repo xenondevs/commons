@@ -13,7 +13,7 @@ import kotlin.concurrent.withLock
  * 
  * [transform] should be a pure function.
  */
-fun <T, R> Provider<T>.map(transform: (T) -> R): Provider<R> =
+fun <T, R> Provider<T>.strongMap(transform: (T) -> R): Provider<R> =
     MappingProvider(this as AbstractProvider<T>, transform, false)
 
 /**
@@ -24,7 +24,7 @@ fun <T, R> Provider<T>.map(transform: (T) -> R): Provider<R> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T, R> Provider<T>.weakMap(transform: (T) -> R): Provider<R> =
+fun <T, R> Provider<T>.map(transform: (T) -> R): Provider<R> =
     MappingProvider(this as AbstractProvider<T>, transform, true)
 
 /**
@@ -36,7 +36,7 @@ fun <T, R> Provider<T>.weakMap(transform: (T) -> R): Provider<R> =
  * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
  */
 @Suppress("UNCHECKED_CAST")
-fun <T, R> Provider<T>.flatMap(transform: (T) -> Provider<R>): Provider<R> =
+fun <T, R> Provider<T>.strongFlatMap(transform: (T) -> Provider<R>): Provider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, false)
 
 /**
@@ -49,7 +49,7 @@ fun <T, R> Provider<T>.flatMap(transform: (T) -> Provider<R>): Provider<R> =
  * ([this][MutableProvider] and the result of [transform]).
  */
 @Suppress("UNCHECKED_CAST")
-fun <T, R> Provider<T>.weakFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+fun <T, R> Provider<T>.flatMap(transform: (T) -> Provider<R>): Provider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, true)
 
 /**
@@ -61,7 +61,7 @@ fun <T, R> Provider<T>.weakFlatMap(transform: (T) -> Provider<R>): Provider<R> =
  * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
  */
 @Suppress("UNCHECKED_CAST")
-fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+fun <T, R> Provider<T>.strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, false)
 
 /**
@@ -74,7 +74,7 @@ fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): Mut
  * ([this][MutableProvider] and the result of [transform]).
  */
 @Suppress("UNCHECKED_CAST")
-fun <T, R> Provider<T>.weakFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, true)
 
 /**
@@ -84,8 +84,8 @@ fun <T, R> Provider<T>.weakFlatMapMutable(transform: (T) -> MutableProvider<R>):
  *
  * [transform] should be a pure function.
  */
-inline fun <T : Any, R> Provider<T?>.mapNonNull(crossinline transform: (T) -> R): Provider<R?> =
-    map { it?.let(transform) }
+inline fun <T : Any, R> Provider<T?>.strongMapNonNull(crossinline transform: (T) -> R): Provider<R?> =
+    strongMap { it?.let(transform) }
 
 /**
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]
@@ -96,8 +96,8 @@ inline fun <T : Any, R> Provider<T?>.mapNonNull(crossinline transform: (T) -> R)
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-inline fun <T : Any, R> Provider<T?>.weakMapNonNull(crossinline transform: (T) -> R): Provider<R?> =
-    weakMap { it?.let(transform) }
+inline fun <T : Any, R> Provider<T?>.mapNonNull(crossinline transform: (T) -> R): Provider<R?> =
+    map { it?.let(transform) }
 
 private class MappingProvider<P, T>(
     private val parent: AbstractProvider<P>,
@@ -167,7 +167,7 @@ private class FlatMappingProvider<P, T>(
  * 
  * [transform] and [untransform] should be pure functions.
  */
-fun <T, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> =
+fun <T, R> MutableProvider<T>.strongMap(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> =
     MutableMappingProvider(this as AbstractProvider<T>, transform, untransform, false)
 
 /**
@@ -178,7 +178,7 @@ fun <T, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): M
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T, R> MutableProvider<T>.weakMap(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> =
+fun <T, R> MutableProvider<T>.map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> =
     MutableMappingProvider(this as AbstractProvider<T>, transform, untransform, true)
 
 /**
@@ -188,10 +188,10 @@ fun <T, R> MutableProvider<T>.weakMap(transform: (T) -> R, untransform: (R) -> T
  *
  * [transform] and [untransform] should be pure functions.
  */
-inline fun <T : Any, R : Any> MutableProvider<T?>.mapNonNull(
+inline fun <T : Any, R : Any> MutableProvider<T?>.strongMapNonNull(
     crossinline transform: (T) -> R?,
     crossinline untransform: (R) -> T?
-): MutableProvider<R?> = map({ it?.let(transform) }, { it?.let(untransform) })
+): MutableProvider<R?> = strongMap({ it?.let(transform) }, { it?.let(untransform) })
 
 /**
  * Creates and returns a new [MutableProvider] that maps non-null values of [this][MutableProvider]
@@ -202,10 +202,10 @@ inline fun <T : Any, R : Any> MutableProvider<T?>.mapNonNull(
  * 
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-inline fun <T : Any, R : Any> MutableProvider<T?>.weakMapNonNull(
+inline fun <T : Any, R : Any> MutableProvider<T?>.mapNonNull(
     crossinline transform: (T) -> R?,
     crossinline untransform: (R) -> T?
-): MutableProvider<R?> = weakMap({ it?.let(transform) }, { it?.let(untransform) })
+): MutableProvider<R?> = map({ it?.let(transform) }, { it?.let(untransform) })
 
 private class MutableMappingProvider<P, T>(
     private val parent: AbstractProvider<P>,

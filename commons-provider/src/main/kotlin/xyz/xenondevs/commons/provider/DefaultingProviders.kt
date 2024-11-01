@@ -12,7 +12,7 @@ import kotlin.concurrent.withLock
  * Creates a new [MutableProvider] that defaults to [value] if the value of [this][MutableProvider] is null.
  * The default value is propagated upwards when the value of the returned provider is loaded.
  */
-fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.strongDefaultsTo(value: T): MutableProvider<T> =
     MutableDefaultValueProvider(this as AbstractProvider<T?>, value, false)
 
 /**
@@ -21,7 +21,7 @@ fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.weakDefaultsTo(value: T): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.defaultsTo(value: T): MutableProvider<T> =
     MutableDefaultValueProvider(this as AbstractProvider<T?>, value, true)
 
 /**
@@ -29,7 +29,7 @@ fun <T : Any> MutableProvider<T?>.weakDefaultsTo(value: T): MutableProvider<T> =
  * The default value is propagated upwards when the value of the returned provider is loaded.
  * Once the value has been propagated upwards, changes to the value of [provider] will be ignored.
  */
-fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.strongDefaultsTo(provider: Provider<T>): MutableProvider<T> =
     MutableDefaultProviderProvider(this as AbstractProvider<T?>, provider as AbstractProvider<T>, false)
 
 /**
@@ -39,7 +39,7 @@ fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProv
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.weakDefaultsTo(provider: Provider<T>): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.defaultsTo(provider: Provider<T>): MutableProvider<T> =
     MutableDefaultProviderProvider(this as AbstractProvider<T?>, provider as AbstractProvider<T>, true)
 
 /**
@@ -48,8 +48,8 @@ fun <T : Any> MutableProvider<T?>.weakDefaultsTo(provider: Provider<T>): Mutable
  * 
  * [lazyValue] should be a pure function.
  */
-fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableProvider<T> =
-    defaultsTo(provider(lazyValue))
+fun <T : Any> MutableProvider<T?>.strongDefaultsToLazily(lazyValue: () -> T): MutableProvider<T> =
+    strongDefaultsTo(provider(lazyValue))
 
 /**
  * Creates a new [MutableProvider] that defaults to the value obtained through the [lazyValue] lambda if the value of [this][MutableProvider] is null.
@@ -59,8 +59,8 @@ fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableP
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.weakDefaultsToLazily(lazyValue: () -> T): MutableProvider<T> =
-    weakDefaultsTo(provider(lazyValue))
+fun <T : Any> MutableProvider<T?>.defaultsToLazily(lazyValue: () -> T): MutableProvider<T> =
+    defaultsTo(provider(lazyValue))
 
 private class MutableDefaultValueProvider<T : Any>(
     private val parent: AbstractProvider<T?>,

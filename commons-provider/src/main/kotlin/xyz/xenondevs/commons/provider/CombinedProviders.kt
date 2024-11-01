@@ -23,13 +23,13 @@ import kotlin.concurrent.withLock
  * Creates and returns a new [Provider] that combines all values of [providers].
  */
 @Suppress("UNCHECKED_CAST")
-fun <T> combinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
+fun <T> strongCombinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
     CombinedProvider(providers as List<AbstractProvider<T>>, false)
 
 /**
  * Creates and returns a new [Provider] that combines the values of [a] and [b].
  */
-fun <A, B> combinedProvider(
+fun <A, B> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>
 ): Provider<Tuple2<A, B>> = CombinedProvider2(
@@ -41,7 +41,7 @@ fun <A, B> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b] and [c].
  */
-fun <A, B, C> combinedProvider(
+fun <A, B, C> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>
@@ -55,7 +55,7 @@ fun <A, B, C> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c] and [d].
  */
-fun <A, B, C, D> combinedProvider(
+fun <A, B, C, D> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -71,7 +71,7 @@ fun <A, B, C, D> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d] and [e].
  */
-fun <A, B, C, D, E> combinedProvider(
+fun <A, B, C, D, E> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -89,7 +89,7 @@ fun <A, B, C, D, E> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e] and [f].
  */
-fun <A, B, C, D, E, F> combinedProvider(
+fun <A, B, C, D, E, F> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -109,7 +109,7 @@ fun <A, B, C, D, E, F> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f] and [g].
  */
-fun <A, B, C, D, E, F, G> combinedProvider(
+fun <A, B, C, D, E, F, G> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -131,7 +131,7 @@ fun <A, B, C, D, E, F, G> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g] and [h].
  */
-fun <A, B, C, D, E, F, G, H> combinedProvider(
+fun <A, B, C, D, E, F, G, H> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -155,7 +155,7 @@ fun <A, B, C, D, E, F, G, H> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h] and [i].
  */
-fun <A, B, C, D, E, F, G, H, I> combinedProvider(
+fun <A, B, C, D, E, F, G, H, I> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -181,7 +181,7 @@ fun <A, B, C, D, E, F, G, H, I> combinedProvider(
 /**
  * Creates and returns a new [Provider] that combines the values of [a], [b], [c], [d], [e], [f], [g], [h], [i] and [j].
  */
-fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(
+fun <A, B, C, D, E, F, G, H, I, J> strongCombinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -212,7 +212,7 @@ fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
 @Suppress("UNCHECKED_CAST")
-fun <T> weakCombinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
+fun <T> combinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
     CombinedProvider(providers as List<AbstractProvider<T>>, true)
 
 /**
@@ -220,7 +220,7 @@ fun <T> weakCombinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B> weakCombinedProvider(
+fun <A, B> combinedProvider(
     a: Provider<A>,
     b: Provider<B>
 ): Provider<Tuple2<A, B>> = CombinedProvider2(
@@ -234,7 +234,7 @@ fun <A, B> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C> weakCombinedProvider(
+fun <A, B, C> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>
@@ -250,7 +250,7 @@ fun <A, B, C> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D> weakCombinedProvider(
+fun <A, B, C, D> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -268,7 +268,7 @@ fun <A, B, C, D> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E> weakCombinedProvider(
+fun <A, B, C, D, E> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -288,7 +288,7 @@ fun <A, B, C, D, E> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E, F> weakCombinedProvider(
+fun <A, B, C, D, E, F> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -310,7 +310,7 @@ fun <A, B, C, D, E, F> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E, F, G> weakCombinedProvider(
+fun <A, B, C, D, E, F, G> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -334,7 +334,7 @@ fun <A, B, C, D, E, F, G> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E, F, G, H> weakCombinedProvider(
+fun <A, B, C, D, E, F, G, H> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -360,7 +360,7 @@ fun <A, B, C, D, E, F, G, H> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E, F, G, H, I> weakCombinedProvider(
+fun <A, B, C, D, E, F, G, H, I> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,
@@ -388,7 +388,7 @@ fun <A, B, C, D, E, F, G, H, I> weakCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-fun <A, B, C, D, E, F, G, H, I, J> weakCombinedProvider(
+fun <A, B, C, D, E, F, G, H, I, J> combinedProvider(
     a: Provider<A>,
     b: Provider<B>,
     c: Provider<C>,

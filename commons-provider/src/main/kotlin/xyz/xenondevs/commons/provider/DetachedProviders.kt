@@ -12,7 +12,7 @@ import kotlin.concurrent.withLock
  * It will still receive changes from the parent, but changes made the returned provider
  * will not affect the parent.
  */
-fun <T> MutableProvider<T>.detached(): MutableProvider<T> =
+fun <T> MutableProvider<T>.strongDetached(): MutableProvider<T> =
     DetachedProvider(this as AbstractProvider<T>, false)
 
 /**
@@ -22,7 +22,7 @@ fun <T> MutableProvider<T>.detached(): MutableProvider<T> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> MutableProvider<T>.weakDetached(): MutableProvider<T> =
+fun <T> MutableProvider<T>.detached(): MutableProvider<T> =
     DetachedProvider(this as AbstractProvider<T>, true)
 
 private class DetachedProvider<T>(
