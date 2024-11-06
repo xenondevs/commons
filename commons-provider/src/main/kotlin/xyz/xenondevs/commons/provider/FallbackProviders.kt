@@ -146,7 +146,7 @@ fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): Mutabl
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): MutableProvider<T> =
+fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvider<T> =
     orElse(provider(lazyValue))
 
 /**
