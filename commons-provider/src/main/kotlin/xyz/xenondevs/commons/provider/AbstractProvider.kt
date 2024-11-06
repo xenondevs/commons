@@ -215,6 +215,7 @@ abstract class AbstractProvider<T>(
         
         activeParents?.forEach { it.onChildChanged(this, preparedSubscribers) }
         activeChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
+        weakActiveChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
     }
     
     fun onParentChanged(
@@ -232,6 +233,7 @@ abstract class AbstractProvider<T>(
                 it.onChildChanged(changedParent, preparedSubscribers)
         }
         activeChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
+        weakActiveChildren?.forEach { it.onParentChanged(this, preparedSubscribers) }
     }
     
     fun <C> onChildChanged(
@@ -246,6 +248,10 @@ abstract class AbstractProvider<T>(
         
         activeParents?.forEach { it.onChildChanged(changedChild, preparedSubscribers) }
         activeChildren?.forEach {
+            if (it != changedChild)
+                it.onParentChanged(this, preparedSubscribers)
+        }
+        weakActiveChildren?.forEach {
             if (it != changedChild)
                 it.onParentChanged(this, preparedSubscribers)
         }
