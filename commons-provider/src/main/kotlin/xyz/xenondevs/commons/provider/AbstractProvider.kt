@@ -420,6 +420,8 @@ abstract class AbstractProvider<T>(
         
         activeChildren?.forEach { it.changeLock(lock) }
         inactiveChildren?.forEach { it.changeLock(lock) }
+        weakActiveChildren?.forEach { it.changeLock(lock) }
+        weakInactiveChildren?.forEach { it.changeLock(lock) }
         activeParents?.forEach { it.parent.changeLock(lock) }
         inactiveParents?.forEach { it.changeLock(lock) }
     }

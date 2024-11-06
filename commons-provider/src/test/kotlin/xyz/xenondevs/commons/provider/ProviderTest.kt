@@ -1,6 +1,7 @@
 package xyz.xenondevs.commons.provider
 
 import org.junit.jupiter.api.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class ProviderTest {
@@ -180,6 +181,25 @@ class ProviderTest {
         mapped.subscribeWeak(this) { _, _ -> assertEquals(false, provider.lock.isHeldByCurrentThread) }
         
         provider.set(1)
+    }
+    
+    @OptIn(UnstableProviderApi::class)
+    @Test
+    fun testLockChangedPropagate() {
+        val a = provider("a") as AbstractProvider<String>
+        val b = provider("b") as AbstractProvider<String>
+        val c = provider("c") as AbstractProvider<String>
+        
+        val combinedAB = combinedProvider(a, b) { a, b -> a + b } as AbstractProvider<String>
+        val combinedBC = combinedProvider(b, c) { b, c -> b + c } as AbstractProvider<String>
+        
+        assertContentEquals(
+            Array(5) { a.lock },
+            arrayOf(
+                a.lock, b.lock, c.lock,
+                combinedAB.lock, combinedBC.lock
+            )
+        )
     }
     
     @Test
