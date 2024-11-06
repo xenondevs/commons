@@ -6,7 +6,7 @@ import kotlin.reflect.KProperty
 /**
  * A [Provider] is a thread-safe, lazily-evaluated, reactive data source that holds a single value of type [T].
  *
- * There are various extension functions available for modelling atomic data transformations, such as [strongMap] and [strongFlatMap].
+ * There are various extension functions available for modelling atomic data transformations, such as [map] and [flatMap].
  * It is important that all data transformation functions are pure, meaning that they are side effect free and
  * do not access any mutable external state, in order to maintain the integrity of lazy evaluation. It is especially
  * important that they do not resolve any other provider's value, **as doing so may risk deadlocks**.
@@ -49,8 +49,6 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
      * The observer will be automatically removed when the [owner] is garbage collected.
      *
      * Contrary to [subscribeWeak], registering an observer does not disable lazy evaluation of the provider.
-     *
-     * The given value is not guaranteed to still be the current value at the time of invocation.
      */
     fun <R : Any> observeWeak(owner: R, action: (owner: R) -> Unit)
     
