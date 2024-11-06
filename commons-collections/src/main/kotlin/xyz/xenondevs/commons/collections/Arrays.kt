@@ -22,6 +22,9 @@ inline fun <reified E : Enum<E>> Array<E>.toEnumSet(): EnumSet<E> {
     return set
 }
 
+fun <T> Array<T>.getCoerced(index: Int): T =
+    get(index.coerceIn(0..<size))
+
 //<editor-fold desc="ObjectArray mapToArray">
 inline fun <T, reified R> Array<T>.mapToArray(transform: (T) -> R): Array<R> {
     return Array(size) { transform(get(it)) }

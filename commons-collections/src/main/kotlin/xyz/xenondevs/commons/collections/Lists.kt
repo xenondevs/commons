@@ -25,3 +25,5 @@ fun <T> List<T>.eachRepeated(times: Int): List<T> {
     }
     return list
 }
+fun <T> List<T>.getCoerced(index: Int): T =
+    get(index.coerceIn(0..<size))
