@@ -17,3 +17,11 @@ fun <T> List<T>.after(element: T, step: Int = 1): T =
 
 fun <T> List<T>.before(element: T, step: Int = 1): T =
     get((indexOf(element) - step).mod(size))
+
+fun <T> List<T>.eachRepeated(times: Int): List<T> {
+    val list = ArrayList<T>(size * times)
+    for (element in this) {
+        repeat(times) { list.add(element) }
+    }
+    return list
+}
