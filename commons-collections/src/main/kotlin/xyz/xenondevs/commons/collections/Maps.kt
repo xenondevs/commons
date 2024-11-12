@@ -24,6 +24,14 @@ inline fun <reified K : Enum<K>, V> enumMap(map: Map<K, V>): EnumMap<K, V> {
     return EnumMap(map)
 }
 
+inline fun <reified K : Enum<K>, V> enumMap(initializer: (K) -> V): EnumMap<K, V> {
+    return enumMap<K, V>().apply {
+        for (key in enumValues<K>()) {
+            this[key] = initializer(key)
+        }
+    }
+}
+
 inline fun <reified K : Enum<K>, V> Map<K, V>.toEnumMap(): EnumMap<K, V> {
     return toMap(EnumMap(K::class.java))
 }
