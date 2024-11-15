@@ -34,3 +34,6 @@ fun <T> List<T>.repeated(times: Int): List<T> {
 
 fun <T> List<T>.getCoerced(index: Int): T =
     get(index.coerceIn(0..<size))
+
+fun <T> List<T>.getMod(index: Int): T =
+    get(index.mod(size))
