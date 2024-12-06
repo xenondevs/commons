@@ -7,7 +7,9 @@ import xyz.xenondevs.commons.provider.observed
 import xyz.xenondevs.commons.provider.orElse
 import xyz.xenondevs.commons.provider.orElseLazily
 import xyz.xenondevs.commons.provider.orElseNew
+import xyz.xenondevs.commons.provider.provider
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class FallbackProviderTests {
     
@@ -60,11 +62,31 @@ class FallbackProviderTests {
     }
     
     @Test
+    fun testOrElseNullableProvider() {
+        val provider = mutableProvider<Int?>(null)
+        var fallback: Provider<Int>? = provider(10)
+        val orElse1 = provider.orElse(fallback)
+        fallback = null
+        val orElse2 = provider.orElse(fallback as Provider<Int>?)
+        
+        assertEquals(null, provider.get())
+        assertEquals(10, orElse1.get())
+        assertEquals(null, orElse2.get())
+        assertTrue(provider === orElse2)
+        
+        provider.set(1)
+        
+        assertEquals(1, provider.get())
+        assertEquals(1, orElse1.get())
+        assertEquals(1, orElse2.get())
+    }
+    
+    @Test
     fun testOrElseLazily() {
         var lazyCalled = false
         
         val provider = mutableProvider<Int?>(0)
-        val orElse = provider.orElseLazily { 
+        val orElse = provider.orElseLazily {
             lazyCalled = true
             1
         }

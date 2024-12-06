@@ -26,7 +26,7 @@ fun <T> Provider<T?>.orElse(value: T): Provider<T> =
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
  */
 fun <T> Provider<T?>.strongOrElse(provider: Provider<T>): Provider<T> =
-    strongOrElse(provider, false)
+    orElse(provider, false)
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
@@ -34,9 +34,27 @@ fun <T> Provider<T?>.strongOrElse(provider: Provider<T>): Provider<T> =
  * The returned provider will only be stored in a [WeakReference] in the parent providers ([this][MutableProvider] and [provider]).
  */
 fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> =
-    strongOrElse(provider, true)
+    orElse(provider, true)
 
-private fun <T> Provider<T?>.strongOrElse(provider: Provider<T>, weak: Boolean): Provider<T> {
+/**
+ * If [provider] is null, returns [this][Provider]. If [provider] is not null, creates and returns a new [Provider] that returns a fallback value obtained
+ * through [provider] if the value of [this][Provider] is null.
+ */
+@JvmName("strongOrElseNullable")
+fun <T> Provider<T?>.strongOrElse(provider: Provider<T>?): Provider<T?> =
+    if (provider != null) strongOrElse(provider) else this
+
+/**
+ * If [provider] is null, returns [this][Provider]. If [provider] is not null, creates and returns a new [Provider] that returns a fallback value obtained
+ * through [provider] if the value of [this][Provider] is null.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent providers ([this][MutableProvider] and [provider]).
+ */
+@JvmName("orElseNullable")
+fun <T> Provider<T?>.orElse(provider: Provider<T>?): Provider<T?> =
+    if (provider != null) orElse(provider) else this
+
+private fun <T> Provider<T?>.orElse(provider: Provider<T>, weak: Boolean): Provider<T> {
     this as AbstractProvider<T?>
     provider as AbstractProvider<T>
     
