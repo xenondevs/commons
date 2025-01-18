@@ -78,6 +78,40 @@ fun <T, R> Provider<T>.flatMapMutable(transform: (T) -> MutableProvider<R>): Mut
     FlatMappingProvider(this as AbstractProvider<T>, transform as (T) -> AbstractProvider<R>, true)
 
 /**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * 
+ * This function is equivalent to `provider.flatMap { it }`.
+ * 
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<Provider<R>>.flatten(): Provider<R> = flatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * 
+ * This function is equivalent to `provider.flatMap { it }`.
+ */
+fun <R> Provider<Provider<R>>.strongFlatten(): Provider<R> = strongFlatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * 
+ * This function is equivalent to `provider.flatMapMutable { it }`.
+ * 
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<MutableProvider<R>>.flatten(): MutableProvider<R> = flatMapMutable { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * 
+ * This function is equivalent to `provider.flatMapMutable { it }`.
+ */
+fun <R> Provider<MutableProvider<R>>.strongFlatten(): MutableProvider<R> = strongFlatMapMutable { it }
+
+/**
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]
  * using the [transform] function.
  * Null values will be passed through without transformation.

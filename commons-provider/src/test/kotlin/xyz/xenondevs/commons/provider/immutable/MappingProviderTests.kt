@@ -6,6 +6,7 @@ import xyz.xenondevs.commons.provider.Provider
 import xyz.xenondevs.commons.provider.flatMap
 import xyz.xenondevs.commons.provider.flatMapCollection
 import xyz.xenondevs.commons.provider.flatMapMutable
+import xyz.xenondevs.commons.provider.flatten
 import xyz.xenondevs.commons.provider.flattenIterables
 import xyz.xenondevs.commons.provider.map
 import xyz.xenondevs.commons.provider.mapEach
@@ -195,6 +196,36 @@ class MappingProviderTests {
     
     @Test
     fun testFlatten() {
+        val inner1 = provider(1)
+        val inner2 = provider(2)
+        val outer = mutableProvider(inner1)
+        
+        val flattened = outer.flatten()
+        
+        assertEquals(1, flattened.get())
+        outer.set(inner2)
+        assertEquals(2, flattened.get())
+    }
+    
+    @Test
+    fun testFlattenMutable() {
+        val inner1 = mutableProvider(1)
+        val inner2 = mutableProvider(2)
+        val outer = mutableProvider(inner1)
+        
+        val flattened = outer.flatten()
+        
+        assertEquals(1, flattened.get())
+        outer.set(inner2)
+        assertEquals(2, flattened.get())
+        flattened.set(3)
+        assertEquals(1, inner1.get())
+        assertEquals(3, inner2.get())
+        assertEquals(3, flattened.get())
+    }
+    
+    @Test
+    fun testFlattenIterables() {
         val provider = provider(listOf(listOf(1, 2), listOf(3, 4)))
         val flattened = provider.flattenIterables()
         
