@@ -27,6 +27,12 @@ java {
     withSourcesJar()
 }
 
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
+
 publishing {
     repositories {
         maven {
