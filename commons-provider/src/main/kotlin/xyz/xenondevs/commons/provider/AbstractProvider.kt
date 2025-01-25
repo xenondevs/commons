@@ -45,14 +45,15 @@ private class ParentProviderWrapper<C, P>(
     
 }
 
+private val LOCK = ReentrantLock()
+
 @UnstableProviderApi
 abstract class AbstractProvider<T>(
     lock: ReentrantLock
 ) : MutableProvider<T> {
     
-    @Volatile
-    var lock: ReentrantLock = lock
-        private set
+    // temporary workaround: use constant lock for all providers
+    val lock = LOCK
     
     /**
      * The value of the provider.
@@ -413,18 +414,7 @@ abstract class AbstractProvider<T>(
         }
     }
     
-    fun changeLock(lock: ReentrantLock): Unit = lock.withLock {
-        if (this.lock == lock)
-            return
-        this.lock = lock
-        
-        activeChildren?.forEach { it.changeLock(lock) }
-        inactiveChildren?.forEach { it.changeLock(lock) }
-        weakActiveChildren?.forEach { it.changeLock(lock) }
-        weakInactiveChildren?.forEach { it.changeLock(lock) }
-        activeParents?.forEach { it.parent.changeLock(lock) }
-        inactiveParents?.forEach { it.changeLock(lock) }
-    }
+    fun changeLock(lock: ReentrantLock) = Unit
     
     abstract fun pull(): T
     
