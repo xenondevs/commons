@@ -1,5 +1,5 @@
 group = "xyz.xenondevs.commons"
-version = "1.25"
+version = "1.26"
 
 plugins {
     `java-library`
