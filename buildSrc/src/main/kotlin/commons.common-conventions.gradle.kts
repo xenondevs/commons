@@ -1,5 +1,7 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+
 group = "xyz.xenondevs.commons"
-version = "1.26"
+version = "1.27"
 
 plugins {
     `java-library`
@@ -7,14 +9,18 @@ plugins {
     kotlin("jvm")
 }
 
+val libs = the<LibrariesForLibs>()
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.1.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+    api(libs.kotlin.stdlib)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.platformLauncher)
+    testImplementation(libs.kotlin.test.junit)
 }
 
 kotlin {
