@@ -73,7 +73,8 @@ class VersionTest {
         "1.0-alpha.0",
         "1.0-alpha.1",
         "1.0-alpha.1.0.0",
-        "1.0-alpha.1.0.0+abc.def.ghi"
+        "1.0-alpha.1.0.0+abc.def.ghi",
+        "1.0-AlPhA.1.0.0+AbC.DEF.ghi"
     ])
     fun testRoundTrip(version: String) {
         assertEquals(version, Version(version).toString())

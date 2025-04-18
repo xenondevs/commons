@@ -9,11 +9,8 @@ private val RELEASE_STAGES: Map<String, Int> = buildMap {
     this["snapshot"] = -4
 }
 
-private val RELEASE_STAGES_INVERTED: Map<Int, String> =
-    RELEASE_STAGES.entries.associate { (key, value) -> value to key }.toMap(HashMap())
-
 private const val VERSION_NUMBER_GROUP = """((?:0|[1-9]\d*)(?:\.(?:0|[1-9]\d*))*)"""
-private const val RELEASE_STAGES_GROUP = """(snapshot|alpha|beta|rc)"""
+private const val RELEASE_STAGES_GROUP = """(?i)(snapshot|alpha|beta|rc)(?-i)"""
 private const val METADATA_GROUP = """((?:[0-9A-Za-z-]+)(?:\.[0-9A-Za-z-]+)*)"""
 private val VERSION_REGEX = Regex($$"""^$$VERSION_NUMBER_GROUP(?:-$$RELEASE_STAGES_GROUP(?:\.$$VERSION_NUMBER_GROUP)?)?(?:\+$$METADATA_GROUP)?$""")
 
@@ -37,6 +34,7 @@ class Version : Comparable<Version> {
     
     private val version: IntArray
     private val stageVersion: IntArray
+    private val stage: String? // stage in original capitalization
     
     /**
      * The metadata of the version, or `null` if there is none.
@@ -55,6 +53,7 @@ class Version : Comparable<Version> {
     constructor(vararg version: Int) {
         this.version = version
         this.stageVersion = intArrayOf()
+        this.stage = null
         this.metadata = null
     }
     
@@ -63,8 +62,8 @@ class Version : Comparable<Version> {
      * @throws IllegalArgumentException If the version string is invalid.
      */
     constructor(version: String) {
-        val result = VERSION_REGEX.matchEntire(version.lowercase())
-            ?: throw IllegalArgumentException("${version.lowercase()} does not match version regex $VERSION_REGEX")
+        val result = VERSION_REGEX.matchEntire(version)
+            ?: throw IllegalArgumentException("$version does not match version regex $VERSION_REGEX")
         
         val ver = result.groupValues[1]
         val stage = result.groupValues[2].takeUnless(String::isBlank)
@@ -74,10 +73,14 @@ class Version : Comparable<Version> {
         
         if (stage != null) {
             this.stageVersion = buildList<Int> {
-                this += RELEASE_STAGES[stage] ?: throw IllegalArgumentException("Unknown release stage: $stage")
+                this += RELEASE_STAGES[stage.lowercase()] ?: throw IllegalArgumentException("Unknown release stage: $stage")
                 if (stageVer != null) this += stageVer.split('.').map { it.toIntOrNull() ?: 0 }
             }.toIntArray()
-        } else this.stageVersion = intArrayOf()
+            this.stage = stage
+        } else {
+            this.stageVersion = intArrayOf()
+            this.stage = null
+        }
         
         this.metadata = result.groupValues[4].takeUnless(String::isBlank)
     }
@@ -112,7 +115,7 @@ class Version : Comparable<Version> {
         
         if (stageVersion.isNotEmpty()) {
             sb.append("-")
-            sb.append(RELEASE_STAGES_INVERTED[stageVersion[0]])
+            sb.append(stage)
             if (stageVersion.size > 1 && (!omitZeros || !isAllZeros(1, stageVersion))) {
                 sb.append(".")
                 appendVersion(1, stageVersion)
