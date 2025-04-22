@@ -70,7 +70,7 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     /**
      * Removes a previously registered [weak observer][observeWeak].
      */
-    fun <R : Any> unobserveWeak(owner: R, action: Function2<R, T, Unit>)
+    fun <R : Any> unobserveWeak(owner: R, action: Function1<R, Unit>)
     
     /**
      * Removes all [weak subscribers][subscribeWeak] under the given [owner].

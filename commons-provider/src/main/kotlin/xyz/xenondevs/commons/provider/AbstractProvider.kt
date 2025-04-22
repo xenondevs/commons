@@ -192,7 +192,7 @@ abstract class AbstractProvider<T>(
     }
     
     @Suppress("UNCHECKED_CAST")
-    override fun <R : Any> unobserveWeak(owner: R, action: (R, T) -> Unit): Unit = lock.withLock {
+    override fun <R : Any> unobserveWeak(owner: R, action: (R) -> Unit): Unit = lock.withLock {
         action as (Any) -> Unit
         weakObservers?.get(owner)?.remove(action)
     }
