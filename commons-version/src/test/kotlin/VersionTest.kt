@@ -87,6 +87,18 @@ class VersionTest {
     }
     
     @ParameterizedTest
+    @MethodSource("testToStringOmitIdxCases")
+    fun testToStringOmitIdx(version: String, ignoreIdx: Int, expected: String) {
+        assertEquals(expected, Version(version).toString(omitIdx = ignoreIdx))
+    }
+    
+    @ParameterizedTest
+    @MethodSource("testToStringOmitMetadataCases")
+    fun testToStringOmitMetadata(version: String, expected: String) {
+        assertEquals(expected, Version(version).toString(omitMetadata = true))
+    }
+    
+    @ParameterizedTest
     @MethodSource("testEqualsIgnoringCases")
     fun testEqualsIgnoring(v1: String, v2: String, ignoreIdx: Int) {
         assert(Version(v1).equals(Version(v2), ignoreIdx))
@@ -130,6 +142,20 @@ class VersionTest {
             Arguments.of("1.2.0-alpha.1.0.0", "1.2-alpha.1"),
             Arguments.of("1.0-alpha.0", "1-alpha"),
             Arguments.of("0", "0")
+        )
+        
+        @JvmStatic
+        fun testToStringOmitIdxCases(): List<Arguments> = listOf(
+            Arguments.of("1.0.0", 0, ""),
+            Arguments.of("1.0.0", 1, "1"),
+            Arguments.of("1.2.3-alpha.4+ABC", 2, "1.2+ABC")
+        )
+        
+        @JvmStatic
+        fun testToStringOmitMetadataCases(): List<Arguments> = listOf(
+            Arguments.of("1.0.0+abc", "1.0.0"),
+            Arguments.of("1.0.0-alpha+abc", "1.0.0-alpha"),
+            Arguments.of("1.0.0-alpha.3+abc.def", "1.0.0-alpha.3")
         )
         
         @JvmStatic

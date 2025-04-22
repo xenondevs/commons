@@ -93,17 +93,19 @@ class Version : Comparable<Version> {
      *
      * @param separator The separator to use between the version parts. Defaults to `.`.
      * @param omitZeros Whether to omit trailing zeros in the version number (i.e. `1.0.0` -> `1`). Defaults to `false`.
+     * @param omitIdx The first index of the main version number that should not be included in the string, or -1 to include everything. Defaults to `-1`.
+     * @param omitMetadata Whether to omit the metadata. Defaults to `false`.
      */
-    fun toString(separator: String = ".", omitZeros: Boolean = false): String {
+    fun toString(separator: String = ".", omitZeros: Boolean = false, omitIdx: Int = -1, omitMetadata: Boolean = false): String {
         val sb = StringBuilder()
         
         fun isAllZeros(start: Int, array: IntArray) =
             array.copyOfRange(start, array.size).all { it == 0 }
         
-        fun appendVersion(start: Int, array: IntArray) {
-            for (i in start..array.lastIndex) {
+        fun appendVersion(startInclusive: Int, endExclusive: Int, array: IntArray) {
+            for (i in startInclusive..<endExclusive) {
                 sb.append(array[i])
-                if (i < array.lastIndex) {
+                if (i < endExclusive - 1) {
                     if (omitZeros && isAllZeros(i + 1, array))
                         break
                     sb.append(separator)
@@ -111,18 +113,18 @@ class Version : Comparable<Version> {
             }
         }
         
-        appendVersion(0, version)
+        appendVersion(0, if (omitIdx < 0) version.size else omitIdx, version)
         
-        if (stageVersion.isNotEmpty()) {
+        if (stageVersion.isNotEmpty() && omitIdx < 0) {
             sb.append("-")
             sb.append(stage)
             if (stageVersion.size > 1 && (!omitZeros || !isAllZeros(1, stageVersion))) {
                 sb.append(".")
-                appendVersion(1, stageVersion)
+                appendVersion(1, stageVersion.size, stageVersion)
             }
         }
         
-        if (metadata != null) {
+        if (metadata != null && !omitMetadata) {
             sb.append("+")
             sb.append(metadata)
         }
