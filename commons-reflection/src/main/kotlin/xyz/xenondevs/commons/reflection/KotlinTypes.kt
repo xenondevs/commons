@@ -7,6 +7,8 @@ import kotlin.reflect.KClassifier
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeProjection
 import kotlin.reflect.full.createType
+import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.full.isSupertypeOf
 import kotlin.reflect.typeOf
 
 val KType.classifierClass: KClass<*>?
@@ -39,6 +41,12 @@ fun KType?.equalsIgnoreNullability(other: KType?): Boolean {
     
     return true
 }
+
+inline fun <reified T> KType.isSubtypeOf(): Boolean =
+    isSubtypeOf(typeOf<T>())
+
+inline fun <reified T> KType.isSuperTypeOf(): Boolean =
+    isSupertypeOf(typeOf<T>())
 
 fun KClass<*>.createStarProjectedType(
     nullable: Boolean = false,
