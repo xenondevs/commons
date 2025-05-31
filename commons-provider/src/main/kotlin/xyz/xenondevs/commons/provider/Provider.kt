@@ -1,12 +1,13 @@
 package xyz.xenondevs.commons.provider
 
+import java.lang.ref.WeakReference
 import java.util.function.Supplier
 import kotlin.reflect.KProperty
 
 /**
  * A [Provider] is a thread-safe, lazily-evaluated, reactive data source that holds a single value of type [T].
  *
- * There are various extension functions available for modelling atomic data transformations, such as [map] and [flatMap].
+ * There are various extension functions available for modelling atomic data transformations, such as [map] and [flatMapMutable].
  * It is important that all data transformation functions are pure, meaning that they are side effect free and
  * do not access any mutable external state, in order to maintain the integrity of lazy evaluation. It is especially
  * important that they do not resolve any other provider's value, **as doing so may risk deadlocks**.
@@ -17,6 +18,68 @@ import kotlin.reflect.KProperty
  * immediately when an update happens in order to propagate it to the subscribers.
  */
 sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
+    
+    /**
+     * Creates and returns a new [Provider] that maps the value of [this][Provider]
+     * using the [transform] function.
+     *
+     * [transform] should be a pure function.
+     */
+    fun <R> strongMap(transform: (T) -> R): Provider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps the value of [this][Provider]
+     * using the [transform] function.
+     *
+     * [transform] should be a pure function.
+     *
+     * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
+     */
+    fun <R> map(transform: (T) -> R): Provider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps to the value of the [Provider]
+     * returned by [transform].
+     *
+     * [transform] should be a pure function.
+     *
+     * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
+     */
+    fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps to the value of the [Provider]
+     * returned by [transform].
+     *
+     * [transform] should be a pure function.
+     *
+     * The returned provider will only be stored in a [WeakReference] in the parent providers
+     * ([this][MutableProvider] and the result of [transform]).
+     */
+    fun <R> flatMap(transform: (T) -> Provider<R>): Provider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps to the value of the [MutableProvider]
+     * returned by [transform].
+     *
+     * [transform] should be a pure function.
+     *
+     * Note that this function registers a subscriber on [this][Provider] and as such disables lazy evaluation of [this][Provider].
+     */
+    fun <R> strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps to the value of the [MutableProvider]
+     * returned by [transform].
+     *
+     * [transform] should be a pure function.
+     *
+     * The returned provider will only be stored in a [WeakReference] in the parent providers
+     * ([this][MutableProvider] and the result of [transform]).
+     */
+    fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R>
+    
+    fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R>
     
     /**
      * Registers a function that will be called with the new value whenever the value of this [Provider] changes.

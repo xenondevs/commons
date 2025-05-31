@@ -1,10 +1,7 @@
 @file:JvmName("Providers")
 @file:JvmMultifileClass
-@file:OptIn(UnstableProviderApi::class)
 
 package xyz.xenondevs.commons.provider
-
-import java.util.concurrent.locks.ReentrantLock
 
 /**
  * A [Provider] that always returns `null`.
@@ -16,50 +13,26 @@ val NULL_PROVIDER: Provider<Nothing?> = provider(null)
  * [lazyValue] should be a pure function.
  */
 fun <T> provider(lazyValue: () -> T): Provider<T> =
-    object : AbstractProvider<T>(ReentrantLock()) {
-        
-        override fun pull(): T {
-            return lazyValue()
-        }
-        
-    }
+    StableProvider(lazy(lazyValue))
 
 /**
  * Creates a new [Provider] with the given [value].
  */
 fun <T> provider(value: T): Provider<T> =
-    object : AbstractProvider<T>(ReentrantLock()) {
-        
-        override fun pull(): T {
-            return value
-        }
-        
-    }
+    StableProvider(lazyOf(value))
 
 /**
  * Creates a new [MutableProvider] with the given [initialValue].
  */
 fun <T> mutableProvider(initialValue: T): MutableProvider<T> =
-    object : AbstractProvider<T>(ReentrantLock()) {
-        
-        override fun pull(): T {
-            return initialValue
-        }
-        
-    }
+    BidirectionalProvider(DeferredValue.Direct(initialValue))
 
 /**
  * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function.
  * [lazyValue] should be a pure function.
  */
 fun <T> mutableProvider(lazyValue: () -> T): MutableProvider<T> =
-    object : AbstractProvider<T>(ReentrantLock()) {
-        
-        override fun pull(): T {
-            return lazyValue()
-        }
-        
-    }
+    BidirectionalProvider(DeferredValue.Lazy(lazyValue))
 
 /**
  * Creates a new [MutableProvider] that loads its value using the given [lazyValue] function

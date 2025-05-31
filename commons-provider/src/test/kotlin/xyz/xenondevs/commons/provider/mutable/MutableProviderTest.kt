@@ -2,7 +2,8 @@ package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import xyz.xenondevs.commons.provider.map
+import xyz.xenondevs.commons.provider.DeferredValue
+import xyz.xenondevs.commons.provider.MutableProviderImpl
 import xyz.xenondevs.commons.provider.mutableProvider
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -74,6 +75,42 @@ class MutableProviderTest {
         
         provider.set(2)
         assertEquals(2, origin.get())
+    }
+    
+    @Test
+    fun testUpdateIgnoresOldState() {
+        val provider = mutableProvider(0) as MutableProviderImpl<Int>
+        
+        val one = DeferredValue.Direct(1)
+        val two = DeferredValue.Direct(2)
+        
+        assertEquals(0, provider.get())
+        provider.update(one)
+        assertEquals(1, provider.get())
+        provider.update(two)
+        assertEquals(2, provider.get())
+        provider.update(one)
+        assertEquals(2, provider.get())
+    }
+    
+    @Test
+    fun testNotifiedOnUpdatingWithEqualState() {
+        val provider = mutableProvider(0) as MutableProviderImpl<Int>
+        var updateCount = 0
+        provider.observe { updateCount++ }
+        
+        val one = DeferredValue.Direct(1)
+        val two = DeferredValue.Direct(2)
+        
+        assertEquals(0, updateCount)
+        provider.update(one)
+        assertEquals(1, updateCount)
+        provider.update(one)
+        assertEquals(2, updateCount)
+        provider.update(two)
+        assertEquals(3, updateCount)
+        provider.update(one)
+        assertEquals(3, updateCount)
     }
     
 }

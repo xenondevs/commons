@@ -1,7 +1,6 @@
 package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Test
-import xyz.xenondevs.commons.provider.map
 import xyz.xenondevs.commons.provider.mapNonNull
 import xyz.xenondevs.commons.provider.mutableProvider
 import kotlin.test.assertEquals
@@ -31,22 +30,22 @@ class MappingProviderTests {
     fun testMapNonNull() {
         val provider = mutableProvider<Int?>(null)
         val mappedProvider = provider.mapNonNull({ it + 1 }, { it - 1 })
-        
+
         assertEquals(null, provider.get())
         assertEquals(null, mappedProvider.get())
-        
+
         provider.set(2)
-        
+
         assertEquals(2, provider.get())
         assertEquals(3, mappedProvider.get())
-        
+
         mappedProvider.set(4)
-        
+
         assertEquals(3, provider.get())
         assertEquals(4, mappedProvider.get())
-        
+
         mappedProvider.set(null)
-        
+
         assertEquals(null, provider.get())
         assertEquals(null, mappedProvider.get())
     }

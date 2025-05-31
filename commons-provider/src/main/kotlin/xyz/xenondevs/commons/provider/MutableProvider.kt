@@ -1,5 +1,6 @@
 package xyz.xenondevs.commons.provider
 
+import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
 /**
@@ -9,6 +10,24 @@ import kotlin.reflect.KProperty
  * data transformations, which are bidirectional in the case of [MutableProvider].
  */
 sealed interface MutableProvider<T> : Provider<T> {
+    
+    /**
+     * Creates and returns a new [MutableProvider] that maps the value of [this][MutableProvider]
+     * bi-directionally using the provided [transform] and [untransform] functions.
+     *
+     * [transform] and [untransform] should be pure functions.
+     */
+    fun <R> strongMap(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R>
+    
+    /**
+     * Creates and returns a new [MutableProvider] that maps the value of [this][MutableProvider]
+     * bi-directionally using the provided [transform] and [untransform] functions.
+     *
+     * [transform] and [untransform] should be pure functions.
+     *
+     * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
+     */
+    fun <R> map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R>
     
     /**
      * Sets the value of this [MutableProvider] to [value].

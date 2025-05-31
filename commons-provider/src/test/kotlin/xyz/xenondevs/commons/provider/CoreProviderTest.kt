@@ -1,10 +1,10 @@
 package xyz.xenondevs.commons.provider
 
 import org.junit.jupiter.api.Test
-import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
-class ProviderTest {
+class CoreProviderTest {
     
     @Test
     fun testProviderPropagate() {
@@ -125,12 +125,14 @@ class ProviderTest {
         assert(!invoked)
         assert(!invokedWeak)
         
-        // updating without changes to value should not call subscriber
+        // updating without changes to value should call subscriber
         provider.set(0)
-        assert(!invoked)
-        assert(!invokedWeak)
+        assert(invoked)
+        assert(invokedWeak)
         
         // updating with change to value should call subscriber
+        invoked = false
+        invokedWeak = false
         provider.set(1)
         assert(invoked)
         assert(invokedWeak)
@@ -169,37 +171,17 @@ class ProviderTest {
         assertEquals(1, mirror3)
     }
     
-    @OptIn(UnstableProviderApi::class)
     @Test
     fun testProviderSubscriberCalledOutsideLock() {
-        val provider = mutableProvider(0) as AbstractProvider<Int>
-        val mapped = provider.map({ it + 1 }, { it - 1 }) as AbstractProvider<Int>
-        
-        provider.subscribe { assertEquals(false, provider.lock.isHeldByCurrentThread) }
-        provider.subscribeWeak(this) { _, _ -> assertEquals(false, provider.lock.isHeldByCurrentThread) }
-        mapped.subscribe { assertEquals(false, provider.lock.isHeldByCurrentThread) }
-        mapped.subscribeWeak(this) { _, _ -> assertEquals(false, provider.lock.isHeldByCurrentThread) }
-        
+        val provider = mutableProvider(0)
+        val mapped = provider.map({ it + 1 }, { it - 1 })
+
+        provider.subscribe { assertFalse(Thread.holdsLock(provider)) }
+        provider.subscribeWeak(this) { _, _ -> assertFalse(Thread.holdsLock(provider)) }
+        mapped.subscribe { assertFalse(Thread.holdsLock(provider)) }
+        mapped.subscribeWeak(this) { _, _ -> assertFalse(Thread.holdsLock(provider)) }
+
         provider.set(1)
-    }
-    
-    @OptIn(UnstableProviderApi::class)
-    @Test
-    fun testLockChangedPropagate() {
-        val a = provider("a") as AbstractProvider<String>
-        val b = provider("b") as AbstractProvider<String>
-        val c = provider("c") as AbstractProvider<String>
-        
-        val combinedAB = combinedProvider(a, b) { a, b -> a + b } as AbstractProvider<String>
-        val combinedBC = combinedProvider(b, c) { b, c -> b + c } as AbstractProvider<String>
-        
-        assertContentEquals(
-            Array(5) { a.lock },
-            arrayOf(
-                a.lock, b.lock, c.lock,
-                combinedAB.lock, combinedBC.lock
-            )
-        )
     }
     
     @Test
@@ -218,12 +200,14 @@ class ProviderTest {
         assert(!invoked)
         assert(!invokedWeak)
         
-        // updating without changes to value should not call observer
+        // updating without changes to value should call observer
         root.set(0)
-        assert(!invoked)
-        assert(!invokedWeak)
+        assert(invoked)
+        assert(invokedWeak)
         
         // updating with change to value should call observer
+        invoked = false
+        invokedWeak = false
         root.set(1)
         assert(invoked)
         assert(invokedWeak)

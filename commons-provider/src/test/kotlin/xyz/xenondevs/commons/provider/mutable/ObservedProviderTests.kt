@@ -1,7 +1,6 @@
 package xyz.xenondevs.commons.provider.mutable
 
 import org.junit.jupiter.api.Test
-import xyz.xenondevs.commons.provider.map
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.observed
 import kotlin.test.assertEquals
@@ -47,7 +46,7 @@ class ObservedProviderTests {
         val mapProvider = mutableProvider(mapA)
         val observedProvider = mapProvider.observed()
         observedProvider.subscribe { updateCount++ }
-    
+        
         assertEquals(0, updateCount)
         
         val observedMapA = observedProvider.get()
