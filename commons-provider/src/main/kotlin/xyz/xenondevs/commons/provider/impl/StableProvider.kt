@@ -32,6 +32,18 @@ internal class StableProvider<T>(private val lazyValue: Lazy<T>) : ProviderImpl<
     override fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
         UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
     
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+        UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+    
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+        BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+    
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+        BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+    
     // the value is immutable, so subscribers / observers would never be called
     override fun subscribe(action: (T) -> Unit) = Unit
     override fun observe(action: () -> Unit) = Unit

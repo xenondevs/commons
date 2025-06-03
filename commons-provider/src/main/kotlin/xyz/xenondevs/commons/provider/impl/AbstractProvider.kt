@@ -239,6 +239,27 @@ internal interface ProviderWithChildren<T> : ProviderImpl<T> {
         return provider
     }
     
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> {
+        val provider = UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        addStrongChild(provider)
+        return provider
+    }
+    
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
+        val provider = BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        addWeakChild(provider)
+        return provider
+    }
+    
+    @Suppress("UNCHECKED_CAST")
+    override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
+        val provider = BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        addStrongChild(provider)
+        return provider
+    }
+    
 }
 
 internal interface MutableProviderImpl<T> : ProviderWithChildren<T>, MutableProvider<T> {

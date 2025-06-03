@@ -131,4 +131,53 @@ class FlatMapProviderTest {
         assertEquals(2, flatMapTransformExecCount)
     }
     
+    @Test
+    fun testLazyFlatMapMutable() {
+        val a = mutableProvider(1)
+        val b = mutableProvider(2)
+        val selector = mutableProvider(a)
+        
+        var flatMapTransformExecCount = 0
+        var flatMapObserverFiredCount = 0
+        
+        val flatMapped = selector.lazyFlatMapMutable {
+            flatMapTransformExecCount++
+            it
+        }
+        flatMapped.observe { flatMapObserverFiredCount++ }
+        
+        // flat map transform will not be executed before its value is resolved
+        selector.set(b)
+        selector.set(a)
+        assertEquals(0, flatMapTransformExecCount)
+        assertEquals(0, flatMapObserverFiredCount)
+        
+        // resolve flat-mapped provider
+        assertEquals(1, flatMapped.get())
+        assertEquals(1, flatMapTransformExecCount)
+        
+        // already resolved flat-mapped provider should not run transform again
+        assertEquals(1, flatMapped.get())
+        assertEquals(1, flatMapTransformExecCount)
+        
+        // flat-mapped provider allows setting value
+        flatMapped.set(-1)
+        flatMapped.set(1)
+        flatMapped.set(-1)
+        assertEquals(-1, flatMapped.get())
+        assertEquals(-1, a.get())
+        assertEquals(3, flatMapObserverFiredCount)
+        
+        // now, observer's will be fired once if the value changes
+        assertEquals(3, flatMapObserverFiredCount)
+        selector.set(b)
+        selector.set(a)
+        selector.set(b)
+        assertEquals(4, flatMapObserverFiredCount)
+        
+        // switching the selected provider works properly
+        assertEquals(2, flatMapped.get())
+        assertEquals(2, flatMapTransformExecCount)
+    }
+    
 }
