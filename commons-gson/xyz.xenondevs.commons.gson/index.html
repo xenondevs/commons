@@ -1,0 +1,1037 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>xyz.xenondevs.commons.gson</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../index.html">
+                    commons
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":commons-gson/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":commons-gson/main" data-filter=":commons-gson/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    commons
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="package" id="content" pageids="commons-gson::xyz.xenondevs.commons.gson////PointingToDeclaration//1876130704">
+  <div class="breadcrumbs"><a href="../index.html">commons-gson</a><span class="delimiter">/</span><span class="current">xyz.xenondevs.commons.gson</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="EXTENSION_FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-661828965%2FFunctions%2F1876130704" anchor-label="addAll" id="-661828965%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-all.html"><span>add</span><wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-661828965%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>elements<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllElementsArray"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elementArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>numbers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>strings<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllStringArray"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">stringArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>booleans<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllBooleanArray"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">booleanArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean-array/index.html">BooleanArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>chars<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char/index.html">Char</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllCharArray"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">charArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char-array/index.html">CharArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">doubleArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double-array/index.html">DoubleArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">floatArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float-array/index.html">FloatArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">intArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int-array/index.html">IntArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">longArray<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long-array/index.html">LongArray</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllElements"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elements<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllBooleans"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">booleans<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllChars"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">chars<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char/index.html">Char</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllNumbers"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">numbers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"addAllStrings"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">strings<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="add-all.html"><span class="token function">addAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2027990698%2FFunctions%2F1876130704" anchor-label="deserializeTyped" id="2027990698%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="deserialize-typed.html"><span>deserialize</span><wbr><span><span>Typed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2027990698%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="deserialize-typed.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonDeserializationContext///PointingToDeclaration/">JsonDeserializationContext</span><span class="token punctuation">.</span><a href="deserialize-typed.html"><span class="token function">deserializeTyped</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">json<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="deserialize-typed.html">T</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1292281154%2FFunctions%2F1876130704" anchor-label="fromJson" id="-1292281154%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="from-json.html"><span>from</span><wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1292281154%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="from-json.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="from-json.html"><span class="token function">fromJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">jsonElement<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="from-json.html">T</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="from-json.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="from-json.html"><span class="token function">fromJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="from-json.html">T</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="from-json.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="from-json.html"><span class="token function">fromJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">reader<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Reader.html">Reader</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="from-json.html">T</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="from-json.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="from-json.html"><span class="token function">fromJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html">Path</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="from-json.html">T</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="from-json.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="from-json.html"><span class="token function">fromJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="from-json.html">T</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1115434913%2FFunctions%2F1876130704" anchor-label="getAllBooleans" id="1115434913%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-booleans.html"><span>get</span><wbr><span>All</span><wbr><span><span>Booleans</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1115434913%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-booleans.html"><span class="token function">getAllBooleans</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-559035933%2FFunctions%2F1876130704" anchor-label="getAllBooleansTo" id="-559035933%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-booleans-to.html"><span>get</span><wbr><span>All</span><wbr><span>Booleans</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-559035933%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-booleans-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-booleans-to.html"><span class="token function">getAllBooleansTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-booleans-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-booleans-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="79535761%2FFunctions%2F1876130704" anchor-label="getAllChars" id="79535761%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-chars.html"><span>get</span><wbr><span>All</span><wbr><span><span>Chars</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="79535761%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-chars.html"><span class="token function">getAllChars</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char/index.html">Char</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1214872283%2FFunctions%2F1876130704" anchor-label="getAllCharsTo" id="1214872283%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-chars-to.html"><span>get</span><wbr><span>All</span><wbr><span>Chars</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1214872283%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-chars-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char/index.html">Char</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-chars-to.html"><span class="token function">getAllCharsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-chars-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-chars-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-631026058%2FFunctions%2F1876130704" anchor-label="getAllDoubles" id="-631026058%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-doubles.html"><span>get</span><wbr><span>All</span><wbr><span><span>Doubles</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-631026058%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-doubles.html"><span class="token function">getAllDoubles</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1911522833%2FFunctions%2F1876130704" anchor-label="getAllDoublesTo" id="1911522833%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-doubles-to.html"><span>get</span><wbr><span>All</span><wbr><span>Doubles</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1911522833%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-doubles-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-doubles-to.html"><span class="token function">getAllDoublesTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-doubles-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-doubles-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1685128915%2FFunctions%2F1876130704" anchor-label="getAllFloats" id="-1685128915%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-floats.html"><span>get</span><wbr><span>All</span><wbr><span><span>Floats</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1685128915%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-floats.html"><span class="token function">getAllFloats</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2005467805%2FFunctions%2F1876130704" anchor-label="getAllFloatsTo" id="-2005467805%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-floats-to.html"><span>get</span><wbr><span>All</span><wbr><span>Floats</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2005467805%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-floats-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-floats-to.html"><span class="token function">getAllFloatsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-floats-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-floats-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1231028998%2FFunctions%2F1876130704" anchor-label="getAllInts" id="-1231028998%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-ints.html"><span>get</span><wbr><span>All</span><wbr><span><span>Ints</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1231028998%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-ints.html"><span class="token function">getAllInts</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="101694211%2FFunctions%2F1876130704" anchor-label="getAllIntsTo" id="101694211%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-ints-to.html"><span>get</span><wbr><span>All</span><wbr><span>Ints</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="101694211%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-ints-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-ints-to.html"><span class="token function">getAllIntsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-ints-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-ints-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="414898840%2FFunctions%2F1876130704" anchor-label="getAllJsonArrays" id="414898840%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-json-arrays.html"><span>get</span><wbr><span>All</span><wbr><span>Json</span><wbr><span><span>Arrays</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="414898840%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-json-arrays.html"><span class="token function">getAllJsonArrays</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1661604185%2FFunctions%2F1876130704" anchor-label="getAllJsonArraysTo" id="-1661604185%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-json-arrays-to.html"><span>get</span><wbr><span>All</span><wbr><span>Json</span><wbr><span>Arrays</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1661604185%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-json-arrays-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-json-arrays-to.html"><span class="token function">getAllJsonArraysTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-json-arrays-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-json-arrays-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1193094336%2FFunctions%2F1876130704" anchor-label="getAllJsonObjects" id="1193094336%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-json-objects.html"><span>get</span><wbr><span>All</span><wbr><span>Json</span><wbr><span><span>Objects</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1193094336%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-json-objects.html"><span class="token function">getAllJsonObjects</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2059725993%2FFunctions%2F1876130704" anchor-label="getAllJsonObjectsTo" id="2059725993%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-json-objects-to.html"><span>get</span><wbr><span>All</span><wbr><span>Json</span><wbr><span>Objects</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2059725993%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-json-objects-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-json-objects-to.html"><span class="token function">getAllJsonObjectsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-json-objects-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-json-objects-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1663137195%2FFunctions%2F1876130704" anchor-label="getAllLongs" id="1663137195%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-longs.html"><span>get</span><wbr><span>All</span><wbr><span><span>Longs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1663137195%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-longs.html"><span class="token function">getAllLongs</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="25629223%2FFunctions%2F1876130704" anchor-label="getAllLongsTo" id="25629223%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-longs-to.html"><span>get</span><wbr><span>All</span><wbr><span>Longs</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="25629223%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-longs-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-longs-to.html"><span class="token function">getAllLongsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-longs-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-longs-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-989232586%2FFunctions%2F1876130704" anchor-label="getAllStrings" id="-989232586%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-strings.html"><span>get</span><wbr><span>All</span><wbr><span><span>Strings</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-989232586%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-strings.html"><span class="token function">getAllStrings</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2134023825%2FFunctions%2F1876130704" anchor-label="getAllStringsTo" id="2134023825%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-all-strings-to.html"><span>get</span><wbr><span>All</span><wbr><span>Strings</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2134023825%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-all-strings-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token punctuation">.</span><a href="get-all-strings-to.html"><span class="token function">getAllStringsTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="get-all-strings-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-all-strings-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1459419682%2FFunctions%2F1876130704" anchor-label="getArray" id="-1459419682%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-array.html"><span>get</span><wbr><span><span>Array</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1459419682%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-array.html"><span class="token function">getArray</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-909987512%2FFunctions%2F1876130704" anchor-label="getArrayOrNull" id="-909987512%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-array-or-null.html"><span>get</span><wbr><span>Array</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-909987512%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-array-or-null.html"><span class="token function">getArrayOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1232023635%2FFunctions%2F1876130704" anchor-label="getBoolean" id="-1232023635%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-boolean.html"><span>get</span><wbr><span><span>Boolean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1232023635%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-boolean.html"><span class="token function">getBoolean</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1145021399%2FFunctions%2F1876130704" anchor-label="getBooleanOrNull" id="1145021399%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-boolean-or-null.html"><span>get</span><wbr><span>Boolean</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1145021399%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-boolean-or-null.html"><span class="token function">getBooleanOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1850512691%2FFunctions%2F1876130704" anchor-label="getByte" id="-1850512691%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-byte.html"><span>get</span><wbr><span><span>Byte</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1850512691%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-byte.html"><span class="token function">getByte</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte/index.html">Byte</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1064737033%2FFunctions%2F1876130704" anchor-label="getByteOrNull" id="-1064737033%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-byte-or-null.html"><span>get</span><wbr><span>Byte</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1064737033%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-byte-or-null.html"><span class="token function">getByteOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte/index.html">Byte</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="613676438%2FFunctions%2F1876130704" anchor-label="getDouble" id="613676438%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-double.html"><span>get</span><wbr><span><span>Double</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="613676438%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-double.html"><span class="token function">getDouble</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1344206592%2FFunctions%2F1876130704" anchor-label="getDoubleOrNull" id="1344206592%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-double-or-null.html"><span>get</span><wbr><span>Double</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1344206592%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-double-or-null.html"><span class="token function">getDoubleOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1660609055%2FFunctions%2F1876130704" anchor-label="getFloat" id="-1660609055%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-float.html"><span>get</span><wbr><span><span>Float</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1660609055%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-float.html"><span class="token function">getFloat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1753578251%2FFunctions%2F1876130704" anchor-label="getFloatOrNull" id="1753578251%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-float-or-null.html"><span>get</span><wbr><span>Float</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1753578251%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-float-or-null.html"><span class="token function">getFloatOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1505342324%2FFunctions%2F1876130704" anchor-label="getInt" id="1505342324%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-int.html"><span>get</span><wbr><span><span>Int</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1505342324%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-int.html"><span class="token function">getInt</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="787109470%2FFunctions%2F1876130704" anchor-label="getIntOrNull" id="787109470%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-int-or-null.html"><span>get</span><wbr><span>Int</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="787109470%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-int-or-null.html"><span class="token function">getIntOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="919744577%2FFunctions%2F1876130704" anchor-label="getLong" id="919744577%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-long.html"><span>get</span><wbr><span><span>Long</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="919744577%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-long.html"><span class="token function">getLong</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1156364949%2FFunctions%2F1876130704" anchor-label="getLongOrNull" id="-1156364949%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-long-or-null.html"><span>get</span><wbr><span>Long</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1156364949%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-long-or-null.html"><span class="token function">getLongOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="759010574%2FFunctions%2F1876130704" anchor-label="getNumber" id="759010574%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-number.html"><span>get</span><wbr><span><span>Number</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="759010574%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-number.html"><span class="token function">getNumber</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1086397560%2FFunctions%2F1876130704" anchor-label="getNumberOrNull" id="1086397560%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-number-or-null.html"><span>get</span><wbr><span>Number</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1086397560%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-number-or-null.html"><span class="token function">getNumberOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="36351236%2FFunctions%2F1876130704" anchor-label="getObject" id="36351236%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-object.html"><span>get</span><wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="36351236%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-object.html"><span class="token function">getObject</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1954407406%2FFunctions%2F1876130704" anchor-label="getObjectOrNull" id="1954407406%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-object-or-null.html"><span>get</span><wbr><span>Object</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1954407406%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-object-or-null.html"><span class="token function">getObjectOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="84135887%2FFunctions%2F1876130704" anchor-label="getOrNull" id="84135887%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-or-null.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="84135887%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-or-null.html"><span class="token function">getOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="644430148%2FFunctions%2F1876130704" anchor-label="getOrPut" id="644430148%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-or-put.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Put</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="644430148%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="get-or-put.html">T</a><span class="token operator"> : </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-or-put.html"><span class="token function">getOrPut</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">defaultValue<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="get-or-put.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="get-or-put.html">T</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2040102913%2FFunctions%2F1876130704" anchor-label="getShort" id="2040102913%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-short.html"><span>get</span><wbr><span><span>Short</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2040102913%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-short.html"><span class="token function">getShort</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-short/index.html">Short</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1167050027%2FFunctions%2F1876130704" anchor-label="getShortOrNull" id="1167050027%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-short-or-null.html"><span>get</span><wbr><span>Short</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1167050027%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-short-or-null.html"><span class="token function">getShortOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-short/index.html">Short</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-852502058%2FFunctions%2F1876130704" anchor-label="getString" id="-852502058%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-string.html"><span>get</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-852502058%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-string.html"><span class="token function">getString</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="516860736%2FFunctions%2F1876130704" anchor-label="getStringOrNull" id="516860736%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-string-or-null.html"><span>get</span><wbr><span>String</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="516860736%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="get-string-or-null.html"><span class="token function">getStringOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1706986778%2FFunctions%2F1876130704" anchor-label="hasArray" id="1706986778%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-array.html"><span>has</span><wbr><span><span>Array</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1706986778%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="has-array.html"><span class="token function">hasArray</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="847738857%2FFunctions%2F1876130704" anchor-label="hasBoolean" id="847738857%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-boolean.html"><span>has</span><wbr><span><span>Boolean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="847738857%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="has-boolean.html"><span class="token function">hasBoolean</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="133363026%2FFunctions%2F1876130704" anchor-label="hasNumber" id="133363026%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-number.html"><span>has</span><wbr><span><span>Number</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="133363026%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="has-number.html"><span class="token function">hasNumber</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-589296312%2FFunctions%2F1876130704" anchor-label="hasObject" id="-589296312%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-object.html"><span>has</span><wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-589296312%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="has-object.html"><span class="token function">hasObject</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1478149606%2FFunctions%2F1876130704" anchor-label="hasString" id="-1478149606%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-string.html"><span>has</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1478149606%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="has-string.html"><span class="token function">hasString</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-679247968%2FFunctions%2F1876130704" anchor-label="isBoolean" id="-679247968%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-boolean.html"><span>is</span><wbr><span><span>Boolean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-679247968%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token punctuation">.</span><a href="is-boolean.html"><span class="token function">isBoolean</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="318959873%2FFunctions%2F1876130704" anchor-label="isNumber" id="318959873%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-number.html"><span>is</span><wbr><span><span>Number</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="318959873%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token punctuation">.</span><a href="is-number.html"><span class="token function">isNumber</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1361042999%2FFunctions%2F1876130704" anchor-label="isString" id="-1361042999%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-string.html"><span>is</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1361042999%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token punctuation">.</span><a href="is-string.html"><span class="token function">isString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-959706005%2FFunctions%2F1876130704" anchor-label="parseJson" id="-959706005%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="parse-json.html"><span>parse</span><wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-959706005%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a><span class="token punctuation">.</span><a href="parse-json.html"><span class="token function">parseJson</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html">InputStream</a><span class="token punctuation">.</span><a href="parse-json.html"><span class="token function">parseJson</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html">Path</a><span class="token punctuation">.</span><a href="parse-json.html"><span class="token function">parseJson</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="128671392%2FFunctions%2F1876130704" anchor-label="registerTypeAdapter" id="128671392%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="register-type-adapter.html"><span>register</span><wbr><span>Type</span><wbr><span><span>Adapter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="128671392%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"registerTypeAdapter1"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token punctuation">, </span><a href="register-type-adapter.html">A</a><span class="token operator"> : </span><span data-unresolved-link="com.google.gson/JsonSerializer///PointingToDeclaration/">JsonSerializer</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span>, <span data-unresolved-link="com.google.gson/JsonDeserializer///PointingToDeclaration/">JsonDeserializer</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-adapter.html"><span class="token function">registerTypeAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><a href="register-type-adapter.html">A</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-adapter.html"><span class="token function">registerTypeAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/InstanceCreator///PointingToDeclaration/">InstanceCreator</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-adapter.html"><span class="token function">registerTypeAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonDeserializer///PointingToDeclaration/">JsonDeserializer</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-adapter.html"><span class="token function">registerTypeAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonSerializer///PointingToDeclaration/">JsonSerializer</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-adapter.html"><span class="token function">registerTypeAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/TypeAdapter///PointingToDeclaration/">TypeAdapter</span><span class="token operator">&lt;</span><a href="register-type-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="249800956%2FFunctions%2F1876130704" anchor-label="registerTypeHierarchyAdapter" id="249800956%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="register-type-hierarchy-adapter.html"><span>register</span><wbr><span>Type</span><wbr><span>Hierarchy</span><wbr><span><span>Adapter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="249800956%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"registerTypeHierarchyAdapter1"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token punctuation">, </span><a href="register-type-hierarchy-adapter.html">A</a><span class="token operator"> : </span><span data-unresolved-link="com.google.gson/JsonSerializer///PointingToDeclaration/">JsonSerializer</span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt;</span>, <span data-unresolved-link="com.google.gson/JsonDeserializer///PointingToDeclaration/">JsonDeserializer</span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-hierarchy-adapter.html"><span class="token function">registerTypeHierarchyAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><a href="register-type-hierarchy-adapter.html">A</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-hierarchy-adapter.html"><span class="token function">registerTypeHierarchyAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonDeserializer///PointingToDeclaration/">JsonDeserializer</span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-hierarchy-adapter.html"><span class="token function">registerTypeHierarchyAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonSerializer///PointingToDeclaration/">JsonSerializer</span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span><span class="token punctuation">.</span><a href="register-type-hierarchy-adapter.html"><span class="token function">registerTypeHierarchyAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">typeAdapter<span class="token operator">: </span><span data-unresolved-link="com.google.gson/TypeAdapter///PointingToDeclaration/">TypeAdapter</span><span class="token operator">&lt;</span><a href="register-type-hierarchy-adapter.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/GsonBuilder///PointingToDeclaration/">GsonBuilder</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1644618751%2FFunctions%2F1876130704" anchor-label="serializeTyped" id="1644618751%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="serialize-typed.html"><span>serialize</span><wbr><span><span>Typed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1644618751%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="serialize-typed.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/JsonSerializationContext///PointingToDeclaration/">JsonSerializationContext</span><span class="token punctuation">.</span><a href="serialize-typed.html"><span class="token function">serializeTyped</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">src<span class="token operator">: </span><a href="serialize-typed.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="214334235%2FFunctions%2F1876130704" anchor-label="set" id="214334235%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set.html"><span><span>set</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="214334235%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="set.html"><span class="token function">set</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="841074571%2FFunctions%2F1876130704" anchor-label="toJsonArray" id="841074571%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-json-array.html"><span>to</span><wbr><span>Json</span><wbr><span><span>Array</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="841074571%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean-array/index.html">BooleanArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char-array/index.html">CharArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double-array/index.html">DoubleArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float-array/index.html">FloatArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int-array/index.html">IntArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long-array/index.html">LongArray</a><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"toJsonArrayElements"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"toJsonArrayBooleans"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"toJsonArrayChars"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char/index.html">Char</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"toJsonArrayNumbers"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"toJsonArrayStrings"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="to-json-array.html"><span class="token function">toJsonArray</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonArray///PointingToDeclaration/">JsonArray</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1524839598%2FFunctions%2F1876130704" anchor-label="toJsonTreeTyped" id="1524839598%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-json-tree-typed.html"><span>to</span><wbr><span>Json</span><wbr><span>Tree</span><wbr><span><span>Typed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1524839598%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="to-json-tree-typed.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="com.google.gson/Gson///PointingToDeclaration/">Gson</span><span class="token punctuation">.</span><a href="to-json-tree-typed.html"><span class="token function">toJsonTreeTyped</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">src<span class="token operator">: </span><a href="to-json-tree-typed.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1827927027%2FFunctions%2F1876130704" anchor-label="writeToFile" id="1827927027%2FFunctions%2F1876130704" data-filterable-set=":commons-gson/main"></a>
+          <div class="table-row" data-filterable-current=":commons-gson/main" data-filterable-set=":commons-gson/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="write-to-file.html"><span>write</span><wbr><span>To</span><wbr><span><span>File</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1827927027%2FFunctions%2F1876130704"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-gson/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token punctuation">.</span><a href="write-to-file.html"><span class="token function">writeToFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="com.google.gson/JsonElement///PointingToDeclaration/">JsonElement</span><span class="token punctuation">.</span><a href="write-to-file.html"><span class="token function">writeToFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">path<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html">Path</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

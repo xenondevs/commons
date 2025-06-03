@@ -1,0 +1,791 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ObservableMap</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    commons
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":commons-collections/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":commons-collections/main" data-filter=":commons-collections/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    commons
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="commons-collections::xyz.xenondevs.commons.collections.observed/ObservableMap///PointingToDeclaration//1768229086">
+  <div class="breadcrumbs"><a href="../../index.html">commons-collections</a><span class="delimiter">/</span><a href="../index.html">xyz.xenondevs.commons.collections.observed</a><span class="delimiter">/</span><span class="current">ObservableMap</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Observable</span><wbr><span><span>Map</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">ObservableMap</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>map<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">handleUpdate<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt; </span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-781227644%2FConstructors%2F1768229086" anchor-label="ObservableMap" id="-781227644%2FConstructors%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-observable-map.html"><span>Observable</span><wbr><span><span>Map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-781227644%2FConstructors%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">map<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">handleUpdate<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="68857990%2FProperties%2F1768229086" anchor-label="entries" id="68857990%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="entries.html"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68857990%2FProperties%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="entries.html">entries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-set/index.html">MutableSet</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/-mutable-entry/index.html">MutableMap.MutableEntry</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="253749136%2FProperties%2F1768229086" anchor-label="keys" id="253749136%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="keys.html"><span><span>keys</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="253749136%2FProperties%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="keys.html">keys</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-set/index.html">MutableSet</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1352310342%2FProperties%2F1768229086" anchor-label="map" id="-1352310342%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="map.html"><span><span>map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1352310342%2FProperties%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="map.html">map</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-157521630%2FProperties%2F1768229086" anchor-label="size" id="-157521630%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-157521630%2FProperties%2F1768229086"><span><span>size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-157521630%2FProperties%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="index.html#-157521630%2FProperties%2F1768229086">size</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-73690526%2FProperties%2F1768229086" anchor-label="values" id="-73690526%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-73690526%2FProperties%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="values.html">values</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><a href="index.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1948319657%2FFunctions%2F1768229086" anchor-label="clear" id="1948319657%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear.html"><span><span>clear</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1948319657%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="clear.html"><span class="token function">clear</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="392596737%2FFunctions%2F1768229086" anchor-label="compute" id="392596737%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="compute.html"><span><span>compute</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="392596737%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="compute.html"><span class="token function">compute</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">remappingFunction<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html">BiFunction</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">K</a><span class="token punctuation">, </span><span class="token keyword">in </span><a href="index.html">V</a><span class="token operator">?</span><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">V</a><span class="token operator">?</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1507267388%2FFunctions%2F1768229086" anchor-label="computeIfAbsent" id="1507267388%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="compute-if-absent.html"><span>compute</span><wbr><span>If</span><wbr><span><span>Absent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1507267388%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="compute-if-absent.html"><span class="token function">computeIfAbsent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">mappingFunction<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html">Function</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">K</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">V</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="523314296%2FFunctions%2F1768229086" anchor-label="computeIfPresent" id="523314296%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="compute-if-present.html"><span>compute</span><wbr><span>If</span><wbr><span><span>Present</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="523314296%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="compute-if-present.html"><span class="token function">computeIfPresent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">remappingFunction<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html">BiFunction</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">K</a><span class="token punctuation">, </span><span class="token keyword">in </span><a href="index.html">V</a><span class="token operator"> &amp; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">V</a><span class="token operator">?</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="189495335%2FFunctions%2F1768229086" anchor-label="containsKey" id="189495335%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#189495335%2FFunctions%2F1768229086"><span>contains</span><wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="189495335%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="index.html#189495335%2FFunctions%2F1768229086"><span class="token function">containsKey</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-337993863%2FFunctions%2F1768229086" anchor-label="containsValue" id="-337993863%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-337993863%2FFunctions%2F1768229086"><span>contains</span><wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-337993863%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="index.html#-337993863%2FFunctions%2F1768229086"><span class="token function">containsValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="115892349%2FFunctions%2F1768229086" anchor-label="equals" id="115892349%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="equals.html"><span><span>equals</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="115892349%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="equals.html"><span class="token function">equals</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1624146342%2FFunctions%2F1768229086" anchor-label="filterIsInstanceKeys" id="-1624146342%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html"><span>filter</span><wbr><span>Is</span><wbr><span>Instance</span><wbr><span><span>Keys</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1624146342%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html"><span class="token function">filterIsInstanceKeys</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1911640449%2FFunctions%2F1768229086" anchor-label="filterIsInstanceKeysTo" id="1911640449%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html"><span>filter</span><wbr><span>Is</span><wbr><span>Instance</span><wbr><span>Keys</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1911640449%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">V</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html"><span class="token function">filterIsInstanceKeysTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-keys-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="632380744%2FFunctions%2F1768229086" anchor-label="filterIsInstanceValues" id="632380744%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html"><span>filter</span><wbr><span>Is</span><wbr><span>Instance</span><wbr><span><span>Values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="632380744%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html"><span class="token function">filterIsInstanceValues</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values.html">R</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-522664593%2FFunctions%2F1768229086" anchor-label="filterIsInstanceValuesTo" id="-522664593%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html"><span>filter</span><wbr><span>Is</span><wbr><span>Instance</span><wbr><span>Values</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-522664593%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">R</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html"><span class="token function">filterIsInstanceValuesTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-is-instance-values-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="701775411%2FFunctions%2F1768229086" anchor-label="filterValuesNotNull" id="701775411%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html"><span>filter</span><wbr><span>Values</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="701775411%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">V</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">V</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html"><span class="token function">filterValuesNotNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-662964819%2FFunctions%2F1768229086" anchor-label="filterValuesNotNullTo" id="-662964819%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html"><span>filter</span><wbr><span>Values</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-662964819%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">V</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">V</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html"><span class="token function">filterValuesNotNullTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">C</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/filter-values-not-null-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-511286730%2FFunctions%2F1768229086" anchor-label="flatMap" id="-511286730%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/flat-map.html"><span>flat</span><wbr><span><span>Map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-511286730%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">R</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html"><span class="token function">flatMap</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">R</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map.html">R</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1870319132%2FFunctions%2F1768229086" anchor-label="flatMapTo" id="-1870319132%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html"><span>flat</span><wbr><span>Map</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1870319132%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">R</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html"><span class="token function">flatMapTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">C</a><span class="token punctuation">, </span></span><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">R</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1589144509%2FFunctions%2F1768229086" anchor-label="get" id="1589144509%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1589144509%2FFunctions%2F1768229086"><span><span>get</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1589144509%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="index.html#1589144509%2FFunctions%2F1768229086"><span class="token function">get</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="548329417%2FFunctions%2F1768229086" anchor-label="hashCode" id="548329417%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="548329417%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="hash-code.html"><span class="token function">hashCode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1708477740%2FFunctions%2F1768229086" anchor-label="isEmpty" id="-1708477740%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1708477740%2FFunctions%2F1768229086"><span>is</span><wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1708477740%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="index.html#-1708477740%2FFunctions%2F1768229086"><span class="token function">isEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2143892194%2FFunctions%2F1768229086" anchor-label="isNotNullOrEmpty" id="-2143892194%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/is-not-null-or-empty.html"><span>is</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span>Or</span><wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2143892194%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/is-not-null-or-empty.html"><span class="token function">isNotNullOrEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2064930963%2FFunctions%2F1768229086" anchor-label="isNullOrEmpty" id="2064930963%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/is-null-or-empty.html"><span>is</span><wbr><span>Null</span><wbr><span>Or</span><wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2064930963%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/is-null-or-empty.html"><span class="token function">isNullOrEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1690351632%2FFunctions%2F1768229086" anchor-label="mapKeysNotNull" id="-1690351632%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html"><span>map</span><wbr><span>Keys</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1690351632%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">R</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html"><span class="token function">mapKeysNotNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">keySelector<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">R</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1845723562%2FFunctions%2F1768229086" anchor-label="mapKeysNotNullTo" id="-1845723562%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html"><span>map</span><wbr><span>Keys</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1845723562%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">M</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html"><span class="token function">mapKeysNotNullTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">M</a><span class="token punctuation">, </span></span><span class="parameter ">keySelector<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">R</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/map-keys-not-null-to.html">M</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1050252674%2FFunctions%2F1768229086" anchor-label="mapValuesNotNull" id="1050252674%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html"><span>map</span><wbr><span>Values</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1050252674%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">R</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html"><span class="token function">mapValuesNotNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">valueSelector<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">R</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null.html">R</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1090381820%2FFunctions%2F1768229086" anchor-label="mapValuesNotNullTo" id="-1090381820%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html"><span>map</span><wbr><span>Values</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1090381820%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">R</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">M</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">R</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html"><span class="token function">mapValuesNotNullTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">M</a><span class="token punctuation">, </span></span><span class="parameter ">valueSelector<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">R</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/map-values-not-null-to.html">M</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2139458602%2FFunctions%2F1768229086" anchor-label="merge" id="-2139458602%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="merge.html"><span><span>merge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2139458602%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="merge.html"><span class="token function">merge</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a><span class="token operator"> &amp; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span></span><span class="parameter ">remappingFunction<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html">BiFunction</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">V</a><span class="token operator"> &amp; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword">in </span><a href="index.html">V</a><span class="token operator"> &amp; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">V</a><span class="token operator">?</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2113129900%2FFunctions%2F1768229086" anchor-label="poll" id="-2113129900%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/poll.html"><span><span>poll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2113129900%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/poll.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/poll.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/poll.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/poll.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/poll.html"><span class="token function">poll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/poll.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/poll.html">V</a><span class="token operator">&gt;</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1849514326%2FFunctions%2F1768229086" anchor-label="put" id="1849514326%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put.html"><span><span>put</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1849514326%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="put.html"><span class="token function">put</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1575536598%2FFunctions%2F1768229086" anchor-label="putAll" id="-1575536598%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-all.html"><span>put</span><wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1575536598%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="put-all.html"><span class="token function">putAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">from<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="index.html">K</a><span class="token punctuation">, </span><a href="index.html">V</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-793786324%2FFunctions%2F1768229086" anchor-label="putIfAbsent" id="-793786324%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-if-absent.html"><span>put</span><wbr><span>If</span><wbr><span><span>Absent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-793786324%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="put-if-absent.html"><span class="token function">putIfAbsent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2024272055%2FFunctions%2F1768229086" anchor-label="putOrRemove" id="2024272055%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html"><span>put</span><wbr><span>Or</span><wbr><span><span>Remove</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2024272055%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html"><span class="token function">putOrRemove</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">V</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/put-or-remove.html">V</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="137017101%2FFunctions%2F1768229086" anchor-label="remove" id="137017101%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove.html"><span><span>remove</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="137017101%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="remove.html"><span class="token function">remove</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="remove.html"><span class="token function">remove</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1998312553%2FFunctions%2F1768229086" anchor-label="removeIf" id="1998312553%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/remove-if.html"><span>remove</span><wbr><span><span>If</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1998312553%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/remove-if.html"><span class="token function">removeIf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">predicate<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/remove-if.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="11081097%2FFunctions%2F1768229086" anchor-label="replace" id="11081097%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="replace.html"><span><span>replace</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="11081097%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="replace.html"><span class="token function">replace</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">V</a><span class="token operator">?</span></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="replace.html"><span class="token function">replace</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="index.html">K</a><span class="token punctuation">, </span></span><span class="parameter ">oldValue<span class="token operator">: </span><a href="index.html">V</a><span class="token punctuation">, </span></span><span class="parameter ">newValue<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1093750376%2FFunctions%2F1768229086" anchor-label="replaceAll" id="1093750376%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="replace-all.html"><span>replace</span><wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1093750376%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="replace-all.html"><span class="token function">replaceAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">function<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html">BiFunction</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">K</a><span class="token punctuation">, </span><span class="token keyword">in </span><a href="index.html">V</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">V</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1224819407%2FFunctions%2F1768229086" anchor-label="selectValues" id="-1224819407%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/select-values.html"><span>select</span><wbr><span><span>Values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1224819407%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/select-values.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/select-values.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/select-values.html"><span class="token function">selectValues</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">keys<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values.html">K</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="168334147%2FFunctions%2F1768229086" anchor-label="selectValuesTo" id="168334147%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/select-values-to.html"><span>select</span><wbr><span>Values</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="168334147%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">V</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">C</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-collection/index.html">MutableCollection</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">V</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html"><span class="token function">selectValuesTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">destination<span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">C</a><span class="token punctuation">, </span></span><span class="parameter ">keys<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">K</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../xyz.xenondevs.commons.collections/select-values-to.html">C</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1533157753%2FFunctions%2F1768229086" anchor-label="toEnumMap" id="-1533157753%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html"><span>to</span><wbr><span>Enum</span><wbr><span><span>Map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1533157753%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">K</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">K</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">V</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">V</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html"><span class="token function">toEnumMap</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/EnumMap.html">EnumMap</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">K</a><span class="token punctuation">, </span><a href="../../xyz.xenondevs.commons.collections/to-enum-map.html">V</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="370163352%2FFunctions%2F1768229086" anchor-label="toString" id="370163352%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="370163352%2FFunctions%2F1768229086"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
