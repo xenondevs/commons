@@ -50,4 +50,26 @@ class MappingProviderTests {
         assertEquals(null, mappedProvider.get())
     }
     
+    @Test
+    fun testMapParentsSet() {
+        val root = mutableProvider(1)
+        val child = root.map({ it + 1 }, { it - 1 })
+        val grandChild = child.map({ it + 1 }, { it - 1 })
+        
+        assertEquals(emptySet(), root.parents)
+        assertEquals(setOf(root), child.parents)
+        assertEquals(setOf(child), grandChild.parents)
+    }
+    
+    @Test
+    fun testMapChildrenSet() {
+        val root = mutableProvider(1)
+        val child = root.map({ it + 1 }, { it - 1 })
+        val grandChild = child.map({ it + 1 }, { it - 1 })
+        
+        assertEquals(setOf(child), root.children)
+        assertEquals(setOf(grandChild), child.children)
+        assertEquals(emptySet(), grandChild.children)
+    }
+    
 }

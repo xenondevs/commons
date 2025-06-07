@@ -36,6 +36,9 @@ internal class UnidirectionalTransformingProvider<P, T>(
     private val transform: (P) -> T
 ) : UnidirectionalProvider<P, T>() {
     
+    override val parents: Set<Provider<*>>
+        get() = setOf(parent)
+    
     @Volatile
     override var value: DeferredValue<T> = DeferredValue.Mapped(parent.value, transform)
     
@@ -49,6 +52,9 @@ internal class ObservedValueUndirectionalTransformingProvider<P, T> private cons
     private val parent: MutableProviderImpl<P>,
     private val createObservedObj: (original: P, updateHandler: () -> Unit) -> T
 ) : UnidirectionalProvider<P, T>() {
+    
+    override val parents: Set<Provider<*>>
+        get() = setOf(parent)
     
     @Volatile
     override var value: DeferredValue<T> = createDeferredValue()
@@ -90,15 +96,18 @@ internal class ObservedValueUndirectionalTransformingProvider<P, T> private cons
 }
 
 internal class MultiUnidirectionalTransformingProvider<P, T> private constructor(
-    private val parents: List<ProviderImpl<P>>,
+    private val _parents: List<ProviderImpl<P>>,
     private val transform: (List<P>) -> T
 ) : UnidirectionalProvider<P, T>() {
     
+    override val parents: Set<Provider<*>>
+        get() = _parents.toSet()
+    
     @Volatile
-    override var value: DeferredValue<T> = DeferredValue.MappedMulti(parents.map { it.value }, transform)
+    override var value: DeferredValue<T> = DeferredValue.MappedMulti(_parents.map { it.value }, transform)
     
     override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
-        update(DeferredValue.MappedMulti(parents.map { it.value }, transform)) // TODO: does getting value from parents cause any issues?
+        update(DeferredValue.MappedMulti(_parents.map { it.value }, transform)) // TODO: does getting value from parents cause any issues?
     }
     
     companion object {

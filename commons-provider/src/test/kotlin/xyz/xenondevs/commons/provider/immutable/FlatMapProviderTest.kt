@@ -180,4 +180,44 @@ class FlatMapProviderTest {
         assertEquals(2, flatMapTransformExecCount)
     }
     
+    @Test
+    fun testFlatMapParentsSet() {
+        val a = mutableProvider(1)
+        val b = mutableProvider(2)
+        val selector = mutableProvider(a)
+        val flatMapped = selector.flatMap { it }
+        
+        assertEquals(emptySet(), a.parents)
+        assertEquals(emptySet(), b.parents)
+        assertEquals(emptySet(), selector.parents)
+        assertEquals(setOf(selector, a), flatMapped.parents)
+        
+        selector.set(b)
+        
+        assertEquals(emptySet(), a.parents)
+        assertEquals(emptySet(), b.parents)
+        assertEquals(emptySet(), selector.parents)
+        assertEquals(setOf(selector, b), flatMapped.parents)
+    }
+    
+    @Test
+    fun testFlatMapChildrenSet() {
+        val a = mutableProvider(1)
+        val b = mutableProvider(2)
+        val selector = mutableProvider(a)
+        val flatMapped = selector.flatMap { it }
+        
+        assertEquals(setOf(flatMapped), a.children)
+        assertEquals(emptySet(), b.children)
+        assertEquals(setOf(flatMapped), selector.children)
+        assertEquals(emptySet(), flatMapped.children)
+        
+        selector.set(b)
+        
+        assertEquals(emptySet(), a.children)
+        assertEquals(setOf(flatMapped), b.children)
+        assertEquals(setOf(flatMapped), selector.children)
+        assertEquals(emptySet(), flatMapped.children)
+    }
+    
 }

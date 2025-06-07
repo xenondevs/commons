@@ -175,4 +175,22 @@ class ObservedProviderTests {
         assertEquals(3, updateCount)
     }
     
+    @Test
+    fun testObservedProviderParentsSet() {
+        val root = mutableProvider(mutableListOf<Int>())
+        val child = root.observed()
+        
+        assertEquals(emptySet(), root.parents)
+        assertEquals(setOf(root), child.parents)
+    }
+    
+    @Test
+    fun testObservedProviderChildrenSet() {
+        val root = mutableProvider(mutableListOf<Int>())
+        val child = root.observed()
+        
+        assertEquals(setOf(child), root.children)
+        assertEquals(emptySet(), child.children)
+    }
+    
 }

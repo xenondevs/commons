@@ -6,6 +6,9 @@ internal open class BidirectionalProvider<T>(
     override var value: DeferredValue<T>
 ) : AbstractChildContainingProvider<T>(), MutableProviderImpl<T> {
     
+    override val parents: Set<Provider<*>>
+        get() = emptySet()
+    
     override fun update(value: DeferredValue<T>, ignore: Provider<*>?): Boolean {
         if (this.value > value)
             return false
@@ -34,6 +37,9 @@ internal class BidirectionalTransformingProvider<P, T>(
     private val transform: (P) -> T,
     private val untransform: (T) -> P
 ) : BidirectionalProvider<T>(DeferredValue.Mapped(parent.value, transform)), HasParents {
+    
+    override val parents: Set<Provider<*>>
+        get() = setOf(parent)
     
     override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
         update(DeferredValue.Mapped(parent.value, transform), parent)

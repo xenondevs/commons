@@ -21,6 +21,9 @@ internal abstract class AbstractFlatMappedProvider<P, T, DP : ProviderImpl<T>>(
         DynamicParent(staticParentValue.state, dynamicParent)
     }
     
+    override val parents: Set<Provider<*>>
+        get() = setOf(staticParent, dynamicParent.provider)
+    
     override val value: DeferredValue<T>
         get() {
             val (minState, dynamicParent) = dynamicParent

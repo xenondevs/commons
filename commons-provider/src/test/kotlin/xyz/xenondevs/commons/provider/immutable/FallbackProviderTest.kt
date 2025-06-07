@@ -110,4 +110,26 @@ class FallbackProviderTest {
         assertEquals(1, orElse2.get())
     }
     
+    @Test
+    fun testOrElseProviderParentsSet() {
+        val root = mutableProvider<Int?>(null)
+        val fallback = mutableProvider(42)
+        val result = root.orElse(fallback)
+        
+        assertEquals(emptySet(), root.parents)
+        assertEquals(emptySet(), fallback.parents)
+        assertEquals(setOf(root, fallback), result.parents)
+    }
+    
+    @Test
+    fun testOrElseProviderChildrenSet() {
+        val root = mutableProvider<Int?>(null)
+        val fallback = mutableProvider(42)
+        val result = root.orElse(fallback)
+        
+        assertEquals(setOf(result), root.children)
+        assertEquals(setOf(result), fallback.children)
+        assertEquals(emptySet(), result.children)
+    }
+    
 }

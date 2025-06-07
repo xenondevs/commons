@@ -21,6 +21,18 @@ import kotlin.reflect.KProperty
 sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
+     * A snapshot of the direct parents of this [Provider].
+     * May not necessarily contain parents if it can be determined that no updates will be received from them.
+     */
+    val parents: Set<Provider<*>>
+    
+    /**
+     * A snapshot of the direct children of this [Provider].
+     * May not necessarily contain children if it can be determined that no updates will be sent to them.
+     */
+    val children: Set<Provider<*>>
+    
+    /**
      * Creates and returns a new [Provider] that maps the value of [this][Provider]
      * using the [transform] function.
      *

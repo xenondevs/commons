@@ -9,6 +9,16 @@ internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : ProviderImpl<T
     @Volatile
     protected var lazyDynamicParent: Lazy<DynamicParent<DP>> = lazy(::createDynamicParent)
     
+    override val parents: Set<Provider<*>>
+        get() {
+            val ldp = lazyDynamicParent
+            if (ldp.isInitialized()) {
+                return setOf(staticParent, ldp.value.provider)
+            } else {
+                return setOf(staticParent)
+            }
+        }
+    
     override val value: DeferredValue<T>
         get() {
             val ldp = lazyDynamicParent

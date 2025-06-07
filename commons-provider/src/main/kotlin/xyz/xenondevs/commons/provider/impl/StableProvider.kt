@@ -8,6 +8,11 @@ package xyz.xenondevs.commons.provider
  */
 internal class StableProvider<T>(private val lazyValue: Lazy<T>) : ProviderImpl<T> {
     
+    override val parents: Set<Provider<*>>
+        get() = emptySet()
+    override val children: Set<Provider<*>>
+        get() = emptySet()
+    
     override val value: DeferredValue<T> = DeferredValue.Lazy(lazyValue)
     
     override fun <R> strongMap(transform: (T) -> R): Provider<R> =

@@ -20,13 +20,26 @@ internal interface ProviderImpl<out T> : Provider<T> {
  */
 internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildren<T> {
     
-    private val subscribers: MutableList<(T) -> Unit> = Collections.synchronizedList(ArrayList(0))
+    private val strongSubscribers: MutableList<(T) -> Unit> = Collections.synchronizedList(ArrayList(0))
     private val weakSubscribers: MutableMap<Any, MutableList<(Any, T) -> Unit>> = Collections.synchronizedMap(WeakHashMap(0))
-    private val observers: MutableList<() -> Unit> = Collections.synchronizedList(ArrayList(0))
+    private val strongObservers: MutableList<() -> Unit> = Collections.synchronizedList(ArrayList(0))
     private val weakObservers: MutableMap<Any, MutableList<(Any) -> Unit>> = Collections.synchronizedMap(WeakHashMap(0))
     
-    private val children: MutableSet<HasParents> = Collections.synchronizedSet(HashSet())
+    private val strongChildren: MutableSet<HasParents> = Collections.synchronizedSet(HashSet())
     private val weakChildren: MutableSet<HasParents> = Collections.synchronizedSet(weakHashSet())
+    
+    @Suppress("UNCHECKED_CAST")
+    override val children: Set<Provider<*>>
+        get() {
+            val set = HashSet<Provider<*>>()
+            synchronized(strongChildren) {
+                set.addAll(strongChildren as Set<Provider<*>>)
+            }
+            synchronized(weakChildren) {
+                set.addAll(weakChildren as Set<Provider<*>>)
+            }
+            return set
+        }
     
     /**
      * Creates a list of runnables that notify all subscribers, observers, and children (except [ignore]) of the value of this provider.
@@ -34,8 +47,8 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
     protected fun prepareNotifiers(ignore: Provider<*>? = null): List<() -> Unit> {
         val preparedSubscribers = ArrayList<() -> Unit>()
         
-        synchronized(children) {
-            for (child in children) {
+        synchronized(strongChildren) {
+            for (child in strongChildren) {
                 if (child === ignore)
                     continue
                 preparedSubscribers += { child.handleParentUpdated(this) }
@@ -50,8 +63,8 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
             }
         }
         
-        synchronized(observers) {
-            preparedSubscribers += observers
+        synchronized(strongObservers) {
+            preparedSubscribers += strongObservers
         }
         
         synchronized(weakObservers) {
@@ -62,10 +75,10 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
             }
         }
         
-        synchronized(subscribers) {
-            if (subscribers.isNotEmpty()) {
+        synchronized(strongSubscribers) {
+            if (strongSubscribers.isNotEmpty()) {
                 val value = get()
-                for (subscriber in subscribers) {
+                for (subscriber in strongSubscribers) {
                     preparedSubscribers += { subscriber(value) }
                 }
             }
@@ -87,11 +100,11 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
     
     //<editor-fold desc="(un)registering subscribers / observers">
     override fun subscribe(action: (T) -> Unit) {
-        subscribers += action
+        strongSubscribers += action
     }
     
     override fun observe(action: () -> Unit) {
-        observers += action
+        strongObservers += action
     }
     
     @Suppress("UNCHECKED_CAST")
@@ -107,11 +120,11 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
     }
     
     override fun unsubscribe(action: (T) -> Unit) { 
-        subscribers -= action
+        strongSubscribers -= action
     }
     
     override fun unobserve(action: () -> Unit) {
-        observers -= action
+        strongObservers -= action
     }
     
     @Suppress("UNCHECKED_CAST")
@@ -137,11 +150,11 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
     
     //<editor-fold desc="(un)registering (weak) children">
     override fun addStrongChild(child: HasParents) {
-        children += child
+        strongChildren += child
     }
     
     override fun removeStrongChild(child: HasParents) {
-        children -= child
+        strongChildren -= child
     }
     
     override fun addWeakChild(child: HasParents) {
