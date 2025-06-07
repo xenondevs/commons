@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.Provider
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.orElse
+import xyz.xenondevs.commons.provider.orElseLazily
 import xyz.xenondevs.commons.provider.orElseNew
 import xyz.xenondevs.commons.provider.provider
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class FallbackProviderTest {
     
@@ -108,6 +110,67 @@ class FallbackProviderTest {
         assertEquals(1, provider.get())
         assertEquals(1, orElse1.get())
         assertEquals(1, orElse2.get())
+    }
+    
+    @Test
+    fun testOrElseValueIsLazy() {
+        var evaluated = false
+        val root = provider<Int?> {
+            evaluated = true
+            null
+        }
+        val result = root.orElse(42)
+        
+        assertFalse(evaluated)
+        result.get()
+        assertTrue(evaluated)
+    }
+    
+    @Test
+    fun testOrElseLazilyIsLazy() {
+        var rootEvaluated = false
+        var fallbackEvaluated = false
+        
+        val root = provider<Int?> {
+            rootEvaluated = true
+            null
+        }
+        val result = root.orElseLazily {
+            fallbackEvaluated = true
+            42
+        }
+        
+        assertFalse(rootEvaluated)
+        assertFalse(fallbackEvaluated)
+        
+        result.get()
+        
+        assertTrue(rootEvaluated)
+        assertTrue(fallbackEvaluated)
+    }
+    
+    @Test
+    fun testOrElseProviderIsLazy() {
+        var rootEvaluated = false
+        var fallbackEvaluated = false
+        
+        val root = provider<Int?> {
+            rootEvaluated = true
+            null
+        }
+        val fallback = provider {
+            fallbackEvaluated = true
+            42
+        }
+        val result = root.orElse(fallback)
+        
+        assertFalse(rootEvaluated)
+        assertFalse(fallbackEvaluated)
+        
+        result.get()
+        
+        assertTrue(rootEvaluated)
+        assertTrue(fallbackEvaluated)
     }
     
     @Test

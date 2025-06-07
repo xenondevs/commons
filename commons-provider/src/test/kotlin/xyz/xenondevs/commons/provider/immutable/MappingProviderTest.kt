@@ -6,6 +6,8 @@ import xyz.xenondevs.commons.provider.mapNonNull
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.provider
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class MappingProviderTest {
     
@@ -32,6 +34,28 @@ class MappingProviderTest {
         
         assertEquals(1, provider.get())
         assertEquals(2, mapped.get())
+    }
+    
+    @Test
+    fun testMapIsLazy() {
+        var rootEvaluated = false
+        var childEvaluated = false
+        val root = mutableProvider { 
+            rootEvaluated = true
+            1
+        }
+        val child = root.map { 
+            childEvaluated = true
+            it + 1
+        }
+        
+        assertFalse(rootEvaluated)
+        assertFalse(childEvaluated)
+        
+        child.get()
+        
+        assertTrue(rootEvaluated)
+        assertTrue(childEvaluated)
     }
     
     @Test

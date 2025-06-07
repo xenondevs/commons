@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.observed
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ObservedProviderTests {
     
@@ -173,6 +175,20 @@ class ObservedProviderTests {
         
         observedListB += 2
         assertEquals(3, updateCount)
+    }
+    
+    @Test
+    fun testObservedIsLazy() {
+        var rootEvaluated = false
+        val root = mutableProvider { 
+            rootEvaluated = true
+            mutableListOf<Int>()
+        }
+        val child = root.observed()
+        
+        assertFalse(rootEvaluated)
+        child.get()
+        assertTrue(rootEvaluated)
     }
     
     @Test

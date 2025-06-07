@@ -1,11 +1,13 @@
 package xyz.xenondevs.commons.provider.mutable
 
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.orElse
 import xyz.xenondevs.commons.provider.orElseLazily
 import xyz.xenondevs.commons.provider.orElseNew
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class FallbackProviderTests {
     
@@ -83,6 +85,43 @@ class FallbackProviderTests {
         orElse.set(mutableSetOf(1))
         parent.set(null)
         assertEquals(emptySet(), orElse.get())
+    }
+    
+    @Test
+    fun testOrElseValueIsLazy() {
+        var evaluated = false
+        val root = mutableProvider<Int?> {
+            evaluated = true
+            null
+        }
+        val result = root.orElse(42)
+        
+        assertFalse(evaluated)
+        result.get()
+        assertTrue(evaluated)
+    }
+    
+    @Test
+    fun testOrElseLazilyIsLazy() {
+        var rootEvaluated = false
+        var fallbackEvaluated = false
+        
+        val root = mutableProvider<Int?> {
+            rootEvaluated = true
+            null
+        }
+        val result = root.orElseLazily {
+            fallbackEvaluated = true
+            42
+        }
+        
+        assertFalse(rootEvaluated)
+        assertFalse(fallbackEvaluated)
+        
+        result.get()
+        
+        assertTrue(rootEvaluated)
+        assertTrue(fallbackEvaluated)
     }
     
 }

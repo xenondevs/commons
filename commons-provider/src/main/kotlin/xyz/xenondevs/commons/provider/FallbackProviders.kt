@@ -31,7 +31,7 @@ fun <T> Provider<T?>.strongOrElse(provider: Provider<T>): Provider<T> =
  * The returned provider will only be stored in a [WeakReference] in the parent providers ([this][MutableProvider] and [provider]).
  */
 fun <T> Provider<T?>.orElse(provider: Provider<T>): Provider<T> =
-    flatMap { it?.let(::provider) ?: provider }
+    combinedProvider(this, provider) { a, b -> a ?: b }
 
 /**
  * If [provider] is null, returns [this][Provider]. If [provider] is not null, creates and returns a new [Provider] that returns a fallback value obtained
@@ -56,8 +56,10 @@ fun <T> Provider<T?>.orElse(provider: Provider<T>?): Provider<T?> =
  *
  * [lazyValue] should be a pure function.
  */
-fun <T> Provider<T?>.strongOrElseLazily(lazyValue: () -> T): Provider<T> =
-    strongOrElse(provider(lazyValue))
+fun <T> Provider<T?>.strongOrElseLazily(lazyValue: () -> T): Provider<T> {
+    val lazy = lazy(lazyValue)
+    return map { it ?: lazy.value }
+}
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
@@ -66,8 +68,10 @@ fun <T> Provider<T?>.strongOrElseLazily(lazyValue: () -> T): Provider<T> =
  *
  * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
  */
-fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> =
-    orElse(provider(lazyValue))
+fun <T> Provider<T?>.orElseLazily(lazyValue: () -> T): Provider<T> {
+    val lazy = lazy(lazyValue)
+    return map { it ?: lazy.value }
+}
 
 /**
  * Creates a new [Provider] that returns a fallback value which is re-created through the [newValue] lambda every time the value of [this][Provider] is set to null.
@@ -111,7 +115,7 @@ fun <T> MutableProvider<T?>.orElse(value: T): MutableProvider<T> =
  */
 fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): MutableProvider<T> {
     val lazy = lazy(lazyValue)
-    return strongMap({ it ?: lazy.value }, { it.takeUnless { it == lazy.value } }, )
+    return strongMap({ it ?: lazy.value }, { it.takeUnless { it == lazy.value } })
 }
 
 /**
@@ -124,7 +128,7 @@ fun <T : Any> MutableProvider<T?>.strongOrElseLazily(lazyValue: () -> T): Mutabl
  */
 fun <T : Any> MutableProvider<T?>.orElseLazily(lazyValue: () -> T): MutableProvider<T> {
     val lazy = lazy(lazyValue)
-    return map({ it ?: lazy.value }, { it.takeUnless { it == lazy.value } }, )
+    return map({ it ?: lazy.value }, { it.takeUnless { it == lazy.value } })
 }
 
 /**
