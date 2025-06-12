@@ -23,6 +23,15 @@ inline val <reified K> Map<K, *>.keyType: KType
 inline val <reified V> Map<*, V>.valueType: KType
     get() = typeOf<V>()
 
+/**
+ * Compares two [KTypes][KType] for equality, ignoring nullability.
+ * 
+ * Examples:
+ * ```kotlin
+ * String == String?
+ * List<String> == List<String?>?
+ * ```
+ */
 fun KType?.equalsIgnoreNullability(other: KType?): Boolean {
     if (this == null && other == null)
         return true
@@ -36,6 +45,40 @@ fun KType?.equalsIgnoreNullability(other: KType?): Boolean {
     
     for (i in arguments.indices) {
         if (!arguments[i].type.equalsIgnoreNullability(other.arguments[i].type))
+            return false
+    }
+    
+    return true
+}
+
+/**
+ * Compares two [KTypes][KType] for equality, treating platform types as non-nullable types (e.g. `String!` -> `String`).
+ * 
+ * Examples:
+ * ```kotlin
+ * String == String
+ * String != String?
+ * String! == String
+ * String! != String?
+ * AtomicReference<String!> == AtomicReference<String>
+ * AtomicReference<String!> != AtomicReference<String?>
+ * ```
+ */
+fun KType?.equalsIgnorePlatformTypes(other: KType?): Boolean {
+    if (this == null && other == null)
+        return true
+    
+    if (this == null || other == null)
+        return false
+    if (classifier != other.classifier)
+        return false
+    if (arguments.size != other.arguments.size)
+        return false
+    if (isMarkedNullable != other.isMarkedNullable)
+        return false
+    
+    for (i in arguments.indices) {
+        if (!arguments[i].type.equalsIgnorePlatformTypes(other.arguments[i].type))
             return false
     }
     
