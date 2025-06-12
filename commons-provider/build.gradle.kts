@@ -3,7 +3,7 @@ plugins {
     id("commons.dokka-conventions")
 }
 
-version = "2.0.0-alpha.1"
+version = "2.0.0-alpha.2"
 
 dependencies {
     api(project(":commons-tuple"))
