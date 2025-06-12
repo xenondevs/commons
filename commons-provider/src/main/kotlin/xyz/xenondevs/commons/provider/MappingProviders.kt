@@ -40,6 +40,40 @@ fun <R> Provider<MutableProvider<R>>.flatten(): MutableProvider<R> = flatMapMuta
 fun <R> Provider<MutableProvider<R>>.strongFlatten(): MutableProvider<R> = strongFlatMapMutable { it }
 
 /**
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.lazyFlatMap { it }`.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<Provider<R>>.lazyFlatten(): Provider<R> = lazyFlatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.lazyFlatMap { it }`.
+ */
+fun <R> Provider<Provider<R>>.strongLazyFlatten(): Provider<R> = strongLazyFlatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.lazyFlatMapMutable { it }`.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<MutableProvider<R>>.lazyFlatten(): MutableProvider<R> = lazyFlatMapMutable { it }
+
+/**
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.lazyFlatMapMutable { it }`.
+ */
+fun <R> Provider<MutableProvider<R>>.strongLazyFlatten(): MutableProvider<R> = strongLazyFlatMapMutable { it }
+
+/**
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]
  * using the [transform] function.
  * Null values will be passed through without transformation.
