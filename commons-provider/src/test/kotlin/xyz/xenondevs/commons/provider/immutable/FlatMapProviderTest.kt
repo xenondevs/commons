@@ -2,9 +2,12 @@ package xyz.xenondevs.commons.provider.immutable
 
 import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.flatten
+import xyz.xenondevs.commons.provider.lazyFlatten
 import xyz.xenondevs.commons.provider.mutableProvider
 import xyz.xenondevs.commons.provider.provider
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class FlatMapProviderTest {
     
@@ -178,6 +181,50 @@ class FlatMapProviderTest {
         // switching the selected provider works properly
         assertEquals(2, flatMapped.get())
         assertEquals(2, flatMapTransformExecCount)
+    }
+    
+    @Test
+    fun testLazyFlatten() {
+        var resolved = false
+        
+        val inner1 = provider(1)
+        val inner2 = provider(2)
+        val outer = mutableProvider {
+            resolved = true
+            inner1
+        }
+        
+        val flattened = outer.lazyFlatten()
+        
+        assertFalse(resolved)
+        assertEquals(1, flattened.get())
+        assertTrue(resolved)
+        outer.set(inner2)
+        assertEquals(2, flattened.get())
+    }
+    
+    @Test
+    fun testLazyFlattenMutable() {
+        var resolved = false
+        
+        val inner1 = mutableProvider(1)
+        val inner2 = mutableProvider(2)
+        val outer = mutableProvider {
+            resolved = true
+            inner1
+        }
+        
+        val flattened = outer.lazyFlatten()
+        
+        assertFalse(resolved)
+        assertEquals(1, flattened.get())
+        assertTrue(resolved)
+        outer.set(inner2)
+        assertEquals(2, flattened.get())
+        flattened.set(3)
+        assertEquals(1, inner1.get())
+        assertEquals(3, inner2.get())
+        assertEquals(3, flattened.get())
     }
     
     @Test
