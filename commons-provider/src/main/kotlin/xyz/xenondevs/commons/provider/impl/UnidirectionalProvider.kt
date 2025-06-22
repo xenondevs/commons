@@ -107,7 +107,7 @@ internal class MultiUnidirectionalTransformingProvider<P, T> private constructor
     override var value: DeferredValue<T> = DeferredValue.MappedMulti(_parents.map { it.value }, transform)
     
     override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
-        update(DeferredValue.MappedMulti(_parents.map { it.value }, transform)) // TODO: does getting value from parents cause any issues?
+        update(DeferredValue.MappedMulti(_parents.map { it.value }, transform))
     }
     
     companion object {

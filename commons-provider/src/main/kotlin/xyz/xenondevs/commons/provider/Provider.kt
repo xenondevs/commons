@@ -17,6 +17,17 @@ import kotlin.reflect.KProperty
  * do not access any mutable external state, in order to maintain the integrity of lazy evaluation. It is especially
  * important that they do not resolve any other provider's value, **as doing so may risk deadlocks**.
  * To properly operate on the values of multiple providers, combine them first via [combinedProvider].
+ * 
+ * Usage example:
+ * ```kotlin
+ * val provider0 = provider { "Hello" } // Provider with lazy value of "Hello"
+ * val provider1 = provider0.map { it + ", World!" } // Lazily maps the value of provider by appending ", World!" to it
+ * 
+ * println(provider1.get()) // "Hello, World!" (runs lambdas above)
+ * println(provider1.get()) // "Hello, World!" (cached value)
+ * ```
+ * 
+ * @see provider
  */
 sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
@@ -156,6 +167,8 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a function that will be called with the new value whenever the value of this [Provider] changes.
+     * If multiple threads update the value concurrently, intermediate subscriber invocations may be skipped, but the
+     * supplied value will always be the most recent one.
      *
      * Registering a subscriber disables lazy evaluation of the provider.
      *
@@ -165,6 +178,7 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a function that will be called whenever the value of this [Provider] changes.
+     * If multiple threads update the value concurrently, intermediate observer invocations may be skipped.
      *
      * Contrary to [subscribe], registering an observer does not disable lazy evaluation of the provider.
      */
@@ -172,6 +186,8 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a weak subscriber that will be called when the value of this [Provider] changes.
+     * If multiple threads update the value concurrently, subscriber invocations may be skipped, but the
+     * supplied value will always be the most recent one.
      * The subscriber will be automatically removed when the [owner] is garbage collected.
      *
      * Registering a subscriber disables lazy evaluation of the provider.
@@ -182,6 +198,7 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a weak observer that will be called when the value of this [Provider] changes.
+     * If multiple threads update the value concurrently, intermediate observer invocations may be skipped.
      * The observer will be automatically removed when the [owner] is garbage collected.
      *
      * Contrary to [subscribeWeak], registering an observer does not disable lazy evaluation of the provider.
