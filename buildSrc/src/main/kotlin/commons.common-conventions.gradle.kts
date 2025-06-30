@@ -1,7 +1,7 @@
 import org.gradle.accessors.dm.LibrariesForLibs
 
 group = "xyz.xenondevs.commons"
-version = "1.32"
+version = "1.33"
 
 plugins {
     `java-library`
