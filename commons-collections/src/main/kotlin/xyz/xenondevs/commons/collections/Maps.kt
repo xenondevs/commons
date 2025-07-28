@@ -153,3 +153,19 @@ inline fun <K, V> MutableMap<K, V>.removeIf(predicate: (Map.Entry<K, V>) -> Bool
     
     return this
 }
+
+fun <K, V> Map<K, V>.containsAll(other: Map<K, V>): Boolean {
+    if (this === other)
+        return true
+    if (this.size < other.size)
+        return false
+    
+    for ((key, value) in other) {
+        val thisValue = this[key]
+        if (thisValue == null || thisValue != value) {
+            return false
+        }
+    }
+    
+    return true
+}
