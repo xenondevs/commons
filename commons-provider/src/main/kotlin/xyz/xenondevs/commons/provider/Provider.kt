@@ -167,9 +167,10 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a function that will be called with the new value whenever the value of this [Provider] changes.
-     * If multiple threads update the value concurrently, intermediate subscriber invocations may be skipped, but the
-     * supplied value will always be the most recent one.
-     *
+     * If multiple threads update the value concurrently, intermediate subscriber invocations may be skipped and
+     * values may be out of order.
+     * If resolving the value of this [Provider] throws an exception, subscriber invocations will be skipped silently.
+     * 
      * Registering a subscriber disables lazy evaluation of the provider.
      *
      * The given value is not guaranteed to still be the current value at the time of invocation.
@@ -186,8 +187,9 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * Registers a weak subscriber that will be called when the value of this [Provider] changes.
-     * If multiple threads update the value concurrently, subscriber invocations may be skipped, but the
-     * supplied value will always be the most recent one.
+     * If multiple threads update the value concurrently, subscriber invocations may be skipped and
+     * values may be out of order.
+     * If resolving the value of this [Provider] throws an exception, subscriber invocations will be skipped silently.
      * The subscriber will be automatically removed when the [owner] is garbage collected.
      *
      * Registering a subscriber disables lazy evaluation of the provider.

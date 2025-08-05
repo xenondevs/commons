@@ -77,19 +77,21 @@ internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildre
         
         synchronized(strongSubscribers) {
             if (strongSubscribers.isNotEmpty()) {
-                val value = get()
-                for (subscriber in strongSubscribers) {
-                    preparedSubscribers += { subscriber(value) }
+                runCatching { get() }.onSuccess { value ->
+                    for (subscriber in strongSubscribers) {
+                        preparedSubscribers += { subscriber(value) }
+                    }
                 }
             }
         }
         
         synchronized(weakSubscribers) {
             if (weakSubscribers.isNotEmpty()) {
-                val value = get()
-                for ((owner, actions) in weakSubscribers) {
-                    for (action in actions) {
-                        preparedSubscribers += { action(owner, value) }
+                runCatching { get() }.onSuccess { value ->
+                    for ((owner, actions) in weakSubscribers) {
+                        for (action in actions) {
+                            preparedSubscribers += { action(owner, value) }
+                        }
                     }
                 }
             }

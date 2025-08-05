@@ -1,8 +1,11 @@
 package xyz.xenondevs.commons.provider
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class CoreProviderTest {
     
@@ -214,6 +217,27 @@ class CoreProviderTest {
         
         // observer should not cause the provider value to be resolved
         assertEquals(1, evalCount)
+    }
+    
+    @Test
+    fun testThrowingProvider() {
+        val root = mutableProvider("")
+        val mapped = root.map<String> { throw UnsupportedOperationException() }
+        
+        assertDoesNotThrow { root.get() }
+        assertThrows<UnsupportedOperationException> { mapped.get() }
+        
+        assertDoesNotThrow { root.set("1") }
+        
+        var rootSubscriberInvoked = false
+        var mappedSubscriberInvoked = false
+        
+        root.subscribe { rootSubscriberInvoked = true }
+        mapped.subscribe { mappedSubscriberInvoked = true }
+        
+        assertDoesNotThrow { root.set("2") }
+        assertTrue(rootSubscriberInvoked)
+        assertFalse(mappedSubscriberInvoked)
     }
     
 }
