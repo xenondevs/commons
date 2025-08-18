@@ -6,6 +6,7 @@ package xyz.xenondevs.commons.provider
 import xyz.xenondevs.commons.collections.observed.ObservableList
 import xyz.xenondevs.commons.collections.observed.ObservableMap
 import xyz.xenondevs.commons.collections.observed.ObservableSet
+import xyz.xenondevs.commons.provider.impl.ObservedValueUndirectionalTransformingProvider
 import java.lang.ref.WeakReference
 
 /**

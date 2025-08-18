@@ -1,7 +1,10 @@
-@file:Suppress("PackageDirectoryMismatch") // needs to be in root package for sealed hierarchy, impl directory is used for source file organization
-package xyz.xenondevs.commons.provider
+package xyz.xenondevs.commons.provider.impl
 
-internal abstract class UnidirectionalProvider<P, T> : AbstractChildContainingProvider<T>(), HasParents {
+import xyz.xenondevs.commons.provider.DeferredValue
+import xyz.xenondevs.commons.provider.MutableProvider
+import xyz.xenondevs.commons.provider.Provider
+
+internal abstract class UnidirectionalProvider<P, T> : AbstractProvider<T>() {
     
     abstract override var value: DeferredValue<T>
     
@@ -12,27 +15,26 @@ internal abstract class UnidirectionalProvider<P, T> : AbstractChildContainingPr
         if (this.value > value)
             return false
         
-        val runnables: List<() -> Unit>
+        val updateHandlers: UpdateHandlerCollection
         synchronized(this) {
             if (this.value > value)
                 return false
             this.value = value
             
-            // collect runnables to run outside of lock
-            runnables = prepareNotifiers()
+            // update handlers at time of value change (run outside of lock)
+            updateHandlers = this.updateHandlers
         }
         
-        for (runnable in runnables) {
-            runnable()
-        }
+        updateHandlers.notify()
         
         return true
     }
     
 }
 
+// .map { }: Provider
 internal class UnidirectionalTransformingProvider<P, T>(
-    private val parent: ProviderImpl<P>,
+    private val parent: Provider<P>,
     private val transform: (P) -> T
 ) : UnidirectionalProvider<P, T>() {
     
@@ -42,14 +44,27 @@ internal class UnidirectionalTransformingProvider<P, T>(
     @Volatile
     override var value: DeferredValue<T> = DeferredValue.Mapped(parent.value, transform)
     
-    override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
+    override fun handleParentUpdated(updatedParent: Provider<*>) {
         update(DeferredValue.Mapped(parent.value, transform))
     }
     
 }
 
+/**
+ * A [DeferredValue] that is the result of applying [transform] to the value of [parent]
+ * and the current [DeferredValue] itself.
+ * Inherits the sequence number from [parent].
+ */
+private class SelfMappedDeferredValue<P, T>(val parent: DeferredValue<P>, val transform: (P, DeferredValue<T>) -> T) : DeferredValue<T> {
+    
+    override val seqNo: Long get() = parent.seqNo
+    override val value: T by lazy { transform(parent.value, this) }
+    
+}
+
+// .observed()
 internal class ObservedValueUndirectionalTransformingProvider<P, T> private constructor(
-    private val parent: MutableProviderImpl<P>,
+    private val parent: MutableProvider<P>,
     private val createObservedObj: (original: P, updateHandler: () -> Unit) -> T
 ) : UnidirectionalProvider<P, T>() {
     
@@ -60,17 +75,17 @@ internal class ObservedValueUndirectionalTransformingProvider<P, T> private cons
     override var value: DeferredValue<T> = createDeferredValue()
     
     private fun createDeferredValue(): DeferredValue<T> =
-        DeferredValue.MappedWithSelf(parent.value) { original, deferredValue ->
+        SelfMappedDeferredValue(parent.value) { original, deferredValue ->
             createObservedObj(original) { handleObservedUpdated(deferredValue) }
         }
     
     private fun handleObservedUpdated(value: DeferredValue<T>) {
         if (update(value)) {
-            parent.update(parent.value, this)
+            parent.update(parent.value, setOf(this))
         }
     }
     
-    override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
+    override fun handleParentUpdated(updatedParent: Provider<*>) {
         update(createDeferredValue())
     }
     
@@ -81,7 +96,6 @@ internal class ObservedValueUndirectionalTransformingProvider<P, T> private cons
             weak: Boolean,
             createObservedObj: (original: P, updateHandler: () -> Unit) -> T
         ): Provider<T> {
-            parent as MutableProviderImpl<P>
             val provider = ObservedValueUndirectionalTransformingProvider(parent, createObservedObj)
             if (weak) {
                 parent.addWeakChild(provider)
@@ -95,8 +109,9 @@ internal class ObservedValueUndirectionalTransformingProvider<P, T> private cons
     
 }
 
+// combinedProvider
 internal class MultiUnidirectionalTransformingProvider<P, T> private constructor(
-    private val _parents: List<ProviderImpl<P>>,
+    private val _parents: List<Provider<P>>,
     private val transform: (List<P>) -> T
 ) : UnidirectionalProvider<P, T>() {
     
@@ -106,22 +121,19 @@ internal class MultiUnidirectionalTransformingProvider<P, T> private constructor
     @Volatile
     override var value: DeferredValue<T> = DeferredValue.MappedMulti(_parents.map { it.value }, transform)
     
-    override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
+    override fun handleParentUpdated(updatedParent: Provider<*>) {
         update(DeferredValue.MappedMulti(_parents.map { it.value }, transform))
     }
     
     companion object {
         
-        @Suppress("UNCHECKED_CAST")
         fun <P, T> of(parents: List<Provider<P>>, weak: Boolean, transform: (List<P>) -> T): Provider<T> {
-            val provider = MultiUnidirectionalTransformingProvider(parents as List<ProviderImpl<P>>, transform)
+            val provider = MultiUnidirectionalTransformingProvider(parents, transform)
             for (parent in parents) {
-                if (parent is ProviderWithChildren) {
-                    if (weak) {
-                        parent.addWeakChild(provider)
-                    } else {
-                        parent.addStrongChild(provider)
-                    }
+                if (weak) {
+                    parent.addWeakChild(provider)
+                } else {
+                    parent.addStrongChild(provider)
                 }
             }
             return provider

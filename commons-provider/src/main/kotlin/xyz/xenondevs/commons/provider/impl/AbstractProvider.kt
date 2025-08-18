@@ -1,212 +1,69 @@
-@file:Suppress("PackageDirectoryMismatch") // needs to be in root package for sealed hierarchy, impl directory is used for source file organization
-package xyz.xenondevs.commons.provider
+package xyz.xenondevs.commons.provider.impl
 
 import xyz.xenondevs.commons.collections.weakHashSet
+import xyz.xenondevs.commons.provider.MutableProvider
+import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.util.with
+import xyz.xenondevs.commons.provider.util.without
 import java.util.*
 
 /**
- * Base interface for all implementations of [Provider].
+ * Base class for all default implementations of [xyz.xenondevs.commons.provider.Provider] that can have children.
  */
-internal interface ProviderImpl<out T> : Provider<T> {
+internal abstract class AbstractProvider<T> : Provider<T> {
     
-    val value: DeferredValue<T>
+    @Volatile
+    protected var updateHandlers = UpdateHandlerCollection()
+        private set
     
-    override fun get(): T = value.value
-    
-}
-
-/**
- * Base class for all implementations of [Provider] that can have children.
- */
-internal abstract class AbstractChildContainingProvider<T> : ProviderWithChildren<T> {
-    
-    private val strongSubscribers: MutableList<(T) -> Unit> = Collections.synchronizedList(ArrayList(0))
-    private val weakSubscribers: MutableMap<Any, MutableList<(Any, T) -> Unit>> = Collections.synchronizedMap(WeakHashMap(0))
-    private val strongObservers: MutableList<() -> Unit> = Collections.synchronizedList(ArrayList(0))
-    private val weakObservers: MutableMap<Any, MutableList<(Any) -> Unit>> = Collections.synchronizedMap(WeakHashMap(0))
-    
-    private val strongChildren: MutableSet<HasParents> = Collections.synchronizedSet(HashSet())
-    private val weakChildren: MutableSet<HasParents> = Collections.synchronizedSet(weakHashSet())
-    
-    @Suppress("UNCHECKED_CAST")
     override val children: Set<Provider<*>>
-        get() {
-            val set = HashSet<Provider<*>>()
-            synchronized(strongChildren) {
-                set.addAll(strongChildren as Set<Provider<*>>)
-            }
-            synchronized(weakChildren) {
-                set.addAll(weakChildren as Set<Provider<*>>)
-            }
-            return set
-        }
+        get() = updateHandlers.children
     
-    /**
-     * Creates a list of runnables that notify all subscribers, observers, and children (except [ignore]) of the value of this provider.
-     */
-    protected fun prepareNotifiers(ignore: Provider<*>? = null): List<() -> Unit> {
-        val preparedSubscribers = ArrayList<() -> Unit>()
-        
-        synchronized(strongChildren) {
-            for (child in strongChildren) {
-                if (child === ignore)
-                    continue
-                preparedSubscribers += { child.handleParentUpdated(this) }
-            }
-        }
-        
-        synchronized(weakChildren) {
-            for (weakChild in weakChildren) {
-                if (weakChild === ignore)
-                    continue
-                preparedSubscribers += { weakChild.handleParentUpdated(this) }
-            }
-        }
-        
-        synchronized(strongObservers) {
-            preparedSubscribers += strongObservers
-        }
-        
-        synchronized(weakObservers) {
-            for ((owner, actions) in weakObservers) {
-                for (action in actions) {
-                    preparedSubscribers += { action(owner) }
-                }
-            }
-        }
-        
-        synchronized(strongSubscribers) {
-            if (strongSubscribers.isNotEmpty()) {
-                runCatching { get() }.onSuccess { value ->
-                    for (subscriber in strongSubscribers) {
-                        preparedSubscribers += { subscriber(value) }
-                    }
-                }
-            }
-        }
-        
-        synchronized(weakSubscribers) {
-            if (weakSubscribers.isNotEmpty()) {
-                runCatching { get() }.onSuccess { value ->
-                    for ((owner, actions) in weakSubscribers) {
-                        for (action in actions) {
-                            preparedSubscribers += { action(owner, value) }
-                        }
-                    }
-                }
-            }
-        }
-        
-        return preparedSubscribers
-    }
+    //<editor-fold desc="update handler modifications">
+    override fun subscribe(action: (T) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withStrongSubscriber(action) }
     
-    //<editor-fold desc="(un)registering subscribers / observers">
-    override fun subscribe(action: (T) -> Unit) {
-        strongSubscribers += action
-    }
+    override fun observe(action: () -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withStrongObserver(action) }
     
-    override fun observe(action: () -> Unit) {
-        strongObservers += action
-    }
+    override fun <R : Any> subscribeWeak(owner: R, action: (R, T) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withWeakSubscriber(owner, action) }
     
-    @Suppress("UNCHECKED_CAST")
-    override fun <R : Any> subscribeWeak(owner: R, action: (R, T) -> Unit) {
-        action as (Any, T) -> Unit
-        weakSubscribers.compute(owner) { _, list -> (list ?: ArrayList()).also { it.add(action) } }
-    }
+    override fun <R : Any> observeWeak(owner: R, action: (R) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withWeakObserver(owner, action) }
     
-    @Suppress("UNCHECKED_CAST")
-    override fun <R : Any> observeWeak(owner: R, action: (R) -> Unit) {
-        action as (Any) -> Unit
-        weakObservers.compute(owner) { _, list -> (list ?: ArrayList()).also { it.add(action) } }
-    }
+    override fun unsubscribe(action: (T) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutStrongSubscriber(action) }
     
-    override fun unsubscribe(action: (T) -> Unit) { 
-        strongSubscribers -= action
-    }
+    override fun unobserve(action: () -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutStrongObserver(action) }
     
-    override fun unobserve(action: () -> Unit) {
-        strongObservers -= action
-    }
+    override fun <R : Any> unsubscribeWeak(owner: R, action: (R, T) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutWeakSubscriber(owner, action) }
     
-    @Suppress("UNCHECKED_CAST")
-    override fun <R : Any> unsubscribeWeak(owner: R, action: (R, T) -> Unit) {
-        action as (Any, T) -> Unit
-        weakSubscribers.compute(owner) {_, value -> value?.also { it.remove(action) } }
-    }
+    override fun <R : Any> unobserveWeak(owner: R, action: (R) -> Unit) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutWeakObserver(owner, action) }
     
-    @Suppress("UNCHECKED_CAST")
-    override fun <R : Any> unobserveWeak(owner: R, action: (R) -> Unit) {
-        action as (Any) -> Unit
-        weakObservers.compute(owner) { _, value -> value?.also { it.remove(action) } }
-    }
+    override fun <R : Any> unsubscribeWeak(owner: R) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutWeakSubscriber(owner) }
     
-    override fun <R : Any> unsubscribeWeak(owner: R) {
-        weakSubscribers.remove(owner)
-    }
+    override fun <R : Any> unobserveWeak(owner: R) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutWeakObserver(owner) }
     
-    override fun <R : Any> unobserveWeak(owner: R) {
-        weakObservers.remove(owner)
-    }
+    override fun addStrongChild(child: Provider<*>) =
+        synchronized(this) { updateHandlers = updateHandlers.withStrongChild(child) }
+    
+    override fun removeStrongChild(child: Provider<*>) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutStrongChild(child) }
+    
+    override fun addWeakChild(child: Provider<*>) =
+        synchronized(this) { updateHandlers = updateHandlers.withWeakChild(child) }
+    
+    override fun removeWeakChild(child: Provider<*>) =
+        synchronized(this) { updateHandlers = updateHandlers.withoutWeakChild(child) }
     //</editor-fold>
     
-    //<editor-fold desc="(un)registering (weak) children">
-    override fun addStrongChild(child: HasParents) {
-        strongChildren += child
-    }
-    
-    override fun removeStrongChild(child: HasParents) {
-        strongChildren -= child
-    }
-    
-    override fun addWeakChild(child: HasParents) {
-        weakChildren += child
-    }
-    
-    override fun removeWeakChild(child: HasParents) {
-        weakChildren -= child
-    }
-    //</editor-fold>
-    
-}
-
-/**
- * A provider that can have parent(s), which is every non-root provider.
- */
-internal interface HasParents {
-    
-    /**
-     * Handles the update of [updatedParent].
-     */
-    fun handleParentUpdated(updatedParent: ProviderImpl<*>)
-    
-}
-
-/**
- * A provider that can have children, which is every non-immutable provider.
- */
-internal interface ProviderWithChildren<T> : ProviderImpl<T> {
-    
-    /**
-     * Adds a child provider using a strong reference.
-     */
-    fun addStrongChild(child: HasParents)
-    
-    /**
-     * Removes a strongly referenced child provider.
-     */
-    fun removeStrongChild(child: HasParents)
-    
-    /**
-     * Adds a child provider using a weak reference.
-     */
-    fun addWeakChild(child: HasParents)
-    
-    /**
-     * Removes a weakly referenced child provider.
-     */
-    fun removeWeakChild(child: HasParents)
-    
+    //<editor-fold desc="map / flatMap">
     override fun <R> map(transform: (T) -> R): Provider<R> {
         val provider = UnidirectionalTransformingProvider(this, transform)
         addWeakChild(provider)
@@ -219,65 +76,151 @@ internal interface ProviderWithChildren<T> : ProviderImpl<T> {
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
-        val provider = BidirectionalFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        val provider = BidirectionalFlatMappedProvider(this, transform)
         addWeakChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
-        val provider = BidirectionalFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        val provider = BidirectionalFlatMappedProvider(this, transform)
         addStrongChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> flatMap(transform: (T) -> Provider<R>): Provider<R> {
-        val provider = UnidirectionalFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        val provider = UnidirectionalFlatMappedProvider(this, transform)
         addWeakChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R> {
-        val provider = UnidirectionalFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        val provider = UnidirectionalFlatMappedProvider(this, transform)
         addStrongChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R> {
-        val provider = UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        val provider = UnidirectionalLazyFlatMappedProvider(this, transform)
         addWeakChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> {
-        val provider = UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        val provider = UnidirectionalLazyFlatMappedProvider(this, transform)
         addStrongChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
-        val provider = BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        val provider = BidirectionalLazyFlatMappedProvider(this, transform)
         addWeakChild(provider)
         return provider
     }
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
-        val provider = BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        val provider = BidirectionalLazyFlatMappedProvider(this, transform)
         addStrongChild(provider)
         return provider
+    }
+    //</editor-fold>
+    
+    @Suppress("UNCHECKED_CAST")
+    inner class UpdateHandlerCollection private constructor(
+        val strongSubscribers: Collection<(T) -> Unit>,
+        val weakSubscribers: Map<Any, Set<(Any, T) -> Unit>>,
+        val strongObservers: Collection<() -> Unit>,
+        val weakObservers: Map<Any, Set<(Any) -> Unit>>,
+        val strongChildren: Collection<Provider<*>>,
+        val weakChildren: Collection<Provider<*>>
+    ) {
+        
+        constructor() : this(emptyList(), emptyMap(), emptyList(), emptyMap(), emptySet(), emptySet())
+        
+        val children: Set<Provider<*>>
+            get() = buildSet { addAll(strongChildren); addAll(weakChildren) }
+        
+        //<editor-fold desc="withers">
+        fun withStrongSubscriber(subscriber: (T) -> Unit) =
+            copy(strongSubscribers = strongSubscribers.with(subscriber, ::ArrayList))
+        
+        fun withoutStrongSubscriber(subscriber: (T) -> Unit) =
+            copy(strongSubscribers = strongSubscribers.without(subscriber, ::ArrayList))
+        
+        
+        fun withStrongObserver(observer: () -> Unit) =
+            copy(strongObservers = strongObservers.with(observer, ::ArrayList))
+        
+        fun withoutStrongObserver(observer: () -> Unit) =
+            copy(strongObservers = strongObservers.without(observer, ::ArrayList))
+        
+        
+        fun withStrongChild(child: Provider<*>) =
+            copy(strongChildren = strongChildren.with(child, ::ArrayList))
+        
+        fun withoutStrongChild(child: Provider<*>) =
+            copy(strongChildren = strongChildren.without(child, ::ArrayList))
+        
+        
+        fun withWeakChild(child: Provider<*>) =
+            copy(weakChildren = weakChildren.with(child, ::weakHashSet))
+        
+        fun withoutWeakChild(child: Provider<*>) =
+            copy(weakChildren = weakChildren.without(child, ::weakHashSet))
+        
+        
+        fun <O : Any> withWeakSubscriber(owner: O, subscriber: (O, T) -> Unit) =
+            copy(weakSubscribers = weakSubscribers.with(owner, subscriber as (Any, T) -> Unit, ::WeakHashMap, ::HashSet))
+        
+        fun <O : Any> withoutWeakSubscriber(owner: O, subscriber: (O, T) -> Unit) =
+            copy(weakSubscribers = weakSubscribers.without(owner, subscriber as (Any, T) -> Unit, ::WeakHashMap, ::HashSet))
+        
+        fun withoutWeakSubscriber(owner: Any) =
+            copy(weakSubscribers = WeakHashMap(weakSubscribers).apply { remove(owner) })
+        
+        
+        fun <O : Any> withWeakObserver(owner: O, observer: (O) -> Unit) =
+            copy(weakObservers = weakObservers.with(owner, observer as (Any) -> Unit, ::WeakHashMap, ::HashSet))
+        
+        fun <O : Any> withoutWeakObserver(owner: O, observer: (O) -> Unit) =
+            copy(weakObservers = weakObservers.without(owner, observer as (Any) -> Unit, ::WeakHashMap, ::HashSet))
+        
+        fun withoutWeakObserver(owner: Any) =
+            copy(weakObservers = WeakHashMap(weakObservers).apply { remove(owner) })
+        //</editor-fold>
+        
+        fun notify(ignore: Set<Provider<*>> = emptySet()) {
+            // children
+            strongChildren.forEach { if (it !in ignore) it.handleParentUpdated(this@AbstractProvider) }
+            weakChildren.forEach { if (it !in ignore) it.handleParentUpdated(this@AbstractProvider) }
+            
+            // observers
+            strongObservers.forEach { it() }
+            weakObservers.forEach { (owner, actions) -> actions.forEach { it(owner) } }
+            
+            // subscribers
+            if (strongSubscribers.isNotEmpty() || weakSubscribers.isNotEmpty()) {
+                runCatching { value.value }.onSuccess { value ->
+                    strongSubscribers.forEach { it(value) }
+                    weakSubscribers.forEach { (owner, actions) -> actions.forEach { it(owner, value) } }
+                }
+            }
+        }
+        
+        private fun copy(
+            strongSubscribers: Collection<(T) -> Unit> = this.strongSubscribers,
+            weakSubscribers: Map<Any, Set<(Any, T) -> Unit>> = this.weakSubscribers,
+            strongObservers: Collection<() -> Unit> = this.strongObservers,
+            weakObservers: Map<Any, Set<(Any) -> Unit>> = this.weakObservers,
+            strongChildren: Collection<Provider<*>> = this.strongChildren,
+            weakChildren: Collection<Provider<*>> = this.weakChildren
+        ) = UpdateHandlerCollection(strongSubscribers, weakSubscribers, strongObservers, weakObservers, strongChildren, weakChildren)
+        
     }
     
 }
 
-internal interface MutableProviderImpl<T> : ProviderWithChildren<T>, MutableProvider<T> {
+internal interface MutableProviderDefaults<T> : MutableProvider<T> {
     
     override fun <R> strongMap(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> {
         val provider = BidirectionalTransformingProvider(this, transform, untransform)
@@ -290,17 +233,5 @@ internal interface MutableProviderImpl<T> : ProviderWithChildren<T>, MutableProv
         addWeakChild(provider)
         return provider
     }
-    
-    override fun set(value: T) {
-        update(DeferredValue.Direct(value))
-    }
-    
-    /**
-     * Attempts to update the value of this [MutableProvider] to [value].
-     * Fails if the [DeferredValue.state] of [value] is less than the current state of this [MutableProvider]. Equal state succeeds.
-     *
-     * On success, returns `true` and updates the value while not notifying [ignore].
-     */
-    fun update(value: DeferredValue<T>, ignore: Provider<*>? = null): Boolean
     
 }

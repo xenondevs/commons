@@ -4,6 +4,7 @@
 
 package xyz.xenondevs.commons.provider
 
+import xyz.xenondevs.commons.provider.impl.MultiUnidirectionalTransformingProvider
 import xyz.xenondevs.commons.tuple.Tuple10
 import xyz.xenondevs.commons.tuple.Tuple2
 import xyz.xenondevs.commons.tuple.Tuple3
@@ -18,7 +19,6 @@ import java.lang.ref.WeakReference
 /**
  * Creates and returns a new [Provider] that combines all values of [providers].
  */
-@Suppress("UNCHECKED_CAST")
 fun <T> strongCombinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
     MultiUnidirectionalTransformingProvider.of(providers, false) { it }
 
@@ -154,7 +154,6 @@ fun <A, B, C, D, E, F, G, H, I, J> strongCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-@Suppress("UNCHECKED_CAST")
 fun <T> combinedProvider(providers: List<Provider<T>>): Provider<List<T>> =
     MultiUnidirectionalTransformingProvider.of(providers, true) { it }
 

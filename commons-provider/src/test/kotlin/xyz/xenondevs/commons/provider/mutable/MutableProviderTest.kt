@@ -3,7 +3,6 @@ package xyz.xenondevs.commons.provider.mutable
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import xyz.xenondevs.commons.provider.DeferredValue
-import xyz.xenondevs.commons.provider.MutableProviderImpl
 import xyz.xenondevs.commons.provider.mutableProvider
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -79,7 +78,7 @@ class MutableProviderTest {
     
     @Test
     fun testUpdateIgnoresOldState() {
-        val provider = mutableProvider(0) as MutableProviderImpl<Int>
+        val provider = mutableProvider(0)
         
         val one = DeferredValue.Direct(1)
         val two = DeferredValue.Direct(2)
@@ -95,7 +94,7 @@ class MutableProviderTest {
     
     @Test
     fun testNotifiedOnUpdatingWithEqualState() {
-        val provider = mutableProvider(0) as MutableProviderImpl<Int>
+        val provider = mutableProvider(0)
         var updateCount = 0
         provider.observe { updateCount++ }
         

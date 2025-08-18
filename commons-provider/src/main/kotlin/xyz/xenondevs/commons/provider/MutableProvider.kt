@@ -30,7 +30,7 @@ import kotlin.reflect.KProperty
  * 
  * @see mutableProvider
  */
-sealed interface MutableProvider<T> : Provider<T> {
+interface MutableProvider<T> : Provider<T> {
     
     /**
      * Creates and returns a new [MutableProvider] that maps the value of [this][MutableProvider]
@@ -51,10 +51,23 @@ sealed interface MutableProvider<T> : Provider<T> {
     fun <R> map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R>
     
     /**
-     * Sets the value of this [MutableProvider] to [value].
+     * Sets the value of [this][MutableProvider] to [value].
      */
-    fun set(value: T)
+    fun set(value: T) {
+        update(DeferredValue.Direct(value))
+    }
     
+    /**
+     * Sets the value of [this][MutableProvider] to [value].
+     */
     operator fun <X> setValue(thisRef: X?, property: KProperty<*>, value: T) = set(value)
+    
+    /**
+     * Attempts to update the value of this [MutableProvider] to [value].
+     * Fails if the [DeferredValue.seqNo] of [value] is less than the current state of this [MutableProvider]. Equal state succeeds.
+     *
+     * On success, returns `true` and updates the value while not notifying [ignore].
+     */
+    fun update(value: DeferredValue<T>, ignore: Set<Provider<*>> = emptySet()): Boolean
     
 }

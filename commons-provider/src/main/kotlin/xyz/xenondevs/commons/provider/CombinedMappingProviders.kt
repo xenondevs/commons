@@ -4,6 +4,7 @@
 
 package xyz.xenondevs.commons.provider
 
+import xyz.xenondevs.commons.provider.impl.MultiUnidirectionalTransformingProvider
 import java.lang.ref.WeakReference
 
 /**
@@ -12,7 +13,6 @@ import java.lang.ref.WeakReference
  * 
  * [mapValue] should be a pure function.
  */
-@Suppress("UNCHECKED_CAST")
 fun <T, R> strongCombinedProvider(providers: List<Provider<T>>, mapValue: (List<T>) -> R): Provider<R> =
     MultiUnidirectionalTransformingProvider.of(providers, false, mapValue)
 
@@ -186,7 +186,6 @@ fun <A, B, C, D, E, F, G, H, I, J, R> strongCombinedProvider(
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers.
  */
-@Suppress("UNCHECKED_CAST")
 fun <T, R> combinedProvider(providers: List<Provider<T>>, mapValue: (List<T>) -> R): Provider<R> =
     MultiUnidirectionalTransformingProvider.of(providers, true, mapValue)
 

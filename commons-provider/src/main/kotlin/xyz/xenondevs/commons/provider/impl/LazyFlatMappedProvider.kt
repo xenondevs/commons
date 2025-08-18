@@ -1,10 +1,22 @@
-@file:Suppress("PackageDirectoryMismatch") // needs to be in root package for sealed hierarchy, impl directory is used for source file organization
-package xyz.xenondevs.commons.provider
+package xyz.xenondevs.commons.provider.impl
 
-internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : ProviderImpl<T>>(
-    private val staticParent: ProviderImpl<P>,
+import xyz.xenondevs.commons.provider.DeferredValue
+import xyz.xenondevs.commons.provider.MutableProvider
+import xyz.xenondevs.commons.provider.Provider
+import kotlin.math.max
+
+// TODO: does this break the contract of value never changing?
+private class LambdaDelegatedDeferredValue<T>(val getDelegate: () -> DeferredValue<T>, val getMinState: () -> Long) : DeferredValue<T> {
+    
+    override val seqNo: Long get() = max(getMinState(), getDelegate().seqNo)
+    override val value: T get() = getDelegate().value
+    
+}
+
+internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : Provider<T>>(
+    private val staticParent: Provider<P>,
     private val transform: (P) -> DP
-) : AbstractChildContainingProvider<T>(), HasParents {
+) : AbstractProvider<T>() {
     
     @Volatile
     protected var lazyDynamicParent: Lazy<DynamicParent<DP>> = lazy(::createDynamicParent)
@@ -22,16 +34,17 @@ internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : ProviderImpl<T
     override val value: DeferredValue<T>
         get() {
             val ldp = lazyDynamicParent
-            return DeferredValue.DelegateLambda(
+            return LambdaDelegatedDeferredValue(
                 { ldp.value.provider.value },
                 { ldp.value.state }
             )
         }
     
-    override fun handleParentUpdated(updatedParent: ProviderImpl<*>) {
+    // TODO: are there problems with update handlers?
+    override fun handleParentUpdated(updatedParent: Provider<*>) {
         val ldp = lazyDynamicParent
         if (ldp.isInitialized() && updatedParent == ldp.value.provider) {
-            callUpdate()
+            updateHandlers.notify()
         } else if (updatedParent == staticParent) {
             synchronized(this) {
                 val ldp1 = lazyDynamicParent
@@ -39,48 +52,40 @@ internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : ProviderImpl<T
                     return
                 
                 val staticParentValue = staticParent.value
-                if (ldp1.value.state > staticParentValue.state)
+                if (ldp1.value.state > staticParentValue.seqNo)
                     return
                 
                 // reset lazyDynamicParent
-                (ldp1.value.provider as? ProviderWithChildren<*>)?.removeWeakChild(this)
+                ldp1.value.provider.removeWeakChild(this)
                 lazyDynamicParent = lazy(::createDynamicParent)
             }
             
-            callUpdate()
-        }
-    }
-    
-    protected fun callUpdate() {
-        for (runnable in prepareNotifiers()) {
-            runnable()
+            updateHandlers.notify()
         }
     }
     
     private fun createDynamicParent(): DynamicParent<DP> {
         val staticParentValue = staticParent.value
         val dynamicParent = transform(staticParentValue.value)
-        if (dynamicParent is ProviderWithChildren<*>) {
-            dynamicParent.addWeakChild(this)
-        }
-        return DynamicParent(staticParentValue.state, dynamicParent)
+        dynamicParent.addWeakChild(this)
+        return DynamicParent(staticParentValue.seqNo, dynamicParent)
     }
     
 }
 
 internal class UnidirectionalLazyFlatMappedProvider<P, T>(
-    staticParent: ProviderImpl<P>,
-    transform: (P) -> ProviderImpl<T>
-) : AbstractLazyFlatMappedProvider<P, T, ProviderImpl<T>>(staticParent, transform)
+    staticParent: Provider<P>,
+    transform: (P) -> Provider<T>
+) : AbstractLazyFlatMappedProvider<P, T, Provider<T>>(staticParent, transform)
 
 internal class BidirectionalLazyFlatMappedProvider<P, T>(
-    staticParent: ProviderImpl<P>,
-    transform: (P) -> MutableProviderImpl<T>
-) : AbstractLazyFlatMappedProvider<P, T, MutableProviderImpl<T>>(staticParent, transform), MutableProviderImpl<T> {
+    staticParent: Provider<P>,
+    transform: (P) -> MutableProvider<T>
+) : AbstractLazyFlatMappedProvider<P, T, MutableProvider<T>>(staticParent, transform), MutableProviderDefaults<T> {
     
-    override fun update(value: DeferredValue<T>, ignore: Provider<*>?): Boolean {
-        if (lazyDynamicParent.value.provider.update(value, this)) {
-            callUpdate()
+    override fun update(value: DeferredValue<T>, ignore: Set<Provider<*>>): Boolean {
+        if (lazyDynamicParent.value.provider.update(value, setOf(this))) {
+            updateHandlers.notify(ignore)
             return true
         }
         

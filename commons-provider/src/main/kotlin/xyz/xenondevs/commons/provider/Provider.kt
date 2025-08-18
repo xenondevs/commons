@@ -29,7 +29,7 @@ import kotlin.reflect.KProperty
  * 
  * @see provider
  */
-sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
+interface Provider<out T> : Supplier<@UnsafeVariance T> {
     
     /**
      * A snapshot of the direct parents of this [Provider].
@@ -42,6 +42,11 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
      * May not necessarily contain children if it can be determined that no updates will be sent to them.
      */
     val children: Set<Provider<*>>
+    
+    /**
+     * The [DeferredValue] that holds the value of this [Provider].
+     */
+    val value: DeferredValue<T>
     
     /**
      * Creates and returns a new [Provider] that maps the value of [this][Provider]
@@ -237,6 +242,56 @@ sealed interface Provider<out T> : Supplier<@UnsafeVariance T> {
      */
     fun <R : Any> unobserveWeak(owner: R)
     
+    /**
+     * Resolves the [value] of [this][Provider] and returns it.
+     */
+    override fun get(): T = value.value
+    
+    /**
+     * Resolves the [value] of [this][Provider] and returns it.
+     */
     operator fun <X> getValue(thisRef: X?, property: KProperty<*>?): T = get()
+    
+    // ---- CUSTOM PROVIDER API ----
+    
+    /**
+     * Adds a strongly referenced [child] to [this][Provider].
+     * 
+     * Child management is performed automatically when creating a new provider,
+     * so this should only be used for custom [Provider] implementations.
+     */
+    fun addStrongChild(child: Provider<*>)
+    
+    /**
+     * Removes a strongly referenced [child] from [this][Provider].
+     * 
+     * Child management is performed automatically when creating a new provider,
+     * so this should only be used for custom [Provider] implementations.
+     */
+    fun removeStrongChild(child: Provider<*>)
+    
+    /**
+     * Adds a weakly referenced [child] to [this][Provider].
+     * 
+     * Child management is performed automatically when creating a new provider,
+     * so this should only be used for custom [Provider] implementations.
+     */
+    fun addWeakChild(child: Provider<*>)
+    
+    /**
+     * Removes a weakly referenced [child] from [this][Provider].
+     * 
+     * Child management is performed automatically when creating a new provider,
+     * so this should only be used for custom [Provider] implementations.
+     */
+    fun removeWeakChild(child: Provider<*>)
+    
+    /**
+     * Handles an update of the [parent provider][updatedParent].
+     * 
+     * Updating is performed automatically,
+     * so this should only be used for custom [Provider] implementations.
+     */
+    fun handleParentUpdated(updatedParent: Provider<*>)
     
 }

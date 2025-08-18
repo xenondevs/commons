@@ -1,12 +1,15 @@
-@file:Suppress("PackageDirectoryMismatch") // needs to be in root package for sealed hierarchy, impl directory is used for source file organization
-package xyz.xenondevs.commons.provider
+package xyz.xenondevs.commons.provider.impl
+
+import xyz.xenondevs.commons.provider.DeferredValue
+import xyz.xenondevs.commons.provider.MutableProvider
+import xyz.xenondevs.commons.provider.Provider
 
 // may be able to take advantage of Stable Values (https://openjdk.org/jeps/502) in the future
 
 /**
  * A stable provider is an immutable provider whose value is loaded lazily.
  */
-internal class StableProvider<T>(private val lazyValue: Lazy<T>) : ProviderImpl<T> {
+internal class StableProvider<T>(private val lazyValue: Lazy<T>) : Provider<T> {
     
     override val parents: Set<Provider<*>>
         get() = emptySet()
@@ -33,21 +36,17 @@ internal class StableProvider<T>(private val lazyValue: Lazy<T>) : ProviderImpl<
     override fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
         transform(get())
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
-        UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        UnidirectionalLazyFlatMappedProvider(this, transform)
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
-        UnidirectionalLazyFlatMappedProvider(this, transform as (T) -> ProviderImpl<R>)
+        UnidirectionalLazyFlatMappedProvider(this, transform)
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
-        BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        BidirectionalLazyFlatMappedProvider(this, transform)
     
-    @Suppress("UNCHECKED_CAST")
     override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
-        BidirectionalLazyFlatMappedProvider(this, transform as (T) -> MutableProviderImpl<R>)
+        BidirectionalLazyFlatMappedProvider(this, transform)
     
     // the value is immutable, so subscribers / observers would never be called
     override fun subscribe(action: (T) -> Unit) = Unit
@@ -60,5 +59,10 @@ internal class StableProvider<T>(private val lazyValue: Lazy<T>) : ProviderImpl<
     override fun <R : Any> unsubscribeWeak(owner: R) = Unit
     override fun <R : Any> unobserveWeak(owner: R, action: (R) -> Unit) = Unit
     override fun <R : Any> unobserveWeak(owner: R) = Unit
+    override fun addStrongChild(child: Provider<*>) = Unit
+    override fun removeStrongChild(child: Provider<*>) = Unit
+    override fun addWeakChild(child: Provider<*>) = Unit
+    override fun removeWeakChild(child: Provider<*>) = Unit
+    override fun handleParentUpdated(updatedParent: Provider<*>) = Unit
     
 }
