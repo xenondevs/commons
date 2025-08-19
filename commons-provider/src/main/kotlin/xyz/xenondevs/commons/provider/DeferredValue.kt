@@ -19,12 +19,14 @@ interface DeferredValue<out T> : Comparable<DeferredValue<*>> {
     
     /**
      * The possibly lazily initialized value of this [DeferredValue].
+     * Retrieving this value will initialize it if it hasn't been initialized yet.
      * Once initialized, the value will not change.
      */
     val value: T
     
     /**
      * Compares this [DeferredValue] with another [DeferredValue] based on their [seqNo].
+     * Equivalent to `seqNo.compareTo(other.seqNo)`.
      */
     override fun compareTo(other: DeferredValue<*>): Int = seqNo.compareTo(other.seqNo)
     
@@ -61,6 +63,7 @@ interface DeferredValue<out T> : Comparable<DeferredValue<*>> {
         
     }
     
+    // may be able to take advantage of Stable Values (https://openjdk.org/jeps/502) in the future
     /**
      * A [DeferredValue] that is backed by [lazy].
      * Generates a new sequence number when created.

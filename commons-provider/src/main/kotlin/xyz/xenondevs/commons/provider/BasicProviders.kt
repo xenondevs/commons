@@ -16,13 +16,13 @@ val NULL_PROVIDER: Provider<Nothing?> = provider(null)
  * [lazyValue] should be a pure function.
  */
 fun <T> provider(lazyValue: () -> T): Provider<T> =
-    StableProvider(lazy(lazyValue))
+    StableProvider(DeferredValue.Lazy(lazyValue))
 
 /**
  * Creates a new [Provider] with the given [value].
  */
 fun <T> provider(value: T): Provider<T> =
-    StableProvider(lazyOf(value))
+    StableProvider(DeferredValue.Direct(value))
 
 /**
  * Creates a new [MutableProvider] with the given [initialValue].

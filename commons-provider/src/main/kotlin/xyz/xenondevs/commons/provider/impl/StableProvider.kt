@@ -4,25 +4,22 @@ import xyz.xenondevs.commons.provider.DeferredValue
 import xyz.xenondevs.commons.provider.MutableProvider
 import xyz.xenondevs.commons.provider.Provider
 
-// may be able to take advantage of Stable Values (https://openjdk.org/jeps/502) in the future
-
 /**
- * A stable provider is an immutable provider whose value is loaded lazily.
+ * A stable provider is based on an immutable [value], meaning the provider's value itself
+ * is immutable and possibly lazily initialized.
  */
-internal class StableProvider<T>(private val lazyValue: Lazy<T>) : Provider<T> {
+internal class StableProvider<T>(override val value: DeferredValue<T>) : Provider<T> {
     
     override val parents: Set<Provider<*>>
         get() = emptySet()
     override val children: Set<Provider<*>>
         get() = emptySet()
     
-    override val value: DeferredValue<T> = DeferredValue.Lazy(lazyValue)
-    
     override fun <R> strongMap(transform: (T) -> R): Provider<R> =
         map(transform)
     
     override fun <R> map(transform: (T) -> R): Provider<R> =
-        StableProvider(lazy { transform(lazyValue.value) })
+        StableProvider(DeferredValue.Mapped(value, transform))
     
     override fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R> =
         transform(get())
