@@ -160,11 +160,9 @@ fun <K, V> Map<K, V>.containsAll(other: Map<K, V>): Boolean {
     if (this.size < other.size)
         return false
     
-    for ((key, value) in other) {
-        val thisValue = this[key]
-        if (thisValue == null || thisValue != value) {
+    for ((key, otherValue) in other) {
+        if (key !in this || this[key] != otherValue)
             return false
-        }
     }
     
     return true
