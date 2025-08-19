@@ -1,5 +1,13 @@
 package xyz.xenondevs.commons.provider.util
 
+import java.util.*
+
+/**
+ * Creates a new empty weak hash set with the specified [initialCapacity].
+ */
+fun <K> weakHashSet(initialCapacity: Int): MutableSet<K> =
+    Collections.newSetFromMap(WeakHashMap(initialCapacity))
+
 /**
  * Creates a copy of [this][Collection] using [createCollection] with an additional [element] added to it.
  * Returns itself if the [element] is already contained in the collection.

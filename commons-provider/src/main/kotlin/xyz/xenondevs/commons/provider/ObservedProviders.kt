@@ -3,10 +3,10 @@
 
 package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.collections.observed.ObservableList
-import xyz.xenondevs.commons.collections.observed.ObservableMap
-import xyz.xenondevs.commons.collections.observed.ObservableSet
 import xyz.xenondevs.commons.provider.impl.ObservedValueUndirectionalTransformingProvider
+import xyz.xenondevs.commons.provider.util.ObservableList
+import xyz.xenondevs.commons.provider.util.ObservableMap
+import xyz.xenondevs.commons.provider.util.ObservableSet
 import java.lang.ref.WeakReference
 
 /**

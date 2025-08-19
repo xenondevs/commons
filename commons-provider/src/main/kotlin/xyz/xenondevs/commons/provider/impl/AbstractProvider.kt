@@ -1,8 +1,8 @@
 package xyz.xenondevs.commons.provider.impl
 
-import xyz.xenondevs.commons.collections.weakHashSet
 import xyz.xenondevs.commons.provider.MutableProvider
 import xyz.xenondevs.commons.provider.Provider
+import xyz.xenondevs.commons.provider.util.weakHashSet
 import xyz.xenondevs.commons.provider.util.with
 import xyz.xenondevs.commons.provider.util.without
 import java.util.*

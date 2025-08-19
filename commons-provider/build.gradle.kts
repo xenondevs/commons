@@ -7,5 +7,4 @@ version = "2.0.0-alpha.5"
 
 dependencies {
     api(project(":commons-tuple"))
-    implementation(project(":commons-collections"))
 }
