@@ -123,6 +123,7 @@ internal class MultiUnidirectionalTransformingProvider<P, T> private constructor
                     parent.addStrongChild(provider)
                 }
             }
+            provider.handleParentUpdated(parents[0]) // propagate potentially lost update during provider creation and child assignment
             return provider
         }
         

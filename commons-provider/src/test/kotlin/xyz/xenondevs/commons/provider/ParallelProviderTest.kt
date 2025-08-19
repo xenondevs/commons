@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import xyz.xenondevs.commons.provider.util.ObservableList
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import kotlin.test.assertEquals
@@ -122,73 +123,105 @@ class ParallelProviderTest {
     
     @Test
     fun `test for lost update on provider creation via map`() {
-        testForProviderCreationLostUpdate(2) { provider -> provider.map { it + 1 } }
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.map { it + 1 } }
     }
     
     @Test
     fun `test for lost update on provider creation via strongMap`() {
-        testForProviderCreationLostUpdate(2) { provider -> provider.strongMap { it + 1 } }
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.strongMap { it + 1 } }
     }
     
     @Test
     fun `test for lost update on provider creation via flatMap`() {
         val selection = listOf(provider(1), provider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.flatMap { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.flatMap { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via strongFlatMap`() {
         val selection = listOf(provider(1), provider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.strongFlatMap { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.strongFlatMap { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via flatMapMutable`() {
         val selection = listOf(mutableProvider(1), mutableProvider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.flatMapMutable { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.flatMapMutable { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via strongFlatMapMutable`() {
         val selection = listOf(mutableProvider(1), mutableProvider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.strongFlatMapMutable { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.strongFlatMapMutable { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via lazyFlatMap`() {
         val selection = listOf(provider(1), provider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.lazyFlatMap { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.lazyFlatMap { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via strongLazyFlatMap`() {
         val selection = listOf(provider(1), provider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.strongLazyFlatMap { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.strongLazyFlatMap { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via lazyFlatMapMutable`() {
         val selection = listOf(mutableProvider(1), mutableProvider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.lazyFlatMapMutable { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.lazyFlatMapMutable { selection[it] } }
     }
     
     @Test
     fun `test for lost update on provider creation via strongLazyFlatMapMutable`() {
         val selection = listOf(mutableProvider(1), mutableProvider(2))
-        testForProviderCreationLostUpdate(2) { provider -> provider.strongLazyFlatMapMutable { selection[it] }}
+        testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.strongLazyFlatMapMutable { selection[it] } }
     }
     
-    private fun testForProviderCreationLostUpdate(
-        expectedValueFor1: Int,
-        createResultProvider: (Provider<Int>) -> Provider<Int>
+    @Test
+    fun `test for lost update on provider creation via mapObserved`() {
+        testForProviderCreationLostUpdate(
+            mutableListOf(),
+            mutableListOf("a"),
+            mutableListOf("a")
+        ) { provider -> provider.mapObserved(::ObservableList) }
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongMapObserved`() {
+        testForProviderCreationLostUpdate(
+            mutableListOf(),
+            mutableListOf("a"),
+            mutableListOf("a")
+        ) { provider -> provider.strongMapObserved(::ObservableList) }
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via combinedProvider`() {
+        val b = provider("b")
+        testForProviderCreationLostUpdate("", "a", "ab") { combinedProvider(it, b) { a, b -> a + b } }
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongCombinedProvider`() {
+        val b = provider("b")
+        testForProviderCreationLostUpdate("", "a", "ab") { strongCombinedProvider(it, b) { a, b -> a + b } }
+    }
+    
+    private fun <T, R> testForProviderCreationLostUpdate(
+        initialRootValue: T,
+        newRootValue: T,
+        expectedResult: R,
+        createResultProvider: (MutableProvider<T>) -> Provider<R>
     ) {
         val executor = Executors.newFixedThreadPool(100)
         repeat(100_000) {
-            val root: MutableProvider<Int> = mutableProvider(0)
-            val result: Future<Provider<Int>> = executor.submit<Provider<Int>> { createResultProvider(root) }
-            executor.submit { root.set(1) }.get()
+            val root: MutableProvider<T> = mutableProvider(initialRootValue)
+            val result: Future<Provider<R>> = executor.submit<Provider<R>> { createResultProvider(root) }
+            executor.submit { root.set(newRootValue) }.get()
             
-            assertEquals(expectedValueFor1, result.get().get(), "Iteration $it")
+            assertEquals(expectedResult, result.get().get(), "Iteration $it")
         }
     }
     
