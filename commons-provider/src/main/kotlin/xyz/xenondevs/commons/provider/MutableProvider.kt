@@ -51,6 +51,32 @@ interface MutableProvider<T> : Provider<T> {
     fun <R> map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R>
     
     /**
+     * Creates and returns a new [Provider] that maps the value of [this][MutableProvider]
+     * unidirectionally using the provided [createObservable] function.
+     * The value returned by [createObservable] should be an observable type that propagates updates
+     * to the updateHandler specified in the function, which will in turn propagate changes from the provider.
+     * 
+     * [createObservable] should be a pure function.
+     * 
+     * The returned provider will only be stored in a [WeakReference] in the parent provider ([this][MutableProvider]).
+     * 
+     * @see [observed]
+     */
+    fun <R> mapObserved(createObservable: (value: T, updateHandler: () -> Unit) -> R): Provider<R>
+    
+    /**
+     * Creates and returns a new [Provider] that maps the value of [this][MutableProvider]
+     * unidirectionally using the provided [createObservable] function.
+     * The value returned by [createObservable] should be an observable type that propagates updates
+     * to the updateHandler specified in the function, which will in turn propagate changes from the provider.
+     *
+     * [createObservable] should be a pure function.
+     * 
+     * @see [strongObserved]
+     */
+    fun <R> strongMapObserved(createObservable: (value: T, updateHandler: () -> Unit) -> R): Provider<R>
+    
+    /**
      * Sets the value of [this][MutableProvider] to [value].
      */
     fun set(value: T) {

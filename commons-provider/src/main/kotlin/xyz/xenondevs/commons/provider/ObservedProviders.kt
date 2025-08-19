@@ -3,7 +3,6 @@
 
 package xyz.xenondevs.commons.provider
 
-import xyz.xenondevs.commons.provider.impl.ObservedValueUndirectionalTransformingProvider
 import xyz.xenondevs.commons.provider.util.ObservableList
 import xyz.xenondevs.commons.provider.util.ObservableMap
 import xyz.xenondevs.commons.provider.util.ObservableSet
@@ -15,7 +14,7 @@ import java.lang.ref.WeakReference
  */
 @JvmName("strongObservedList")
 fun <E> MutableProvider<out MutableList<E>>.strongObserved(): Provider<MutableList<E>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, false, ::ObservableList)
+    strongMapObserved(::ObservableList)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
@@ -23,7 +22,7 @@ fun <E> MutableProvider<out MutableList<E>>.strongObserved(): Provider<MutableLi
  */
 @JvmName("strongObservedMap")
 fun <K, V> MutableProvider<out MutableMap<K, V>>.strongObserved(): Provider<MutableMap<K, V>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, false, ::ObservableMap)
+    strongMapObserved(::ObservableMap)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
@@ -31,7 +30,7 @@ fun <K, V> MutableProvider<out MutableMap<K, V>>.strongObserved(): Provider<Muta
  */
 @JvmName("strongObservedSet")
 fun <E> MutableProvider<out MutableSet<E>>.strongObserved(): Provider<MutableSet<E>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, false, ::ObservableSet)
+    strongMapObserved(::ObservableSet)
 
 /**
  * Creates and returns a new [Provider] that observes the list of [this][MutableProvider]
@@ -41,7 +40,7 @@ fun <E> MutableProvider<out MutableSet<E>>.strongObserved(): Provider<MutableSet
  */
 @JvmName("observedList")
 fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, true, ::ObservableList)
+    mapObserved(::ObservableList)
 
 /**
  * Creates and returns a new [Provider] that observes the map of [this][MutableProvider]
@@ -51,7 +50,7 @@ fun <E> MutableProvider<out MutableList<E>>.observed(): Provider<MutableList<E>>
  */
 @JvmName("observedMap")
 fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): Provider<MutableMap<K, V>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, true, ::ObservableMap)
+    mapObserved(::ObservableMap)
 
 /**
  * Creates and returns a new [Provider] that observes the set of [this][MutableProvider]
@@ -61,4 +60,4 @@ fun <K, V> MutableProvider<out MutableMap<K, V>>.observed(): Provider<MutableMap
  */
 @JvmName("observedSet")
 fun <E> MutableProvider<out MutableSet<E>>.observed(): Provider<MutableSet<E>> =
-    ObservedValueUndirectionalTransformingProvider.of(this, true, ::ObservableSet)
+    mapObserved(::ObservableSet)

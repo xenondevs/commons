@@ -256,4 +256,18 @@ internal interface MutableProviderDefaults<T> : MutableProvider<T> {
         return provider
     }
     
+    override fun <R> mapObserved(createObservable: (T, () -> Unit) -> R): Provider<R> {
+        val provider = ObservedValueUndirectionalTransformingProvider(this, createObservable)
+        addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
+        return provider
+    }
+    
+    override fun <R> strongMapObserved(createObservable: (T, () -> Unit) -> R): Provider<R> {
+        val provider = ObservedValueUndirectionalTransformingProvider(this, createObservable)
+        addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
+        return provider
+    }
+    
 }
