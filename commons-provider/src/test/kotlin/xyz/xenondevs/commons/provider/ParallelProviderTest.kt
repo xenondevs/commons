@@ -121,6 +121,26 @@ class ParallelProviderTest {
         }
     }
     
+    private fun runParallel(nThreads: Int = 100, run: () -> Unit) {
+        var failed = false
+        val threads = Array(nThreads) {
+            Thread {
+                try {
+                    run()
+                } catch (t: Throwable) {
+                    failed = true
+                    throw t
+                }
+            }
+        }
+        
+        threads.forEach(Thread::start)
+        threads.forEach(Thread::join)
+        
+        if (failed)
+            throw AssertionError("Failed")
+    }
+    
     @Test
     fun `test for lost update on provider creation via map`() {
         testForProviderCreationLostUpdate(0, 1, 2) { provider -> provider.map { it + 1 } }
@@ -223,27 +243,6 @@ class ParallelProviderTest {
             
             assertEquals(expectedResult, result.get().get(), "Iteration $it")
         }
-    }
-    
-    
-    private fun runParallel(nThreads: Int = 100, run: () -> Unit) {
-        var failed = false
-        val threads = Array(nThreads) {
-            Thread {
-                try {
-                    run()
-                } catch (t: Throwable) {
-                    failed = true
-                    throw t
-                }
-            }
-        }
-        
-        threads.forEach(Thread::start)
-        threads.forEach(Thread::join)
-        
-        if (failed)
-            throw AssertionError("Failed")
     }
     
 }

@@ -42,6 +42,30 @@ interface DeferredValue<out T> : Comparable<DeferredValue<*>> {
     }
     
     /**
+     * A [DeferredValue] that is directly initialized with a value.
+     * Generates a new sequence number when created.
+     */
+    class Direct<T>(override val value: T) : DeferredValue<T> {
+        
+        override val seqNo: Long = nextSeqNo()
+        
+    }
+    
+    // may be able to take advantage of Stable Values (https://openjdk.org/jeps/502) in the future
+    /**
+     * A [DeferredValue] that is backed by [lazy].
+     * Generates a new sequence number when created.
+     */
+    class Lazy<T>(lazy: kotlin.Lazy<T>) : DeferredValue<T> {
+        
+        constructor(initializer: () -> T) : this(lazy(initializer))
+        
+        override val seqNo: Long = nextSeqNo()
+        override val value: T by lazy
+        
+    }
+    
+    /**
      * A [DeferredValue] that is the result of applying [transform] to the value of [parent].
      * Inherits the sequence number from [parent].
      */
@@ -63,27 +87,13 @@ interface DeferredValue<out T> : Comparable<DeferredValue<*>> {
         
     }
     
-    // may be able to take advantage of Stable Values (https://openjdk.org/jeps/502) in the future
     /**
-     * A [DeferredValue] that is backed by [lazy].
-     * Generates a new sequence number when created.
+     * A [DeferredValue] that delegates its value to [parent] but generates a new sequence number when created.
      */
-    class Lazy<T>(lazy: kotlin.Lazy<T>) : DeferredValue<T> {
-        
-        constructor(initializer: () -> T) : this(lazy(initializer))
+    class ReEmitted<T>(val parent: DeferredValue<T>): DeferredValue<T> {
         
         override val seqNo: Long = nextSeqNo()
-        override val value: T by lazy
-        
-    }
-    
-    /**
-     * A [DeferredValue] that is directly initialized with a value.
-     * Generates a new sequence number when created.
-     */
-    class Direct<T>(override val value: T) : DeferredValue<T> {
-        
-        override val seqNo: Long = nextSeqNo()
+        override val value: T get() = parent.value
         
     }
     

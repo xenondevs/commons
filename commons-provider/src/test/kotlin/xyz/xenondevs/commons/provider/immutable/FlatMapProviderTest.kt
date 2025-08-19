@@ -1,6 +1,7 @@
 package xyz.xenondevs.commons.provider.immutable
 
 import org.junit.jupiter.api.Test
+import xyz.xenondevs.commons.provider.DeferredValue
 import xyz.xenondevs.commons.provider.flatten
 import xyz.xenondevs.commons.provider.lazyFlatten
 import xyz.xenondevs.commons.provider.mutableProvider
@@ -37,6 +38,35 @@ class FlatMapProviderTest {
         selector.set(b)
         selector.set(a)
         assertEquals(1, flatMapped.get())
+    }
+    
+    @Test
+    fun testFlatMapStaticParentUpdateWasDelayed() {
+        val staticParent = mutableProvider(1)
+        val dynamicParents = listOf(mutableProvider(0), mutableProvider(1))
+        val flatMapped = staticParent.flatMap { dynamicParents[it] }
+        val flatMappedIdentity = flatMapped.map { it }
+        
+        // simulate a race: staticParent is set to 0 here conceptually
+        val zeroValue = DeferredValue.Direct(0)
+        // afterward, but before staticParent receives the update, the current dynamic parent changes
+        dynamicParents[1].set(999)
+        
+        // because staticParent has not received its update yet, flatMapped and flatMappedIdentity temporarily contain 999
+        assertEquals(999, flatMapped.get())
+        assertEquals(999, flatMappedIdentity.get())
+        
+        // then, staticParent receives the update that happened previously
+        staticParent.update(zeroValue)
+        
+        // even though 999 (with >seqNo) was propagated, the flat-mapped and its identity still switch
+        assertEquals(0, flatMapped.get())
+        assertEquals(0, flatMappedIdentity.get())
+        
+        // the next updates are also propagated appropriately
+        dynamicParents[0].set(2)
+        assertEquals(2, flatMapped.get())
+        assertEquals(2, flatMappedIdentity.get())
     }
     
     @Test
@@ -132,6 +162,64 @@ class FlatMapProviderTest {
         // switching the selected provider works properly
         assertEquals(2, flatMapped.get())
         assertEquals(2, flatMapTransformExecCount)
+    }
+    
+    @Test
+    fun testLazyFlatMapStaticParentUpdateWasDelayed() {
+        val staticParent = mutableProvider(1)
+        val dynamicParents = listOf(mutableProvider(0), mutableProvider(1))
+        val flatMapped = staticParent.lazyFlatMap { dynamicParents[it] }
+        val flatMappedIdentity = flatMapped.map { it }
+        
+        // simulate a race: staticParent is set to 0 here conceptually
+        val zeroValue = DeferredValue.Direct(0)
+        // afterward, but before staticParent receives the update, the current dynamic parent changes
+        dynamicParents[1].set(999)
+        
+        // because staticParent has not received its update yet, flatMapped and flatMappedIdentity temporarily contain 999
+        assertEquals(999, flatMapped.get())
+        assertEquals(999, flatMappedIdentity.get())
+        
+        // then, staticParent receives the update that happened previously
+        staticParent.update(zeroValue)
+        
+        // even though 999 (with >seqNo) was propagated, the flat-mapped and its identity still switch
+        assertEquals(0, flatMapped.get())
+        assertEquals(0, flatMappedIdentity.get())
+        
+        // the next updates are also propagated appropriately
+        dynamicParents[0].set(2)
+        assertEquals(2, flatMapped.get())
+        assertEquals(2, flatMappedIdentity.get())
+    }
+    
+    @Test
+    fun testLazyFlatMapResultPropagated() {
+        val staticParent = mutableProvider(0)
+        val dynamicParents = listOf(
+            provider(0),
+            provider(1),
+            provider(2)
+        )
+        var flatMapTransformExecCount = 0
+        val lazilyFlatMapped = staticParent.lazyFlatMap { 
+            flatMapTransformExecCount++
+            dynamicParents[it]
+        }
+        val mapped = lazilyFlatMapped.map { it * 10 }
+        
+        assertEquals(0, flatMapTransformExecCount)
+        
+        staticParent.set(1)
+        
+        assertEquals(0, flatMapTransformExecCount)
+        
+        staticParent.set(2)
+        
+        assertEquals(0, flatMapTransformExecCount)
+        
+        assertEquals(20, mapped.get())
+        assertEquals(1, flatMapTransformExecCount)
     }
     
     @Test
