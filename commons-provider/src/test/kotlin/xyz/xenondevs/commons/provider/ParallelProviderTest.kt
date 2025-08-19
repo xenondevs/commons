@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import kotlin.test.assertEquals
 
 class ParallelProviderTest {
@@ -117,6 +119,79 @@ class ParallelProviderTest {
             }
         }
     }
+    
+    @Test
+    fun `test for lost update on provider creation via map`() {
+        testForProviderCreationLostUpdate(2) { provider -> provider.map { it + 1 } }
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongMap`() {
+        testForProviderCreationLostUpdate(2) { provider -> provider.strongMap { it + 1 } }
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via flatMap`() {
+        val selection = listOf(provider(1), provider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.flatMap { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongFlatMap`() {
+        val selection = listOf(provider(1), provider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.strongFlatMap { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via flatMapMutable`() {
+        val selection = listOf(mutableProvider(1), mutableProvider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.flatMapMutable { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongFlatMapMutable`() {
+        val selection = listOf(mutableProvider(1), mutableProvider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.strongFlatMapMutable { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via lazyFlatMap`() {
+        val selection = listOf(provider(1), provider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.lazyFlatMap { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongLazyFlatMap`() {
+        val selection = listOf(provider(1), provider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.strongLazyFlatMap { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via lazyFlatMapMutable`() {
+        val selection = listOf(mutableProvider(1), mutableProvider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.lazyFlatMapMutable { selection[it] }}
+    }
+    
+    @Test
+    fun `test for lost update on provider creation via strongLazyFlatMapMutable`() {
+        val selection = listOf(mutableProvider(1), mutableProvider(2))
+        testForProviderCreationLostUpdate(2) { provider -> provider.strongLazyFlatMapMutable { selection[it] }}
+    }
+    
+    private fun testForProviderCreationLostUpdate(
+        expectedValueFor1: Int,
+        createResultProvider: (Provider<Int>) -> Provider<Int>
+    ) {
+        val executor = Executors.newFixedThreadPool(100)
+        repeat(100_000) {
+            val root: MutableProvider<Int> = mutableProvider(0)
+            val result: Future<Provider<Int>> = executor.submit<Provider<Int>> { createResultProvider(root) }
+            executor.submit { root.set(1) }.get()
+            
+            assertEquals(expectedValueFor1, result.get().get(), "Iteration $it")
+        }
+    }
+    
     
     private fun runParallel(nThreads: Int = 100, run: () -> Unit) {
         var failed = false

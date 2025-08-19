@@ -16,14 +16,10 @@ internal open class BidirectionalProvider<T>(
         if (this.value > value)
             return false
         
-        val updateHandlers: UpdateHandlerCollection<T>
         synchronized(this) {
             if (this.value > value)
                 return false
             this.value = value
-            
-            // update handlers at time of value change (run outside of lock)
-            updateHandlers = this.updateHandlers
         }
         
         updateHandlers.notify(ignore)

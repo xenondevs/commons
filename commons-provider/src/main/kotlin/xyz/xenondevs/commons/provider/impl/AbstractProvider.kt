@@ -170,60 +170,70 @@ internal abstract class AbstractProvider<T> : Provider<T> {
     override fun <R> map(transform: (T) -> R): Provider<R> {
         val provider = UnidirectionalTransformingProvider(this, transform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment 
         return provider
     }
     
     override fun <R> strongMap(transform: (T) -> R): Provider<R> {
         val provider = UnidirectionalTransformingProvider(this, transform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
         val provider = BidirectionalFlatMappedProvider(this, transform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
         val provider = BidirectionalFlatMappedProvider(this, transform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> flatMap(transform: (T) -> Provider<R>): Provider<R> {
         val provider = UnidirectionalFlatMappedProvider(this, transform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R> {
         val provider = UnidirectionalFlatMappedProvider(this, transform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R> {
         val provider = UnidirectionalLazyFlatMappedProvider(this, transform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> {
         val provider = UnidirectionalLazyFlatMappedProvider(this, transform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
         val provider = BidirectionalLazyFlatMappedProvider(this, transform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> {
         val provider = BidirectionalLazyFlatMappedProvider(this, transform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     //</editor-fold>
@@ -235,12 +245,14 @@ internal interface MutableProviderDefaults<T> : MutableProvider<T> {
     override fun <R> strongMap(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> {
         val provider = BidirectionalTransformingProvider(this, transform, untransform)
         addStrongChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     
     override fun <R> map(transform: (T) -> R, untransform: (R) -> T): MutableProvider<R> {
         val provider = BidirectionalTransformingProvider(this, transform, untransform)
         addWeakChild(provider)
+        provider.handleParentUpdated(this) // propagate potentially lost update during provider creation and child assignment
         return provider
     }
     

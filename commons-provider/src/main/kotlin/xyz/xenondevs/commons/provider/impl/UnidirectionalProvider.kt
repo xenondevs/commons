@@ -8,21 +8,14 @@ internal abstract class UnidirectionalProvider<P, T> : AbstractProvider<T>() {
     
     abstract override var value: DeferredValue<T>
     
-    @Volatile
-    private var state: Long = 0
-    
     protected fun update(value: DeferredValue<T>): Boolean {
         if (this.value > value)
             return false
         
-        val updateHandlers: UpdateHandlerCollection<T>
         synchronized(this) {
             if (this.value > value)
                 return false
             this.value = value
-            
-            // update handlers at time of value change (run outside of lock)
-            updateHandlers = this.updateHandlers
         }
         
         updateHandlers.notify()
