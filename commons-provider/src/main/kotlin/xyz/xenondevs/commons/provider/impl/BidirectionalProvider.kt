@@ -16,7 +16,7 @@ internal open class BidirectionalProvider<T>(
         if (this.value > value)
             return false
         
-        val updateHandlers: UpdateHandlerCollection
+        val updateHandlers: UpdateHandlerCollection<T>
         synchronized(this) {
             if (this.value > value)
                 return false
