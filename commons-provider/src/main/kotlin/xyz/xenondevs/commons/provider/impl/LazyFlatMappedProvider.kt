@@ -96,8 +96,6 @@ internal abstract class AbstractLazyFlatMappedProvider<P, T, DP : Provider<T>>(
         if (staticParentSeqNo > staticParentValue.seqNo)
             return
         
-        // TODO: potentially lost update: lazyDynamicParent is being resolved during this fn
-        
         var notify = false
         synchronized(this) {
             if (staticParentSeqNo > staticParentValue.seqNo)
