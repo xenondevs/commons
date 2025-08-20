@@ -8,6 +8,40 @@ import java.lang.ref.WeakReference
 /**
  * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
  *
+ * This function is equivalent to `provider.immediateFlatMap { it }`.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<Provider<R>>.immediateFlatten(): Provider<R> = immediateFlatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.strongImmediateFlatMap { it }`.
+ */
+fun <R> Provider<Provider<R>>.strongImmediateFlatten(): Provider<R> = strongImmediateFlatMap { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.immediateFlatMapMutable { it }`.
+ *
+ * The returned provider will only be stored in a [WeakReference] in the parent providers
+ * ([this][Provider] and the value of this).
+ */
+fun <R> Provider<MutableProvider<R>>.immediateFlatten(): MutableProvider<R> = immediateFlatMapMutable { it }
+
+/**
+ * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ *
+ * This function is equivalent to `provider.strongImmediateFlatMapMutable { it }`.
+ */
+fun <R> Provider<MutableProvider<R>>.strongImmediateFlatten(): MutableProvider<R> = strongImmediateFlatMapMutable { it }
+
+/**
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
+ *
  * This function is equivalent to `provider.flatMap { it }`.
  *
  * The returned provider will only be stored in a [WeakReference] in the parent providers
@@ -16,14 +50,14 @@ import java.lang.ref.WeakReference
 fun <R> Provider<Provider<R>>.flatten(): Provider<R> = flatMap { it }
 
 /**
- * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
  *
- * This function is equivalent to `provider.flatMap { it }`.
+ * This function is equivalent to `provider.strongFlatMap { it }`.
  */
 fun <R> Provider<Provider<R>>.strongFlatten(): Provider<R> = strongFlatMap { it }
 
 /**
- * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
  *
  * This function is equivalent to `provider.flatMapMutable { it }`.
  *
@@ -33,45 +67,11 @@ fun <R> Provider<Provider<R>>.strongFlatten(): Provider<R> = strongFlatMap { it 
 fun <R> Provider<MutableProvider<R>>.flatten(): MutableProvider<R> = flatMapMutable { it }
 
 /**
- * Creates and returns a new [Provider] that maps to the provider that is the value of [this][Provider].
+ * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
  *
- * This function is equivalent to `provider.flatMapMutable { it }`.
+ * This function is equivalent to `provider.strongFlatMapMutable { it }`.
  */
 fun <R> Provider<MutableProvider<R>>.strongFlatten(): MutableProvider<R> = strongFlatMapMutable { it }
-
-/**
- * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
- *
- * This function is equivalent to `provider.lazyFlatMap { it }`.
- *
- * The returned provider will only be stored in a [WeakReference] in the parent providers
- * ([this][Provider] and the value of this).
- */
-fun <R> Provider<Provider<R>>.lazyFlatten(): Provider<R> = lazyFlatMap { it }
-
-/**
- * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
- *
- * This function is equivalent to `provider.lazyFlatMap { it }`.
- */
-fun <R> Provider<Provider<R>>.strongLazyFlatten(): Provider<R> = strongLazyFlatMap { it }
-
-/**
- * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
- *
- * This function is equivalent to `provider.lazyFlatMapMutable { it }`.
- *
- * The returned provider will only be stored in a [WeakReference] in the parent providers
- * ([this][Provider] and the value of this).
- */
-fun <R> Provider<MutableProvider<R>>.lazyFlatten(): MutableProvider<R> = lazyFlatMapMutable { it }
-
-/**
- * Creates and returns a new [Provider] that lazily maps to the provider that is the value of [this][Provider].
- *
- * This function is equivalent to `provider.lazyFlatMapMutable { it }`.
- */
-fun <R> Provider<MutableProvider<R>>.strongLazyFlatten(): MutableProvider<R> = strongLazyFlatMapMutable { it }
 
 /**
  * Creates and returns a new [Provider] that maps non-null values of [this][Provider]

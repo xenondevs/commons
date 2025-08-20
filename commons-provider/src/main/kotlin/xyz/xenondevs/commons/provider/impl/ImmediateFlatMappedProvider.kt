@@ -11,7 +11,7 @@ import xyz.xenondevs.commons.provider.Provider
  * In order to propagate all updates from the dynamic parent, the dynamic parent needs to be resolved immediately,
  * disabling lazy evaluation of the static parent.
  */
-internal abstract class AbstractFlatMappedProvider<P, T, DP : Provider<T>>(
+internal abstract class AbstractImmediateFlatMappedProvider<P, T, DP : Provider<T>>(
     private val staticParent: Provider<P>,
     private val transform: (P) -> DP,
     private val weak: Boolean
@@ -110,17 +110,17 @@ internal abstract class AbstractFlatMappedProvider<P, T, DP : Provider<T>>(
     
 }
 
-internal class UnidirectionalFlatMappedProvider<P, T>(
+internal class UnidirectionalImmediateFlatMappedProvider<P, T>(
     staticParent: Provider<P>,
     transform: (P) -> Provider<T>,
     weak: Boolean
-) : AbstractFlatMappedProvider<P, T, Provider<T>>(staticParent, transform, weak)
+) : AbstractImmediateFlatMappedProvider<P, T, Provider<T>>(staticParent, transform, weak)
 
-internal class BidirectionalFlatMappedProvider<P, T>(
+internal class BidirectionalImmediateFlatMappedProvider<P, T>(
     staticParent: Provider<P>,
     transform: (P) -> MutableProvider<T>,
     weak: Boolean
-) : AbstractFlatMappedProvider<P, T, MutableProvider<T>>(staticParent, transform, weak), MutableProviderDefaults<T> {
+) : AbstractImmediateFlatMappedProvider<P, T, MutableProvider<T>>(staticParent, transform, weak), MutableProviderDefaults<T> {
     
     override fun update(value: DeferredValue<T>, ignore: Set<Provider<*>>): Boolean {
         return dynamicParent.update(value)

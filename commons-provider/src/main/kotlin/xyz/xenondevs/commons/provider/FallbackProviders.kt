@@ -23,7 +23,7 @@ fun <T> Provider<T?>.orElse(value: T): Provider<T> =
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.
  */
 fun <T> Provider<T?>.strongOrElse(provider: Provider<T>): Provider<T> =
-    strongFlatMap { it?.let(::provider) ?: provider }
+    strongImmediateFlatMap { it?.let(::provider) ?: provider }
 
 /**
  * Creates and returns a new [Provider] that returns a fallback value obtained through [provider] if the value of [this][Provider] is null.

@@ -21,28 +21,28 @@ internal class StableProvider<T>(override val value: DeferredValue<T>) : Provide
     override fun <R> map(transform: (T) -> R): Provider<R> =
         StableProvider(DeferredValue.Mapped(value, transform))
     
-    override fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+    override fun <R> strongImmediateFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+        transform(get())
+    
+    override fun <R> immediateFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+        transform(get())
+    
+    override fun <R> strongImmediateFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+        transform(get())
+    
+    override fun <R> immediateFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
         transform(get())
     
     override fun <R> flatMap(transform: (T) -> Provider<R>): Provider<R> =
-        transform(get())
-    
-    override fun <R> strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
-        transform(get())
-    
-    override fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
-        transform(get())
-    
-    override fun <R> lazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
         UnidirectionalLazyFlatMappedProvider(this, transform, true)
     
-    override fun <R> strongLazyFlatMap(transform: (T) -> Provider<R>): Provider<R> =
+    override fun <R> strongFlatMap(transform: (T) -> Provider<R>): Provider<R> =
         UnidirectionalLazyFlatMappedProvider(this, transform, false)
     
-    override fun <R> lazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+    override fun <R> flatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
         BidirectionalLazyFlatMappedProvider(this, transform, true)
     
-    override fun <R> strongLazyFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
+    override fun <R> strongFlatMapMutable(transform: (T) -> MutableProvider<R>): MutableProvider<R> =
         BidirectionalLazyFlatMappedProvider(this, transform, false)
     
     // the value is immutable, so subscribers / observers would never be called

@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class DeferredValueTest {
     
     @Test
-    fun `test whether DeferredValue of flat-mapping provider is stable`() {
+    fun `test whether DeferredValue of immediate flat-mapping provider is stable`() {
         val root = mutableProvider(0)
         val selection = listOf(
             mutableProvider("0"),
@@ -14,7 +14,7 @@ class DeferredValueTest {
             mutableProvider("2")
         )
         
-        val flatMapped = root.flatMap { selection[it] }
+        val flatMapped = root.immediateFlatMap { selection[it] }
         
         val deferredValueAt0 = flatMapped.value
         
@@ -50,7 +50,7 @@ class DeferredValueTest {
     }
     
     @Test
-    fun `test whether DeferredValue of lazily flat-mapping provider is stable`() {
+    fun `test whether DeferredValue of flat-mapping provider is stable`() {
         val root = mutableProvider(0)
         val selection = listOf(
             mutableProvider("0"),
@@ -58,7 +58,7 @@ class DeferredValueTest {
             mutableProvider("2")
         )
         
-        val flatMapped = root.lazyFlatMap { selection[it] }
+        val flatMapped = root.flatMap { selection[it] }
         
         val deferredValueAt0 = flatMapped.value
         
