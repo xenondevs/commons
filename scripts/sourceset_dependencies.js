@@ -1,1 +1,1 @@
-sourceset_dependencies = '{":commons-reflection/main":[],":commons-version/main":[],":commons-guava/main":[],":commons-tuple/main":[],":commons-collections/main":[],":commons-gson/main":[],":commons-provider/main":[]}'
+sourceset_dependencies = '{":commons-reflection/main":[],":commons-version/main":[],":commons-guava/main":[],":commons-tuple/main":[],":commons-collections/main":[],":commons-gson/main":[]}'

@@ -8,10 +8,6 @@ module:commons-gson
 xyz.xenondevs.commons.gson
 module:commons-guava
 xyz.xenondevs.commons.guava
-module:commons-provider
-xyz.xenondevs.commons.provider
-xyz.xenondevs.commons.provider.impl
-xyz.xenondevs.commons.provider.util
 module:commons-reflection
 xyz.xenondevs.commons.reflection
 module:commons-tuple
