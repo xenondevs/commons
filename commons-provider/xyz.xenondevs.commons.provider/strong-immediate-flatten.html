@@ -2,8 +2,8 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>lazyFlatMap</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <title>strongImmediateFlatten</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
     if (storage == null) {
@@ -19,24 +19,24 @@
     }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
-<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
-<link href="../../../styles/style.css" rel="Stylesheet">
-<link href="../../../styles/main.css" rel="Stylesheet">
-<link href="../../../styles/prism.css" rel="Stylesheet">
-<link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
-<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
-<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
-<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
-<script type="text/javascript" src="../../../scripts/main.js" defer></script>
-<script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
     <div class="root">
     <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<a class="library-name--link" href="../../index.html">
                     commons
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -90,12 +90,12 @@
                 </div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="member" id="content" pageids="commons-provider::xyz.xenondevs.commons.provider/Provider/lazyFlatMap/#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),xyz.xenondevs.commons.provider.Provider[TypeParam(bounds=[kotlin.Any?])]]/PointingToDeclaration//-615843146">
-  <div class="breadcrumbs"><a href="../../index.html">commons-provider</a><span class="delimiter">/</span><a href="../index.html">xyz.xenondevs.commons.provider</a><span class="delimiter">/</span><a href="index.html">Provider</a><span class="delimiter">/</span><span class="current">lazyFlatMap</span></div>
+<div class="main-content" data-page-type="member" id="content" pageids="commons-provider::xyz.xenondevs.commons.provider//strongImmediateFlatten/xyz.xenondevs.commons.provider.Provider[xyz.xenondevs.commons.provider.Provider[TypeParam(bounds=[kotlin.Any?])]]#/PointingToDeclaration//-615843146">
+  <div class="breadcrumbs"><a href="../index.html">commons-provider</a><span class="delimiter">/</span><a href="index.html">xyz.xenondevs.commons.provider</a><span class="delimiter">/</span><span class="current">strongImmediateFlatten</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>lazy</span><wbr><span>Flat</span><wbr><span><span>Map</span></span></h1>
+    <h1 class="cover"><span>strong</span><wbr><span>Immediate</span><wbr><span><span>Flatten</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-provider/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="lazy-flat-map.html">R</a><span class="token operator">&gt; </span><a href="lazy-flat-map.html"><span class="token function">lazyFlatMap</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="index.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Provider</a><span class="token operator">&lt;</span><a href="lazy-flat-map.html">R</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Provider</a><span class="token operator">&lt;</span><a href="lazy-flat-map.html">R</a><span class="token operator">&gt;</span></div><p class="paragraph">Creates and returns new <a href="index.html">Provider</a> that lazily maps to the value of the <a href="index.html">Provider</a> returned by <a href="lazy-flat-map.html">transform</a>.</p><p class="paragraph">Contrary to <a href="flat-map.html">flatMap</a>, this does not disable lazy evaluation of <a href="index.html">this</a>. Consequently, updates (for example in <a href="subscribe.html">subscribers</a> or <a href="observe.html">observers</a>) are only received after a flat-mapped provider has been resolved by evaluating the returned provider, applying <a href="lazy-flat-map.html">transform</a>.</p><p class="paragraph"><a href="lazy-flat-map.html">transform</a> should be a pure function.</p><p class="paragraph">The returned provider will only be stored in a <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/ref/WeakReference.html">WeakReference</a> in the parent providers (<a href="../-mutable-provider/index.html">this</a> and the result of <a href="lazy-flat-map.html">transform</a>).</p></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-provider/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt; </span><a href="-provider/index.html">Provider</a><span class="token operator">&lt;</span><a href="-provider/index.html">Provider</a><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="strong-immediate-flatten.html"><span class="token function">strongImmediateFlatten</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-provider/index.html">Provider</a><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt;</span></div><p class="paragraph">Creates and returns a new <a href="-provider/index.html">Provider</a> that maps to the provider that is the value of <a href="-provider/index.html">this</a>.</p><p class="paragraph">This function is equivalent to <code class="lang-kotlin">provider.strongImmediateFlatMap { it }</code>.</p><hr><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt; </span><a href="-provider/index.html">Provider</a><span class="token operator">&lt;</span><a href="-mutable-provider/index.html">MutableProvider</a><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="strong-immediate-flatten.html"><span class="token function">strongImmediateFlatten</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-mutable-provider/index.html">MutableProvider</a><span class="token operator">&lt;</span><a href="strong-immediate-flatten.html">R</a><span class="token operator">&gt;</span></div><p class="paragraph">Creates and returns a new <a href="-provider/index.html">Provider</a> that maps to the provider that is the value of <a href="-provider/index.html">this</a>.</p><p class="paragraph">This function is equivalent to <code class="lang-kotlin">provider.strongImmediateFlatMapMutable { it }</code>.</p></div></div>
 </div>
     <div class="footer">
         <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
