@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 fun <K> weakHashSet(): MutableSet<K> = Collections.newSetFromMap(WeakHashMap())
 
-fun <K> weakHashSet(initialCapacity: Int): MutableSet<K> = Collections.newSetFromMap(WeakHashMap(initialCapacity))
+fun <K> weakHashSet(numMappings: Int): MutableSet<K> = Collections.newSetFromMap(WeakHashMap.newWeakHashMap(numMappings))
 
 fun <K> weakHashSetOf(vararg elements: K): MutableSet<K> = weakHashSet<K>().apply { addAll(elements) }
 
