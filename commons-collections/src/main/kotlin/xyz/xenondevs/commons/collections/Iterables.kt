@@ -1,7 +1,6 @@
 package xyz.xenondevs.commons.collections
 
 import java.util.*
-import kotlin.collections.LinkedHashMap
 
 inline fun <T> Iterable<T>.findNthOrNull(n: Int, predicate: (T) -> Boolean): T? {
     var count = 0
@@ -91,7 +90,7 @@ inline fun <reified R> Iterable<*>.firstInstanceOfOrNull(): R? {
 }
 
 inline fun <reified R> Iterable<*>.firstInstanceOf(): R {
-    return firstInstanceOfOrNull() 
+    return firstInstanceOfOrNull()
         ?: throw NoSuchElementException("No element of type ${R::class.java} found")
 }
 
@@ -155,6 +154,14 @@ inline fun <reified E : Enum<E>> Iterable<E>.toEnumSet(): EnumSet<E> {
     val set = enumSet<E>()
     for (element in this) {
         set.add(element)
+    }
+    return set
+}
+
+inline fun <T, R> Iterable<T>.mapToSet(transform: (T) -> R): Set<R> {
+    val set = if (this is Collection) LinkedHashSet.newLinkedHashSet<R>(size) else LinkedHashSet()
+    for (element in this) {
+        set.add(transform(element))
     }
     return set
 }

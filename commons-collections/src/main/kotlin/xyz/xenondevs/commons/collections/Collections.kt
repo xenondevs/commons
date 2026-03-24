@@ -145,6 +145,14 @@ inline fun <T> Collection<T>.mapToBits(transform: (T) -> Boolean): ByteArray {
     return array
 }
 
+inline fun <T, R> Collection<T>.mapToSet(transform: (T) -> R): Set<R> {
+    val set = LinkedHashSet.newLinkedHashSet<R>(size)
+    for (element in this) {
+        set.add(transform(element))
+    }
+    return set
+}
+
 fun <E> Collection<E>.intersects(other: Collection<E>): Boolean {
     if (size > other.size) {
         for (element in other) {
