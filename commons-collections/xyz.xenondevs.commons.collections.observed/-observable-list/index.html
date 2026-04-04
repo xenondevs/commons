@@ -1,42 +1,39 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>ObservableList</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
-<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../../styles/style.css" rel="Stylesheet">
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     commons
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +41,13 @@
         <div class="library-version" id="library-version">
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":commons-collections/main">jvm</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":commons-collections/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,32 +61,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     commons
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="commons-collections::xyz.xenondevs.commons.collections.observed/ObservableList///PointingToDeclaration//1768229086">
   <div class="breadcrumbs"><a href="../../index.html">commons-collections</a><span class="delimiter">/</span><a href="../index.html">xyz.xenondevs.commons.collections.observed</a><span class="delimiter">/</span><span class="current">ObservableList</span></div>
   <div class="cover ">
@@ -100,9 +99,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="1838775746%2FConstructors%2F1768229086" anchor-label="ObservableList" id="1838775746%2FConstructors%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-observable-list.html"><span>Observable</span><wbr><span><span>List</span></span></a></div>
@@ -119,9 +118,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="212134324%2FProperties%2F1768229086" anchor-label="list" id="212134324%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="list.html"><span><span>list</span></span></a></div>
@@ -136,7 +135,7 @@
             </div>
           </div>
 <a data-name="844915858%2FProperties%2F1768229086" anchor-label="size" id="844915858%2FProperties%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#844915858%2FProperties%2F1768229086"><span><span>size</span></span></a></div>
@@ -153,9 +152,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1054069071%2FFunctions%2F1768229086" anchor-label="add" id="1054069071%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="add.html"><span><span>add</span></span></a></div>
@@ -170,7 +169,7 @@
             </div>
           </div>
 <a data-name="1430034543%2FFunctions%2F1768229086" anchor-label="addAll" id="1430034543%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="add-all.html"><span>add</span><wbr><span><span>All</span></span></a></div>
@@ -185,7 +184,7 @@
             </div>
           </div>
 <a data-name="1870631706%2FFunctions%2F1768229086" anchor-label="after" id="1870631706%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/after.html"><span><span>after</span></span></a></div>
@@ -200,7 +199,7 @@
             </div>
           </div>
 <a data-name="-824407393%2FFunctions%2F1768229086" anchor-label="associateByNotNull" id="-824407393%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-by-not-null.html"><span>associate</span><wbr><span>By</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
@@ -215,7 +214,7 @@
             </div>
           </div>
 <a data-name="-610168999%2FFunctions%2F1768229086" anchor-label="associateByNotNullTo" id="-610168999%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-by-not-null-to.html"><span>associate</span><wbr><span>By</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
@@ -230,7 +229,7 @@
             </div>
           </div>
 <a data-name="1108113605%2FFunctions%2F1768229086" anchor-label="associateNotNull" id="1108113605%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-not-null.html"><span>associate</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
@@ -245,7 +244,7 @@
             </div>
           </div>
 <a data-name="216938449%2FFunctions%2F1768229086" anchor-label="associateNotNullTo" id="216938449%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-not-null-to.html"><span>associate</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
@@ -260,7 +259,7 @@
             </div>
           </div>
 <a data-name="918458318%2FFunctions%2F1768229086" anchor-label="associateWithNotNull" id="918458318%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-with-not-null.html"><span>associate</span><wbr><span>With</span><wbr><span>Not</span><wbr><span><span>Null</span></span></a></div>
@@ -275,7 +274,7 @@
             </div>
           </div>
 <a data-name="-1956978294%2FFunctions%2F1768229086" anchor-label="associateWithNotNullTo" id="-1956978294%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/associate-with-not-null-to.html"><span>associate</span><wbr><span>With</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span><span>To</span></span></a></div>
@@ -290,7 +289,7 @@
             </div>
           </div>
 <a data-name="935617667%2FFunctions%2F1768229086" anchor-label="before" id="935617667%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/before.html"><span><span>before</span></span></a></div>
@@ -305,7 +304,7 @@
             </div>
           </div>
 <a data-name="-320528421%2FFunctions%2F1768229086" anchor-label="clear" id="-320528421%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="clear.html"><span><span>clear</span></span></a></div>
@@ -320,7 +319,7 @@
             </div>
           </div>
 <a data-name="765883978%2FFunctions%2F1768229086" anchor-label="contains" id="765883978%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#765883978%2FFunctions%2F1768229086"><span><span>contains</span></span></a></div>
@@ -335,7 +334,7 @@
             </div>
           </div>
 <a data-name="-225903147%2FFunctions%2F1768229086" anchor-label="containsAll" id="-225903147%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#-225903147%2FFunctions%2F1768229086"><span>contains</span><wbr><span><span>All</span></span></a></div>
@@ -350,7 +349,7 @@
             </div>
           </div>
 <a data-name="-887560497%2FFunctions%2F1768229086" anchor-label="contentEquals" id="-887560497%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/content-equals.html"><span>content</span><wbr><span><span>Equals</span></span></a></div>
@@ -365,7 +364,7 @@
             </div>
           </div>
 <a data-name="397421158%2FFunctions%2F1768229086" anchor-label="eachRepeated" id="397421158%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/each-repeated.html"><span>each</span><wbr><span><span>Repeated</span></span></a></div>
@@ -380,7 +379,7 @@
             </div>
           </div>
 <a data-name="1880343983%2FFunctions%2F1768229086" anchor-label="equals" id="1880343983%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="equals.html"><span><span>equals</span></span></a></div>
@@ -395,7 +394,7 @@
             </div>
           </div>
 <a data-name="-4744324%2FFunctions%2F1768229086" anchor-label="findNth" id="-4744324%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/find-nth.html"><span>find</span><wbr><span><span>Nth</span></span></a></div>
@@ -410,7 +409,7 @@
             </div>
           </div>
 <a data-name="-1604125759%2FFunctions%2F1768229086" anchor-label="findNthOfType" id="-1604125759%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/find-nth-of-type.html"><span>find</span><wbr><span>Nth</span><wbr><span>Of</span><wbr><span><span>Type</span></span></a></div>
@@ -425,7 +424,7 @@
             </div>
           </div>
 <a data-name="1169445591%2FFunctions%2F1768229086" anchor-label="findNthOfTypeOrNull" id="1169445591%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/find-nth-of-type-or-null.html"><span>find</span><wbr><span>Nth</span><wbr><span>Of</span><wbr><span>Type</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -440,7 +439,7 @@
             </div>
           </div>
 <a data-name="-1162706330%2FFunctions%2F1768229086" anchor-label="findNthOrNull" id="-1162706330%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/find-nth-or-null.html"><span>find</span><wbr><span>Nth</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -455,7 +454,7 @@
             </div>
           </div>
 <a data-name="1092902657%2FFunctions%2F1768229086" anchor-label="firstInstanceOf" id="1092902657%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/first-instance-of.html"><span>first</span><wbr><span>Instance</span><wbr><span><span>Of</span></span></a></div>
@@ -470,7 +469,7 @@
             </div>
           </div>
 <a data-name="-1411470569%2FFunctions%2F1768229086" anchor-label="firstInstanceOfOrNull" id="-1411470569%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/first-instance-of-or-null.html"><span>first</span><wbr><span>Instance</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -485,7 +484,7 @@
             </div>
           </div>
 <a data-name="421607766%2FFunctions%2F1768229086" anchor-label="flatMap" id="421607766%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/flat-map.html"><span>flat</span><wbr><span><span>Map</span></span></a></div>
@@ -500,7 +499,7 @@
             </div>
           </div>
 <a data-name="-937111782%2FFunctions%2F1768229086" anchor-label="flatMapTo" id="-937111782%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/flat-map-to.html"><span>flat</span><wbr><span>Map</span><wbr><span><span>To</span></span></a></div>
@@ -515,7 +514,7 @@
             </div>
           </div>
 <a data-name="961975567%2FFunctions%2F1768229086" anchor-label="get" id="961975567%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#961975567%2FFunctions%2F1768229086"><span><span>get</span></span></a></div>
@@ -530,7 +529,7 @@
             </div>
           </div>
 <a data-name="927362606%2FFunctions%2F1768229086" anchor-label="getCoerced" id="927362606%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/get-coerced.html"><span>get</span><wbr><span><span>Coerced</span></span></a></div>
@@ -545,7 +544,7 @@
             </div>
           </div>
 <a data-name="-648707819%2FFunctions%2F1768229086" anchor-label="getMod" id="-648707819%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/get-mod.html"><span>get</span><wbr><span><span>Mod</span></span></a></div>
@@ -560,7 +559,7 @@
             </div>
           </div>
 <a data-name="-804425129%2FFunctions%2F1768229086" anchor-label="hashCode" id="-804425129%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
@@ -575,7 +574,7 @@
             </div>
           </div>
 <a data-name="-407930336%2FFunctions%2F1768229086" anchor-label="indexOf" id="-407930336%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#-407930336%2FFunctions%2F1768229086"><span>index</span><wbr><span><span>Of</span></span></a></div>
@@ -590,7 +589,7 @@
             </div>
           </div>
 <a data-name="1188198495%2FFunctions%2F1768229086" anchor-label="intersects" id="1188198495%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/intersects.html"><span><span>intersects</span></span></a></div>
@@ -605,7 +604,7 @@
             </div>
           </div>
 <a data-name="-1000881820%2FFunctions%2F1768229086" anchor-label="isEmpty" id="-1000881820%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#-1000881820%2FFunctions%2F1768229086"><span>is</span><wbr><span><span>Empty</span></span></a></div>
@@ -620,7 +619,7 @@
             </div>
           </div>
 <a data-name="-1242747592%2FFunctions%2F1768229086" anchor-label="isNotNullOrEmpty" id="-1242747592%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/is-not-null-or-empty.html"><span>is</span><wbr><span>Not</span><wbr><span>Null</span><wbr><span>Or</span><wbr><span><span>Empty</span></span></a></div>
@@ -635,7 +634,7 @@
             </div>
           </div>
 <a data-name="-160070941%2FFunctions%2F1768229086" anchor-label="isNullOrEmpty" id="-160070941%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/is-null-or-empty.html"><span>is</span><wbr><span>Null</span><wbr><span>Or</span><wbr><span><span>Empty</span></span></a></div>
@@ -649,23 +648,23 @@
               </div>
             </div>
           </div>
-<a data-name="-1577986619%2FFunctions%2F1768229086" anchor-label="iterator" id="-1577986619%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+<a data-name="1177836957%2FFunctions%2F1768229086" anchor-label="iterator" id="1177836957%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="index.html#-1577986619%2FFunctions%2F1768229086"><span><span>iterator</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1577986619%2FFunctions%2F1768229086"></span>
+                  <div><a href="index.html#1177836957%2FFunctions%2F1768229086"><span><span>iterator</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1177836957%2FFunctions%2F1768229086"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="index.html#-1577986619%2FFunctions%2F1768229086"><span class="token function">iterator</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-iterator/index.html">MutableIterator</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="index.html#1177836957%2FFunctions%2F1768229086"><span class="token function">iterator</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-iterator/index.html">MutableIterator</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1327716778%2FFunctions%2F1768229086" anchor-label="lastIndexOf" id="1327716778%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="index.html#1327716778%2FFunctions%2F1768229086"><span>last</span><wbr><span>Index</span><wbr><span><span>Of</span></span></a></div>
@@ -680,7 +679,7 @@
             </div>
           </div>
 <a data-name="-442573974%2FFunctions%2F1768229086" anchor-label="listIterator" id="-442573974%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="list-iterator.html"><span>list</span><wbr><span><span>Iterator</span></span></a></div>
@@ -695,7 +694,7 @@
             </div>
           </div>
 <a data-name="-343719311%2FFunctions%2F1768229086" anchor-label="mapToArray" id="-343719311%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-array.html"><span>map</span><wbr><span>To</span><wbr><span><span>Array</span></span></a></div>
@@ -710,7 +709,7 @@
             </div>
           </div>
 <a data-name="-797563089%2FFunctions%2F1768229086" anchor-label="mapToBits" id="-797563089%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-bits.html"><span>map</span><wbr><span>To</span><wbr><span><span>Bits</span></span></a></div>
@@ -725,7 +724,7 @@
             </div>
           </div>
 <a data-name="1263291008%2FFunctions%2F1768229086" anchor-label="mapToBitSet" id="1263291008%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html"><span>map</span><wbr><span>To</span><wbr><span>Bit</span><wbr><span><span>Set</span></span></a></div>
@@ -734,13 +733,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/index.html">Collection</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html"><span class="token function">mapToBitSet</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/BitSet.html">BitSet</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/index.html">Collection</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html"><span class="token function">mapToBitSet</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="../../xyz.xenondevs.commons.collections/map-to-bit-set.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/BitSet.html">BitSet</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1331563972%2FFunctions%2F1768229086" anchor-label="mapToBooleanArray" id="1331563972%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-boolean-array.html"><span>map</span><wbr><span>To</span><wbr><span>Boolean</span><wbr><span><span>Array</span></span></a></div>
@@ -755,7 +754,7 @@
             </div>
           </div>
 <a data-name="270639738%2FFunctions%2F1768229086" anchor-label="mapToByteArray" id="270639738%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-byte-array.html"><span>map</span><wbr><span>To</span><wbr><span>Byte</span><wbr><span><span>Array</span></span></a></div>
@@ -770,7 +769,7 @@
             </div>
           </div>
 <a data-name="1548586042%2FFunctions%2F1768229086" anchor-label="mapToCharArray" id="1548586042%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-char-array.html"><span>map</span><wbr><span>To</span><wbr><span>Char</span><wbr><span><span>Array</span></span></a></div>
@@ -785,7 +784,7 @@
             </div>
           </div>
 <a data-name="70979994%2FFunctions%2F1768229086" anchor-label="mapToDoubleArray" id="70979994%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-double-array.html"><span>map</span><wbr><span>To</span><wbr><span>Double</span><wbr><span><span>Array</span></span></a></div>
@@ -800,7 +799,7 @@
             </div>
           </div>
 <a data-name="447268844%2FFunctions%2F1768229086" anchor-label="mapToFloatArray" id="447268844%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-float-array.html"><span>map</span><wbr><span>To</span><wbr><span>Float</span><wbr><span><span>Array</span></span></a></div>
@@ -815,7 +814,7 @@
             </div>
           </div>
 <a data-name="-1516060462%2FFunctions%2F1768229086" anchor-label="mapToIntArray" id="-1516060462%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-int-array.html"><span>map</span><wbr><span>To</span><wbr><span>Int</span><wbr><span><span>Array</span></span></a></div>
@@ -830,7 +829,7 @@
             </div>
           </div>
 <a data-name="-1831988998%2FFunctions%2F1768229086" anchor-label="mapToLongArray" id="-1831988998%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-long-array.html"><span>map</span><wbr><span>To</span><wbr><span>Long</span><wbr><span><span>Array</span></span></a></div>
@@ -845,7 +844,7 @@
             </div>
           </div>
 <a data-name="-132404576%2FFunctions%2F1768229086" anchor-label="mapToSet" id="-132404576%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-set.html"><span>map</span><wbr><span>To</span><wbr><span><span>Set</span></span></a></div>
@@ -860,7 +859,7 @@
             </div>
           </div>
 <a data-name="-1994341332%2FFunctions%2F1768229086" anchor-label="mapToShortArray" id="-1994341332%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/map-to-short-array.html"><span>map</span><wbr><span>To</span><wbr><span>Short</span><wbr><span><span>Array</span></span></a></div>
@@ -875,7 +874,7 @@
             </div>
           </div>
 <a data-name="966255690%2FFunctions%2F1768229086" anchor-label="poll" id="966255690%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/poll.html"><span><span>poll</span></span></a></div>
@@ -890,7 +889,7 @@
             </div>
           </div>
 <a data-name="1168460246%2FFunctions%2F1768229086" anchor-label="pollFirstWhere" id="1168460246%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/poll-first-where.html"><span>poll</span><wbr><span>First</span><wbr><span><span>Where</span></span></a></div>
@@ -905,7 +904,7 @@
             </div>
           </div>
 <a data-name="2082890992%2FFunctions%2F1768229086" anchor-label="remove" id="2082890992%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="remove.html"><span><span>remove</span></span></a></div>
@@ -920,7 +919,7 @@
             </div>
           </div>
 <a data-name="337232635%2FFunctions%2F1768229086" anchor-label="removeAll" id="337232635%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="remove-all.html"><span>remove</span><wbr><span><span>All</span></span></a></div>
@@ -935,7 +934,7 @@
             </div>
           </div>
 <a data-name="-1707938311%2FFunctions%2F1768229086" anchor-label="removeAt" id="-1707938311%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="remove-at.html"><span>remove</span><wbr><span><span>At</span></span></a></div>
@@ -950,7 +949,7 @@
             </div>
           </div>
 <a data-name="2134006875%2FFunctions%2F1768229086" anchor-label="removeFirstWhere" id="2134006875%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/remove-first-where.html"><span>remove</span><wbr><span>First</span><wbr><span><span>Where</span></span></a></div>
@@ -965,7 +964,7 @@
             </div>
           </div>
 <a data-name="1152862558%2FFunctions%2F1768229086" anchor-label="removeIf" id="1152862558%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="remove-if.html"><span>remove</span><wbr><span><span>If</span></span></a></div>
@@ -974,13 +973,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="remove-if.html"><span class="token function">removeIf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">filter<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">E</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="remove-if.html"><span class="token function">removeIf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">filter<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="index.html">E</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="2114371367%2FFunctions%2F1768229086" anchor-label="repeated" id="2114371367%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/repeated.html"><span><span>repeated</span></span></a></div>
@@ -995,7 +994,7 @@
             </div>
           </div>
 <a data-name="-967040666%2FFunctions%2F1768229086" anchor-label="replaceAll" id="-967040666%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="replace-all.html"><span>replace</span><wbr><span><span>All</span></span></a></div>
@@ -1004,13 +1003,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="replace-all.html"><span class="token function">replaceAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">operator<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="replace-all.html"><span class="token function">replaceAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">operator<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="897950780%2FFunctions%2F1768229086" anchor-label="retainAll" id="897950780%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="retain-all.html"><span>retain</span><wbr><span><span>All</span></span></a></div>
@@ -1025,7 +1024,7 @@
             </div>
           </div>
 <a data-name="-460621215%2FFunctions%2F1768229086" anchor-label="rotateLeft" id="-460621215%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/rotate-left.html"><span>rotate</span><wbr><span><span>Left</span></span></a></div>
@@ -1040,7 +1039,7 @@
             </div>
           </div>
 <a data-name="-35243828%2FFunctions%2F1768229086" anchor-label="rotateRight" id="-35243828%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/rotate-right.html"><span>rotate</span><wbr><span><span>Right</span></span></a></div>
@@ -1055,7 +1054,7 @@
             </div>
           </div>
 <a data-name="-1821365277%2FFunctions%2F1768229086" anchor-label="set" id="-1821365277%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="set.html"><span><span>set</span></span></a></div>
@@ -1070,7 +1069,7 @@
             </div>
           </div>
 <a data-name="1442914288%2FFunctions%2F1768229086" anchor-label="sort" id="1442914288%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="sort.html"><span><span>sort</span></span></a></div>
@@ -1085,7 +1084,7 @@
             </div>
           </div>
 <a data-name="-832042571%2FFunctions%2F1768229086" anchor-label="subList" id="-832042571%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="sub-list.html"><span>sub</span><wbr><span><span>List</span></span></a></div>
@@ -1100,7 +1099,7 @@
             </div>
           </div>
 <a data-name="123550026%2FFunctions%2F1768229086" anchor-label="sumOf" id="123550026%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/sum-of.html"><span>sum</span><wbr><span><span>Of</span></span></a></div>
@@ -1115,7 +1114,7 @@
             </div>
           </div>
 <a data-name="518792970%2FFunctions%2F1768229086" anchor-label="toEnumSet" id="518792970%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html"><span>to</span><wbr><span>Enum</span><wbr><span><span>Set</span></span></a></div>
@@ -1124,13 +1123,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/index.html">Collection</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html"><span class="token function">toEnumSet</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/EnumSet.html">EnumSet</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html"><span class="token function">toEnumSet</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/EnumSet.html">EnumSet</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":commons-collections/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/index.html">Collection</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html"><span class="token function">toEnumSet</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/EnumSet.html">EnumSet</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/index.html">Iterable</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html"><span class="token function">toEnumSet</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/EnumSet.html">EnumSet</a><span class="token operator">&lt;</span><a href="../../xyz.xenondevs.commons.collections/to-enum-set.html">E</a><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-982591194%2FFunctions%2F1768229086" anchor-label="toString" id="-982591194%2FFunctions%2F1768229086" data-filterable-set=":commons-collections/main"></a>
-          <div class="table-row" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
+          <div class="table-row table-row_content" data-filterable-current=":commons-collections/main" data-filterable-set=":commons-collections/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -1150,17 +1149,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
