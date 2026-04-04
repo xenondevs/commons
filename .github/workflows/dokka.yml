@@ -1,11 +1,11 @@
 name: Build Documentation
 
 on:
-  push:
-    branches: [ "**" ]
+  release:
+    types: [ created ]
 
 jobs:
-  deploy:
+  dokka:
     runs-on: ubuntu-latest
     
     permissions:
@@ -13,12 +13,12 @@ jobs:
     
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Set Up JDK 21
-        uses: actions/setup-java@v4
+      - name: Set Up JDK 25
+        uses: actions/setup-java@v5
         with:
-          java-version: 21
+          java-version: 25
           distribution: adopt
 
       - name: Setup Gradle
