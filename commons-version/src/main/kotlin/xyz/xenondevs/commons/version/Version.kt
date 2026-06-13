@@ -4,37 +4,41 @@ import kotlin.math.max
 
 private val RELEASE_STAGES: Map<String, Int> = buildMap {
     this["rc"] = -1
-    this["beta"] = -2
-    this["alpha"] = -3
-    this["snapshot"] = -4
+    this["pre"] = -2
+    this["beta"] = -3
+    this["alpha"] = -4
+    this["snapshot"] = -5
 }
 
+private val INVERSE_RELEASE_STAGES = RELEASE_STAGES.entries.associate { (k, v) -> v to k }
+
 private const val VERSION_NUMBER_GROUP = """((?:0|[1-9]\d*)(?:\.(?:0|[1-9]\d*))*)"""
-private const val RELEASE_STAGES_GROUP = """(?i)(snapshot|alpha|beta|rc)(?-i)"""
+private const val RELEASE_STAGES_GROUP = """(?i)(snapshot|alpha|beta|pre|rc)(?-i)"""
 private const val METADATA_GROUP = """((?:[0-9A-Za-z-]+)(?:\.[0-9A-Za-z-]+)*)"""
-private val VERSION_REGEX = Regex($$"""^$$VERSION_NUMBER_GROUP(?:-$$RELEASE_STAGES_GROUP(?:\.$$VERSION_NUMBER_GROUP)?)?(?:\+$$METADATA_GROUP)?$""")
+private val VERSION_REGEX = Regex($$"""^$$VERSION_NUMBER_GROUP(?:-$$RELEASE_STAGES_GROUP(?:[.-]?$$VERSION_NUMBER_GROUP)?)?(?:\+$$METADATA_GROUP)?$""")
 
 /**
  * Represents a version in a format consisting of the following three components:
  * 1. Dot-separated version number of infinite length (ex. `1.0.0.0.0.1`, `1.0.0`, `1`, etc.).
  * Individual components must be non-negative integers and cannot contain leading zeros, except for `0` itself.
- * 2. Optional pre-release stage (any of `snapshot`, `alpha`, `beta`, `rc` (ignoring capitalization)), separated by a dash from the main
- * version number and followed by an optional pre-release version number as in (1). (ex. `1.0.0-alpha`, `1.0.0-beta.1.2.3`)
+ * 2. Optional pre-release stage (any of `snapshot`, `alpha`, `beta`, `pre`, `rc` (ignoring capitalization)), separated by a dash from the main
+ * version number and followed by an optional pre-release version number as in (1) after either a dot (`.`), dash (`-`), or no separator.
+ * (ex. `1.0.0-alpha`, `1.0.0-beta.1.2.3`, `1.0.0-rc-1`, `1.0.0-rc1`)
  * 3. Optional metadata, separated by a plus sign from the main version number. Metadata consists of one or multiple dot-separated
  * identifiers, which themselves are non-empty alphanumeric strings. (ex. `1.0.0+build.123`, `1.0.0+build.123+build.456`)
  *
  * When comparing version numbers, the dot-separated components of version numbers are compared individually,
- * such that `1.11 > 1.2` and `no pre-release stage > rc > beta > alpha > snapshot`.
+ * such that `1.11 > 1.2` and `no pre-release stage > rc > pre > beta > alpha > snapshot`.
  * Metadata is ignored when comparing versions.
  * 
  * This class loosely follows the [SemVer](https://semver.org/) specification, but allows variable-length version numbers
- * and restricts the pre-release stages to `snapshot`, `alpha`, `beta` and `rc`.
+ * and restricts the pre-release stages to `snapshot`, `alpha`, `beta`, `pre` and `rc`.
  */
 class Version : Comparable<Version> {
     
     private val version: IntArray
     private val stageVersion: IntArray
-    private val stage: String? // stage in original capitalization
+    private val str: String? // version in original formatting
     
     /**
      * The metadata of the version, or `null` if there is none.
@@ -53,7 +57,7 @@ class Version : Comparable<Version> {
     constructor(vararg version: Int) {
         this.version = version
         this.stageVersion = intArrayOf()
-        this.stage = null
+        this.str = null
         this.metadata = null
     }
     
@@ -76,12 +80,11 @@ class Version : Comparable<Version> {
                 this += RELEASE_STAGES[stage.lowercase()] ?: throw IllegalArgumentException("Unknown release stage: $stage")
                 if (stageVer != null) this += stageVer.split('.').map { it.toIntOrNull() ?: 0 }
             }.toIntArray()
-            this.stage = stage
         } else {
             this.stageVersion = intArrayOf()
-            this.stage = null
         }
         
+        this.str = version
         this.metadata = result.groupValues[4].takeUnless(String::isBlank)
     }
     
@@ -97,6 +100,9 @@ class Version : Comparable<Version> {
      * @param omitMetadata Whether to omit the metadata. Defaults to `false`.
      */
     fun toString(separator: String = ".", omitZeros: Boolean = false, omitIdx: Int = -1, omitMetadata: Boolean = false): String {
+        if (str != null && separator == "." && !omitZeros && omitIdx == -1 && !omitMetadata)
+            return str
+        
         val sb = StringBuilder()
         
         fun isAllZeros(start: Int, array: IntArray) =
@@ -117,7 +123,7 @@ class Version : Comparable<Version> {
         
         if (stageVersion.isNotEmpty() && omitIdx < 0) {
             sb.append("-")
-            sb.append(stage)
+            sb.append(INVERSE_RELEASE_STAGES[stageVersion[0]]!!)
             if (stageVersion.size > 1 && (!omitZeros || !isAllZeros(1, stageVersion))) {
                 sb.append(".")
                 appendVersion(1, stageVersion.size, stageVersion)

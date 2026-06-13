@@ -39,6 +39,8 @@ class VersionTest {
         "1.0-aLpHa.1",
         "1.0-alpha.1.0.0",
         "1.0-alpha.1+build.732.amd64",
+        "1.0.0-pre-1",
+        "1-pre1.1"
     ])
     fun testValidVersion(version: String) {
         assertDoesNotThrow { Version(version) }
@@ -74,7 +76,9 @@ class VersionTest {
         "1.0-alpha.1",
         "1.0-alpha.1.0.0",
         "1.0-alpha.1.0.0+abc.def.ghi",
-        "1.0-AlPhA.1.0.0+AbC.DEF.ghi"
+        "1.0-AlPhA.1.0.0+AbC.DEF.ghi",
+        "1.0.0-pRe-1",
+        "1-pRe1.1"
     ])
     fun testRoundTrip(version: String) {
         assertEquals(version, Version(version).toString())
@@ -118,7 +122,8 @@ class VersionTest {
             Arguments.of("1.0.0", "1"),
             Arguments.of("1.0.0-alpha", "1.0.0-alpha.0"),
             Arguments.of("1.0.0-alpha", "1.0.0-alpha.0.0.0"),
-            Arguments.of("1.0", "1.0+abc.def.ghi")
+            Arguments.of("1.0", "1.0+abc.def.ghi"),
+            Arguments.of("1-rc1", "1.0.0-rc-1.0.0")
         )
         
         @JvmStatic
@@ -127,7 +132,8 @@ class VersionTest {
             Arguments.of("0.2", "0.10"),
             Arguments.of("1.0-snapshot", "1.0-alpha"),
             Arguments.of("1.0-alpha", "1.0-beta"),
-            Arguments.of("1.0-beta", "1.0-rc"),
+            Arguments.of("1.0-beta", "1.0-pre"),
+            Arguments.of("1.0-pre", "1.0-rc"),
             Arguments.of("1.0-rc", "1.0"),
             Arguments.of("1.0-snapshot.1", "1.0-snapshot.2"),
             Arguments.of("1.0-alpha.1", "1.0-alpha.2"),
