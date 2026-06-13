@@ -175,3 +175,17 @@ inline fun <reified E : Enum<E>> Collection<E>.toEnumSet(): EnumSet<E> {
     
     return EnumSet.copyOf(this)
 }
+
+inline fun <L, R, V> Iterable<L>.zipIndexed(other: Iterable<R>, transform: (Int, L, R) -> V): List<V> {
+    val first = iterator()
+    val second = other.iterator()
+    val list = ArrayList<V>(minOf(collectionSizeOrDefault(10), other.collectionSizeOrDefault(10)))
+    var i = 0
+    while (first.hasNext() && second.hasNext()) {
+        list.add(transform(i++, first.next(), second.next()))
+    }
+    return list
+}
+
+@PublishedApi
+internal fun <T> Iterable<T>.collectionSizeOrDefault(default: Int): Int = if (this is Collection<*>) this.size else default
