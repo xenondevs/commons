@@ -1,6 +1,7 @@
 include(":commons-collections")
 include(":commons-gson")
 include(":commons-guava")
+include(":commons-math")
 include(":commons-reflection")
 include(":commons-tuple")
 include(":commons-version")
